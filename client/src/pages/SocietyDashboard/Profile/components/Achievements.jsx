@@ -1,0 +1,172 @@
+import { Plus, Trash2, Trophy } from "lucide-react";
+
+function Achievements({
+  society,
+  editMode,
+  formData,
+  setFormData,
+}) {
+
+  const addAchievement = () => {
+    setFormData({
+      ...formData,
+      achievements: [
+        ...formData.achievements,
+        {
+          title: "",
+          description: "",
+        },
+      ],
+    });
+  };
+
+  const removeAchievement = (index) => {
+    const updated = [...formData.achievements];
+    updated.splice(index, 1);
+
+    setFormData({
+      ...formData,
+      achievements: updated,
+    });
+  };
+
+  return (
+    <div className="mt-8 bg-white rounded-3xl shadow-lg p-8">
+
+      <div className="flex justify-between items-center mb-8">
+
+        <h2 className="text-2xl font-bold text-slate-800">
+          Achievements
+        </h2>
+
+        {editMode && (
+          <button
+            onClick={addAchievement}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl flex items-center gap-2"
+          >
+            <Plus size={18} />
+            Add
+          </button>
+        )}
+
+      </div>
+
+      {editMode ? (
+
+        <div className="space-y-5">
+
+          {formData.achievements.map((achievement, index) => (
+
+            <div
+              key={index}
+              className="border rounded-2xl p-5 bg-slate-50"
+            >
+
+              <input
+                type="text"
+                placeholder="Achievement Title"
+                value={achievement.title}
+                onChange={(e) => {
+
+                  const updated = [...formData.achievements];
+
+                  updated[index] = {
+                    ...updated[index],
+                    title: e.target.value,
+                  };
+
+                  setFormData({
+                    ...formData,
+                    achievements: updated,
+                  });
+
+                }}
+                className="w-full border rounded-xl px-4 py-3 mb-4 outline-none focus:border-blue-600"
+              />
+
+              <textarea
+                rows={4}
+                placeholder="Achievement Description"
+                value={achievement.description}
+                onChange={(e) => {
+
+                  const updated = [...formData.achievements];
+
+                  updated[index] = {
+                    ...updated[index],
+                    description: e.target.value,
+                  };
+
+                  setFormData({
+                    ...formData,
+                    achievements: updated,
+                  });
+
+                }}
+                className="w-full border rounded-xl p-4 resize-none outline-none focus:border-blue-600 whitespace-pre-wrap break-words"
+              />
+
+              <button
+                onClick={() => removeAchievement(index)}
+                className="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl"
+              >
+                <Trash2 size={18} />
+              </button>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      ) : (
+
+        <div className="grid md:grid-cols-2 gap-5">
+
+          {society?.achievements?.length ? (
+
+            society.achievements.map((achievement, index) => (
+
+              <div
+                key={index}
+                className="border rounded-2xl p-5 bg-slate-50 flex gap-4 items-start"
+              >
+
+                <Trophy
+                  size={24}
+                  className="text-yellow-500 mt-1"
+                />
+
+                <div className="flex-1">
+
+                  <h3 className="font-bold text-lg">
+                    {achievement.title}
+                  </h3>
+
+                  <p className="mt-2 text-slate-700 whitespace-pre-wrap break-words [overflow-wrap:anywhere]">
+                    {achievement.description}
+                  </p>
+
+                </div>
+
+              </div>
+
+            ))
+
+          ) : (
+
+            <p className="text-gray-500">
+              No Achievements Added
+            </p>
+
+          )}
+
+        </div>
+
+      )}
+
+    </div>
+  );
+}
+
+export default Achievements;

@@ -1,0 +1,269 @@
+import { useState } from "react";
+import {
+  ArrowLeft,
+  Eye,
+  EyeOff,
+  Lock,
+} from "lucide-react";
+import toast from "react-hot-toast";
+
+import { changePassword } from "../../../../services/settingsServices";
+
+function ChangePassword({ goBack }) {
+  const [formData, setFormData] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const [showOld, setShowOld] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async () => {
+    if (
+      !formData.oldPassword ||
+      !formData.newPassword ||
+      !formData.confirmPassword
+    ) {
+      return toast.error("All fields are required");
+    }
+
+    if (
+      formData.newPassword !==
+      formData.confirmPassword
+    ) {
+      return toast.error(
+        "Passwords do not match"
+      );
+    }
+
+    try {
+      setLoading(true);
+
+      const response =
+        await changePassword(formData);
+
+      toast.success(response.message);
+
+      setFormData({
+        oldPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+
+      goBack();
+
+    } catch (error) {
+
+      toast.error(
+        error.response?.data?.message ||
+          "Failed to change password"
+      );
+
+    } finally {
+
+      setLoading(false);
+
+    }
+  };
+
+  return (
+    <div className="bg-slate-100 min-h-screen p-8">
+
+      {/* Back Button */}
+
+      <button
+        onClick={goBack}
+        className="flex items-center gap-2 text-blue-600 font-semibold mb-8 hover:text-blue-700 transition"
+      >
+        <ArrowLeft size={20} />
+        Back to Settings
+      </button>
+
+      {/* Card */}
+
+      <div className="max-w-2xl bg-white rounded-3xl shadow-xl p-8 mx-auto">
+
+        <div className="flex items-center gap-3 mb-8">
+
+          <div className="bg-blue-100 p-3 rounded-full">
+            <Lock
+              className="text-blue-600"
+              size={24}
+            />
+          </div>
+
+          <div>
+
+            <h2 className="text-3xl font-bold text-slate-800">
+              Change Password
+            </h2>
+
+            <p className="text-gray-500 mt-1">
+              Update your account password securely.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div className="space-y-6">
+
+          {/* Current Password */}
+
+          <div>
+
+            <label className="block mb-2 font-semibold">
+              Current Password
+            </label>
+
+            <div className="relative">
+
+              <input
+                type={
+                  showOld
+                    ? "text"
+                    : "password"
+                }
+                name="oldPassword"
+                value={formData.oldPassword}
+                onChange={handleChange}
+                placeholder="Enter current password"
+                className="w-full border rounded-xl px-4 py-3 pr-12 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+              <button
+                type="button"
+                onClick={() =>
+                  setShowOld(!showOld)
+                }
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+              >
+                {showOld ? (
+                  <Eye size={20} />
+                ) : (
+                  <EyeOff size={20} />
+                )}
+              </button>
+
+            </div>
+
+          </div>
+
+          {/* New Password */}
+
+          <div>
+
+            <label className="block mb-2 font-semibold">
+              New Password
+            </label>
+
+            <div className="relative">
+
+              <input
+                type={
+                  showNew
+                    ? "text"
+                    : "password"
+                }
+                name="newPassword"
+                value={formData.newPassword}
+                onChange={handleChange}
+                placeholder="Enter new password"
+                className="w-full border rounded-xl px-4 py-3 pr-12 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+              <button
+                type="button"
+                onClick={() =>
+                  setShowNew(!showNew)
+                }
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+              >
+                {showNew ? (
+                  <Eye size={20} />
+                ) : (
+                  <EyeOff
+                 size={20} />
+                )}
+              </button>
+
+            </div>
+
+          </div>
+
+          {/* Confirm Password */}
+
+          <div>
+
+            <label className="block mb-2 font-semibold">
+              Confirm Password
+            </label>
+
+            <div className="relative">
+
+              <input
+                type={
+                  showConfirm
+                    ? "text"
+                    : "password"
+                }
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                placeholder="Confirm new password"
+                className="w-full border rounded-xl px-4 py-3 pr-12 outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+              <button
+                type="button"
+                onClick={() =>
+                  setShowConfirm(
+                    !showConfirm
+                  )
+                }
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+              >
+                {showConfirm ? (
+                  <Eye size={20} />
+                ) : (
+                  <EyeOff
+                   size={20} />
+                )}
+              </button>
+
+            </div>
+
+          </div>
+
+          {/* Button */}
+
+          <button
+            onClick={handleSubmit}
+            disabled={loading}
+            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-3 rounded-xl font-semibold transition"
+          >
+            {loading
+              ? "Updating Password..."
+              : "Change Password"}
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  );
+}
+
+export default ChangePassword;
