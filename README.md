@@ -1,63 +1,70 @@
+<div align="center">
+
 # 🎓 Campus Connect
 
-A full-stack college event management platform that connects students, societies, and administrators through a centralized system for event management, registrations, attendance, certificates, and feedback.
+### A Full-Stack MERN College Event Management Platform
 
-> **Developed by:** Nikhil Yadav  
-> **Role:** Full Stack Developer  
-> **College:** J.C. Bose University of Science and Technology, YMCA
+<p>
+  <img src="https://img.shields.io/badge/MERN-Full%20Stack-green?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/React-Frontend-61DAFB?style=for-the-badge&logo=react"/>
+  <img src="https://img.shields.io/badge/Node.js-Backend-339933?style=for-the-badge&logo=node.js"/>
+  <img src="https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb"/>
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge"/>
+</p>
 
----
+A modern web application that simplifies college event management by connecting **Students**, **Societies**, and **Administrators** through a centralized platform.
 
-## 📌 Overview
-
-Campus Connect is a MERN Stack web application designed to simplify college event management.
-
-The platform allows societies to create and manage events, students to register and participate, and administrators to approve societies while maintaining overall platform control.
-
-The system also includes attendance tracking, automated certificate generation, OTP-based authentication, feedback collection, notifications, and society profile management.
+</div>
 
 ---
 
-# ✨ Features
+# 📖 Project Overview
 
-### 👨‍🎓 Student Module
+Campus Connect is a full-stack MERN application developed to digitize and simplify college event management.
 
-- Student Registration & Login
+The platform enables societies to create and manage events, students to register and participate, and administrators to manage societies securely.
+
+The application includes OTP authentication, attendance management, automated certificate generation, feedback collection, event analytics, notifications, and role-based dashboards.
+
+---
+
+# 🚀 Features
+
+## 👨‍🎓 Student Module
+
+- Secure Registration & Login
 - OTP Email Verification
-- Secure JWT Authentication
+- JWT Authentication
 - Browse Upcoming Events
-- Register for Events
-- Join Viewer Events
-- View Registered Events
+- Register / Join Events
 - Download Certificates
 - Submit Feedback
 - Like Events
 - View Society Profiles
-- Notification System
+- Notifications
 
 ---
 
-### 🏛 Society Module
+## 🏛 Society Module
 
 - Society Registration
-- Admin Approval System
+- Admin Approval
 - Create Events
 - Upload Event Banner
-- Manage Participants
-- Mark Attendance
-- Generate Certificates
-- View Event Reports
-- Manage Society Profile
-- View Analytics
+- Registration Deadline Management
+- Attendance Management
+- Certificate Generation
+- View Reports
+- Analytics Dashboard
+- Society Profile Management
 
 ---
 
-### 👨‍💼 Admin Module
+## 👨‍💼 Admin Module
 
-- Approve Societies
-- Reject Societies
-- Manage Users
+- Approve / Reject Societies
 - Manage Events
+- Manage Students
 - Platform Monitoring
 
 ---
@@ -65,66 +72,27 @@ The system also includes attendance tracking, automated certificate generation, 
 # 🔒 Security Features
 
 - JWT Authentication
+- OTP Email Verification
 - Password Encryption
-- OTP Verification
 - Protected Routes
-- Role-Based Authorization
-- Input Validation
-- Backend Data Validation
-- Secure Certificate Generation
+- Role Based Access Control
+- Backend Validation
+- Secure File Uploads
 
 ---
 
 # 🛠 Tech Stack
 
-## Frontend
-
-- React.js
-- Vite
-- Tailwind CSS
-- Axios
-- React Router
-- React Hot Toast
-- Lucide React
-
----
-
-## Backend
-
-- Node.js
-- Express.js
-
----
-
-## Database
-
-- MongoDB Atlas
-- Mongoose
-
----
-
-## Cloud Services
-
-- Cloudinary (Image Storage)
-
----
-
-## Authentication
-
-- JWT
-- OTP Email Verification
-
----
-
-## Email Service
-
-- Nodemailer
+| Frontend | Backend | Database | Cloud |
+|-----------|----------|-----------|--------|
+| React.js | Node.js | MongoDB Atlas | Cloudinary |
+| Vite | Express.js | Mongoose | |
 
 ---
 
 # 📂 Project Structure
 
-```
+```text
 Campus-Connect
 │
 ├── client
@@ -134,24 +102,27 @@ Campus-Connect
 │
 ├── server
 │   ├── controllers
+│   ├── middleware
 │   ├── models
 │   ├── routes
-│   ├── middleware
 │   ├── utils
 │   └── package.json
 │
-└── README.md
+├── README.md
+└── .gitignore
 ```
 
 ---
 
-# 🚀 Installation
+# ⚙ Installation
 
-## Clone Repository
+### Clone Repository
 
 ```bash
 git clone https://github.com/nikhilydv-21/Campus-Connect.git
 ```
+
+---
 
 ## Client
 
@@ -161,19 +132,21 @@ npm install
 npm run dev
 ```
 
+---
+
 ## Server
 
 ```bash
 cd server
 npm install
-npm start
+npm run dev
 ```
 
 ---
 
 # 🔑 Environment Variables
 
-Create a `.env` file inside the server folder.
+Create a `.env` file inside the **server** folder.
 
 ```env
 PORT=
@@ -195,37 +168,64 @@ CLOUDINARY_SECRET=
 
 ---
 
+# ✨ Key Functionalities
+
+- OTP Based Authentication
+- Event Registration
+- Registration Deadline Validation
+- Attendance Management
+- Automated Certificate Generation
+- Event Feedback System
+- Cloud Image Upload
+- Role Based Dashboards
+- Notifications
+- Search & Filters
+
+---
+
 # 📸 Screenshots
 
-Screenshots will be added soon.
+> Screenshots will be added after deployment.
+
+| Home | Dashboard |
+|------|-----------|
+| Coming Soon | Coming Soon |
 
 ---
 
-# 🎯 Future Enhancements
+# 🔮 Future Enhancements
 
-- QR Code Based Attendance
-- Event Reminder Emails
-- Real-time Chat
-- Event Calendar Integration
+- QR Code Attendance
 - Mobile Application
-- Dashboard Analytics
-- AI-based Event Recommendations
+- Event Reminder Emails
+- AI Event Recommendations
+- Calendar Integration
+- Advanced Analytics
 
 ---
 
-# 👨‍💻 Author
+# 👨‍💻 Developer
 
 **Nikhil Yadav**
 
-**Full Stack Developer**
+**Role:** Full Stack Developer
 
-J.C. Bose University of Science and Technology, YMCA
+**College:** J.C. Bose University of Science and Technology, YMCA 
 
 GitHub:
 https://github.com/nikhilydv-21
 
 ---
 
-# ⭐ Support
+# 🌟 Support
 
-If you like this project, consider giving it a ⭐ on GitHub.
+If you found this project useful, please consider giving it a ⭐ on GitHub.
+
+It motivates me to build more useful projects.
+
+---
+<div align="center">
+
+Made with ❤️ using MERN Stack
+
+</div>
