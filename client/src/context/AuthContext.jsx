@@ -13,7 +13,7 @@ const fetchStudent = async () => {
     
 
     setStudent(response.student);
-  } catch (error) {
+  } catch (error) { 
     setStudent(null);
   } finally {
     setLoading(false);
