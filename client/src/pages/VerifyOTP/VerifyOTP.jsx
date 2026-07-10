@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
 import Button from "../../components/common/Button/Button";
-
+import toast from "react-hot-toast";
 import {
   verifyOTP,
   resendOTP,
@@ -70,7 +70,7 @@ function VerifyOTP() {
     const finalOTP = otp.join("");
 
     if (finalOTP.length !== 6) {
-      alert("Please enter complete OTP");
+      toast.error("Please enter complete OTP");
       return;
     }
 
@@ -82,13 +82,13 @@ function VerifyOTP() {
         otp: finalOTP,
       });
 
-      alert(response.message);
+      toast.success(response.message);
 
       navigate("/login/student");
 
     } catch (error) {
 
-      alert(
+      toast.error(
         error.response?.data?.message ||
         "Verification Failed"
       );
@@ -177,44 +177,43 @@ function VerifyOTP() {
 
           </form>
 
-          
 
-         <p className="text-center text-sm text-gray-500 mt-8">
-  {timer > 0 ? (
-    <>
-      Resend OTP in{" "}
-      <span className="font-semibold text-blue-600">
-        {Math.floor(timer / 60)}:
-        {(timer % 60).toString().padStart(2, "0")}
-      </span>
-    </>
-  ) : (
-    <button
-      type="button"
-      onClick={async () => {
-        try {
-          const response = await resendOTP(email);
 
-          alert(response.message);
+          <p className="text-center text-sm text-gray-500 mt-8">
+            {timer > 0 ? (
+              <>
+                Resend OTP in{" "}
+                <span className="font-semibold text-blue-600">
+                  {Math.floor(timer / 60)}:
+                  {(timer % 60).toString().padStart(2, "0")}
+                </span>
+              </>
+            ) : (
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    const response = await resendOTP(email);
 
-          setOtp(["", "", "", "", "", ""]);
-          document.getElementById("otp-0")?.focus();
+                    toast.success(response.message);
+                    setOtp(["", "", "", "", "", ""]);
+                    document.getElementById("otp-0")?.focus();
 
-          setTimer(120);
+                    setTimer(120);
 
-        } catch (error) {
-          alert(
-            error.response?.data?.message ||
-            "Failed to resend OTP"
-          );
-        }
-      }}
-      className="text-blue-600 font-semibold hover:underline"
-    >
-      Resend OTP
-    </button>
-  )}
-</p>
+                  } catch (error) {
+                    toast.error(
+                      error.response?.data?.message ||
+                      "Failed to resend OTP"
+                    );
+                  }
+                }}
+                className="text-blue-600 font-semibold hover:underline"
+              >
+                Resend OTP
+              </button>
+            )}
+          </p>
 
         </div>
 

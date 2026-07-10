@@ -83,11 +83,14 @@ const handleSubmit = async (e) => {
   }
 
   if (
-    !/^\d{10}$/.test(formData.contactNumber)
-  ) {
-    toast.error("Invalid contact number");
-    return;
-  }
+  role === "student" &&
+  formData.contactNumber &&
+  !/^\d{10}$/.test(formData.contactNumber)
+) {
+  toast.error("Invalid contact number");
+  return;
+}
+
   if (formData.password !== formData.confirmPassword) {
     toast.error("Passwords do not match");
     return;
