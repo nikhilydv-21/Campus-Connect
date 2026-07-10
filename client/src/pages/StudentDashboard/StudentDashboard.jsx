@@ -4,7 +4,7 @@ import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 
 import DashboardHome from "./pages/DashboardHome";
-import Profile from "./pages/Profile";
+import Profile from "./Profile/Profile";
 
 import Societies from "./ExploreSocieties/ExploreSocieties";
 import MySocieties from "./MySocieties/MySocieties";

@@ -22,7 +22,7 @@ function EventBasicInfo({
 
           <input
             type="text"
-            placeholder="Enter Event Title"
+            placeholder="Event Title"
             value={formData.title}
             onChange={(e) =>
               setFormData({
@@ -122,6 +122,7 @@ function EventBasicInfo({
 
           <textarea
             rows={7}
+            maxLength={500}
             placeholder="Write Event Description..."
             value={formData.description}
             onChange={(e) =>

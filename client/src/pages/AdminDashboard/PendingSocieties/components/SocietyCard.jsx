@@ -1,12 +1,16 @@
 import {
-  Mail,
-  Users,
+  MoreVertical,
   Eye,
   CheckCircle,
   XCircle,
 } from "lucide-react";
 
-import { useState } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+} from "react";
+
 import toast from "react-hot-toast";
 
 import {
@@ -23,6 +27,8 @@ function SocietyCard({
   refresh,
 }) {
 
+  const menuRef = useRef(null);
+
   const [loading, setLoading] =
     useState(false);
 
@@ -34,6 +40,40 @@ function SocietyCard({
 
   const [rejectOpen, setRejectOpen] =
     useState(false);
+
+  const [menuOpen, setMenuOpen] =
+    useState(false);
+
+  useEffect(() => {
+
+    const handleClickOutside = (event) => {
+
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target)
+      ) {
+
+        setMenuOpen(false);
+
+      }
+
+    };
+
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside
+    );
+
+    return () => {
+
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
+
+    };
+
+  }, []);
 
   const handleApprove = async () => {
 
@@ -102,102 +142,191 @@ function SocietyCard({
   return (
     <>
 
-      <div className="bg-white rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+      <div
+        className="
+          w-full
+          bg-white
+          rounded-3xl
+          border
+          border-slate-200
+          shadow-sm
+          hover:shadow-lg
+          transition-all
+          duration-300
+          relative
+          p-6
+        "
+      >
 
-        {/* Header */}
+        {/* Logo */}
 
-        <div className="p-6 flex items-center gap-4">
+        <div className="flex justify-center pt-4">
 
           <img
             src={
               society.logo
                 ? society.logo
                 : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                    society.societyName
-                  )}&background=2563eb&color=fff`
+                  society.societyName
+                )}&background=f8fafc&color=111827`
             }
             alt={society.societyName}
-            className="w-16 h-16 rounded-2xl object-cover"
+            className="
+              w-24
+              h-24
+              rounded-full
+              object-cover
+              border-2
+              border-slate-300
+              p-1
+              bg-white
+              shadow-sm
+            "
           />
-
-          <div>
-
-            <h2 className="text-xl font-bold">
-              {society.societyName}
-            </h2>
-
-            <p className="text-blue-600 font-medium mt-1">
-              {society.societyType}
-            </p>
-
-          </div>
 
         </div>
 
-        {/* Body */}
+        {/* Content */}
 
-        <div className="px-6 pb-6 space-y-4">
+        <div className="text-center mt-6">
 
-          <div className="flex items-center gap-2 text-gray-600">
+          <h2 className="text-2xl font-semibold text-slate-700">
 
-            <Users size={18} />
+            {society.societyName}
 
-            <span>
-              {society.facultyCoordinator}
-            </span>
+          </h2>
 
-          </div>
+          <p className="mt-2 text-slate-500 font-medium">
 
-          <div className="flex items-center gap-2 text-gray-600">
+            {society.societyType}
 
-            <Mail size={18} />
+          </p>
 
-            <span className="truncate">
-              {society.email}
-            </span>
 
-          </div>
+          <span
+            className="
+      inline-flex
+      mt-4
+      px-3
+      py-1
+      rounded-full
+      text-xs
+      font-medium
+      bg-slate-100
+      text-slate-700
+    "
+          >
+            Pending
+          </span>
+        </div>
+        {/* Three Dots */}
 
-          {/* Buttons */}
+        <div
+          ref={menuRef}
+          className="absolute top-5 right-5"
+        >
 
-          {/* Buttons */}
+          <button
+            onClick={() =>
+              setMenuOpen(!menuOpen)
+            }
+            className="
+              h-10
+              w-10
+              rounded-full
+              hover:bg-slate-100
+              flex
+              items-center
+              justify-center
+              transition
+            "
+          >
 
-<div className="grid grid-cols-3 gap-3 pt-5">
+            <MoreVertical size={20} />
 
-  {/* View */}
-<button
-  onClick={() => setOpenDetails(true)}
-  className="flex items-center justify-center gap-2 border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-xl py-3 transition font-medium"
->
-  <Eye size={16} />
-  <span className="text-sm">View</span>
-</button>
-  {/* Approve */}
+          </button>
 
-<button
-  onClick={() => setApproveOpen(true)}
-  disabled={loading}
-  className="flex items-center justify-center gap-2 border border-green-200 bg-green-50 hover:bg-green-100 text-green-600 rounded-xl py-3 transition font-medium"
->
-  <CheckCircle size={16} />
-  <span className="text-sm">Approve</span>
-</button>
+          {menuOpen && (
 
-{/* Reject */}
+            <div
+              className="
+                absolute
+                right-0
+                mt-2
+                w-52
+                bg-white
+                border
+                border-slate-200
+                rounded-2xl
+                shadow-xl
+                overflow-hidden
+                z-50
+              "
+            >
 
-<button
-  onClick={() => setRejectOpen(true)}
-  disabled={loading}
-  className="flex items-center justify-center gap-2 border border-red-200 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl py-3 transition font-medium"
->
-  <XCircle size={16} />
-  <span className="text-sm">Reject</span>
-</button>
-  
+             
 
-  
+              {/* Approve */}
 
-</div>
+              <button
+                onClick={() => {
+
+                  setMenuOpen(false);
+
+                  setApproveOpen(true);
+
+                }}
+                className="
+                  w-full
+                  flex
+                  items-center
+                  gap-3
+                  px-5
+                  py-3
+                  hover:bg-slate-100
+                  transition
+                  text-slate-700
+                "
+              >
+
+                <CheckCircle size={17} />
+
+                Approve Society
+
+              </button>
+
+              {/* Reject */}
+
+              <button
+                onClick={() => {
+
+                  setMenuOpen(false);
+
+                  setRejectOpen(true);
+
+                }}
+                className="
+                  w-full
+                  flex
+                  items-center
+                  gap-3
+                  px-5
+                  py-3
+                  hover:bg-red-50
+                  transition
+                  text-red-600
+                "
+              >
+
+                <XCircle size={17} />
+
+                Reject Society
+
+              </button>
+
+            </div>
+
+          )}
 
         </div>
 
@@ -227,6 +356,7 @@ function SocietyCard({
 
     </>
   );
+
 }
 
 export default SocietyCard;

@@ -15,13 +15,20 @@ import {
   ChevronRight,
 } from "lucide-react";
 
+import LogoutModal from "../Settings/components/LogoutModal";
+
 function Sidebar({ activePage, setActivePage }) {
-  const [collapsed, setCollapsed] =
-    useState(false);
+
+  const [collapsed, setCollapsed] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    setLogoutOpen(true);
+  };
+
+  const confirmLogout = () => {
     localStorage.clear();
     navigate("/");
   };
@@ -70,84 +77,97 @@ function Sidebar({ activePage, setActivePage }) {
   ];
 
   return (
-    <div
-      className={`bg-slate-900 text-white h-screen transition-all duration-300 ${
-        collapsed ? "w-20" : "w-64"
-      } flex flex-col`}
-    >
-      {/* Header */}
+    <>
 
-      <div className="flex items-center justify-between p-5 border-b border-slate-800">
+      <div
+        className={`bg-slate-900 text-white h-screen transition-all duration-300 ${
+          collapsed ? "w-20" : "w-64"
+        } flex flex-col`}
+      >
 
-        {!collapsed && (
-          <h1 className="text-xl font-bold">
-            Campus Connect
-          </h1>
-        )}
+        {/* Header */}
 
-        <button
-          onClick={() =>
-            setCollapsed(!collapsed)
-          }
-          className="p-2 rounded-lg hover:bg-slate-800 transition"
-        >
-          {collapsed ? (
-            <ChevronRight size={20} />
-          ) : (
-            <ChevronLeft size={20} />
+        <div className="flex items-center justify-between p-5 border-b border-slate-800">
+
+          {!collapsed && (
+            <h1 className="text-xl font-bold">
+              Campus Connect
+            </h1>
           )}
-        </button>
-
-      </div>
-
-      {/* Menu */}
-
-      <div className="flex-1 mt-5 space-y-2 px-2">
-
-        {menus.map((item) => (
 
           <button
-            key={item.key}
-            onClick={() =>
-              setActivePage(item.key)
-            }
-            className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 ${
-              activePage === item.key
-                ? "bg-blue-600 text-white"
-                : "hover:bg-slate-800 text-gray-200"
-            }`}
+            onClick={() => setCollapsed(!collapsed)}
+            className="p-2 rounded-lg hover:bg-slate-800 transition"
           >
-            {item.icon}
+            {collapsed ? (
+              <ChevronRight size={20} />
+            ) : (
+              <ChevronLeft size={20} />
+            )}
+          </button>
+
+        </div>
+
+        {/* Menu */}
+
+        <div className="flex-1 mt-5 space-y-2 px-2">
+
+          {menus.map((item) => (
+
+            <button
+              key={item.key}
+              onClick={() => setActivePage(item.key)}
+              className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 ${
+                activePage === item.key
+                  ? "bg-blue-600 text-white shadow-lg"
+                  : "text-gray-300 hover:bg-slate-800 hover:text-white"
+              }`}
+            >
+
+              {item.icon}
+
+              {!collapsed && (
+                <span className="font-medium">
+                  {item.name}
+                </span>
+              )}
+
+            </button>
+
+          ))}
+
+        </div>
+
+        {/* Logout */}
+
+        <div className="border-t border-slate-800 p-3">
+
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-red-400 hover:bg-red-600 hover:text-white transition-all duration-200"
+          >
+
+            <LogOut size={22} />
 
             {!collapsed && (
-              <span>{item.name}</span>
+              <span className="font-medium">
+                Logout
+              </span>
             )}
 
           </button>
 
-        ))}
+        </div>
 
       </div>
 
-      {/* Logout */}
+      <LogoutModal
+        open={logoutOpen}
+        setOpen={setLogoutOpen}
+        onLogout={confirmLogout}
+      />
 
-      <div className="border-t border-slate-800 p-2">
-
-        <button
-          onClick={handleLogout}
-          className="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-red-400 hover:bg-red-600 hover:text-white transition"
-        >
-          <LogOut size={22} />
-
-          {!collapsed && (
-            <span>Logout</span>
-          )}
-
-        </button>
-
-      </div>
-
-    </div>
+    </>
   );
 }
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-import { Eye, GraduationCap, Users } from "lucide-react";
+import { Eye, GraduationCap } from "lucide-react";
 
 import { getStudentDetails } from "../../../../services/adminServices";
 
@@ -11,8 +11,7 @@ function StudentCard({
   student,
 }) {
 
-  const [open, setOpen] =
-    useState(false);
+  const [open, setOpen] = useState(false);
 
   const [studentData, setStudentData] =
     useState(null);
@@ -26,9 +25,7 @@ function StudentCard({
           student._id
         );
 
-      setStudentData(
-        response.student
-      );
+      setStudentData(response.student);
 
       setOpen(true);
 
@@ -46,11 +43,23 @@ function StudentCard({
   return (
     <>
 
-      <div className="bg-white rounded-3xl shadow-md hover:shadow-xl transition overflow-hidden">
+      <div
+        className="
+          w-full
+          bg-white
+          rounded-3xl
+          border
+          border-slate-200
+          shadow-sm
+          hover:shadow-lg
+          transition-all
+          duration-300
+        "
+      >
 
-        {/* Header */}
+        {/* Profile Picture */}
 
-        <div className="flex items-center gap-4 p-6">
+        <div className="flex justify-center pt-10">
 
           <img
             src={
@@ -58,31 +67,60 @@ function StudentCard({
                 ? student.profilePicture
                 : `https://ui-avatars.com/api/?name=${encodeURIComponent(
                     student.fullName
-                  )}&background=2563eb&color=fff`
+                  )}&background=f8fafc&color=111827`
             }
             alt={student.fullName}
-            className="w-20 h-20 rounded-full object-cover border-4 border-blue-100"
+            className="
+              w-24
+              h-24
+              rounded-full
+              object-cover
+              border-2
+              border-slate-300
+              p-1
+              bg-white
+              shadow-sm
+            "
           />
-
-          <div className="flex-1">
-
-            <h2 className="text-xl font-bold">
-              {student.fullName}
-            </h2>
-
-            <p className="text-gray-500">
-              {student.rollNumber}
-            </p>
-
-          </div>
 
         </div>
 
-        {/* Info */}
+        {/* Content */}
 
-        <div className="px-6 space-y-3">
+        <div className="p-6 text-center">
 
-          <div className="flex items-center gap-2 text-gray-600">
+          <h2
+            className="
+              text-2xl
+              font-semibold
+              text-slate-700
+              tracking-tight
+            "
+          >
+            {student.fullName}
+          </h2>
+
+          <p
+            className="
+              mt-2
+              text-sm
+              text-slate-500
+            "
+          >
+            {student.rollNumber}
+          </p>
+
+          <div
+            className="
+              flex
+              justify-center
+              items-center
+              gap-2
+              mt-4
+              text-slate-600
+              font-medium
+            "
+          >
 
             <GraduationCap size={18} />
 
@@ -92,30 +130,30 @@ function StudentCard({
 
           </div>
 
-          <div className="flex items-center gap-2 text-gray-600">
-
-            <Users size={18} />
-
-            <span>
-              Joined Societies :
-              {" "}
-              {student.joinedSocieties?.length || 0}
-            </span>
-
-          </div>
-
-        </div>
-
-        {/* Button */}
-
-        <div className="p-6">
+          {/* View Button */}
 
           <button
             onClick={handleView}
-            className="w-full flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl transition"
+            className="
+              mt-6
+              w-full
+              bg-white
+              border
+              border-slate-300
+              hover:bg-slate-100
+              text-slate-800
+              py-2.5
+              rounded-xl
+              flex
+              justify-center
+              items-center
+              gap-2
+              font-semibold
+              transition
+            "
           >
 
-            <Eye size={18} />
+            <Eye size={17} />
 
             View Details
 

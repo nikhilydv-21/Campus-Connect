@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import {
-  getAllEvents,
+    getAllEvents,
 } from "../../../services/adminServices";
 
 import SearchBar from "./components/SearchBar";
@@ -11,127 +11,126 @@ import EmptyState from "./components/EmptyState";
 
 function Events() {
 
-  const [events, setEvents] =
-    useState([]);
+    const [events, setEvents] =
+        useState([]);
 
-  const [loading, setLoading] =
-    useState(true);
+    const [loading, setLoading] =
+        useState(true);
 
-  const [search, setSearch] =
-    useState("");
+    const [search, setSearch] =
+        useState("");
 
-  const [category, setCategory] =
-    useState("");
+    const [category, setCategory] =
+        useState("");
 
-  const [status, setStatus] =
-    useState("");
+    const [status, setStatus] =
+        useState("");
 
-  const fetchEvents = async () => {
+    const fetchEvents = async () => {
 
-    try {
+        try {
 
-      setLoading(true);
+            setLoading(true);
 
-      const response =
-        await getAllEvents(
-          search,
-          category,
-          status
-        );
+            const response =
+                await getAllEvents(
+                    search,
+                    category,
+                    status
+                );
 
-      setEvents(response.events || []);
+            setEvents(response.events || []);
 
-    } catch (error) {
+        } catch (error) {
 
-      toast.error(
-        error.response?.data?.message ||
-        "Failed to load events"
-      );
+            toast.error(
+                error.response?.data?.message ||
+                "Failed to load events"
+            );
 
-    } finally {
+        } finally {
 
-      setLoading(false);
+            setLoading(false);
 
-    }
+        }
 
-  };
+    };
 
-  useEffect(() => {
+    useEffect(() => {
 
-    fetchEvents();
+        fetchEvents();
 
-  }, [search, category, status]);
+    }, [search, category, status]);
 
-  return (
+    return (
 
-    <div className="bg-slate-100 min-h-screen">
+        <div className="bg-slate-100 min-h-screen">
 
-      {/* Heading */}
+            {/* Heading */}
 
-      <div className="mb-8">
+            <div className="mb-8">
 
-        <h1 className="text-4xl font-bold text-slate-800">
+                <h1 className="text-4xl font-bold text-slate-800">
 
-          All Events
+                    All Events
 
-        </h1>
+                </h1>
 
-        <p className="text-gray-500 mt-2">
+                <p className="text-gray-500 mt-2">
 
-          View all events organized by societies.
+                    View all events organized by societies.
 
-        </p>
+                </p>
 
-      </div>
+            </div>
 
-      <SearchBar
+            <SearchBar
 
-        search={search}
-        setSearch={setSearch}
+                search={search}
+                setSearch={setSearch}
 
-        category={category}
-        setCategory={setCategory}
+                category={category}
+                setCategory={setCategory}
 
-        status={status}
-        setStatus={setStatus}
-
-      />
-
-      {loading ? (
-
-        <div className="text-center py-20">
-
-          Loading...
-
-        </div>
-
-      ) : events.length === 0 ? (
-
-        <EmptyState />
-
-      ) : (
-
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
-
-          {events.map((event) => (
-
-            <EventCard
-
-              key={event._id}
-
-              event={event}
+                status={status}
+                setStatus={setStatus}
 
             />
 
-          ))}
+            {loading ? (
+
+                <div className="text-center py-20">
+
+                    Loading...
+
+                </div>
+
+            ) : events.length === 0 ? (
+
+                <EmptyState />
+
+            ) : (
+
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 justify-items-center mt-8">
+                    {events.map((event) => (
+
+                        <EventCard
+
+                            key={event._id}
+
+                            event={event}
+
+                        />
+
+                    ))}
+
+                </div>
+
+            )}
 
         </div>
 
-      )}
-
-    </div>
-
-  );
+    );
 
 }
 

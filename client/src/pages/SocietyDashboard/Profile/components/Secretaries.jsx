@@ -111,9 +111,9 @@ function Secretaries({
 
                 <button
                   onClick={() => removeSecretary(index)}
-                  className="bg-red-500 hover:bg-red-600 text-white px-4 rounded-xl"
-                >
-                  <Trash2 size={18} />
+                className="mt-4 h-11 w-11 flex items-center justify-center rounded-full bg-red-50 hover:bg-red-100 text-red-600 transition"
+                 > 
+                 <Trash2 size={18} />
                 </button>
               </div>
             ))}
@@ -205,7 +205,7 @@ function Secretaries({
                   onClick={() =>
                     removeJointSecretary(index)
                   }
-                  className="bg-red-500 hover:bg-red-600 text-white px-4 rounded-xl"
+                  className="mt-4 h-11 w-11 flex items-center justify-center rounded-full bg-red-50 hover:bg-red-100 text-red-600 transition"
                 >
                   <Trash2 size={18} />
                 </button>

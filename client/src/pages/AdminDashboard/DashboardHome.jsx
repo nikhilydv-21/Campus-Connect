@@ -24,7 +24,7 @@ function DashboardHome() {
 
       toast.error(
         error.response?.data?.message ||
-          "Failed to load dashboard"
+        "Failed to load dashboard"
       );
 
     } finally {
@@ -128,9 +128,14 @@ function DashboardHome() {
             </h3>
 
             <p className="text-gray-500 mt-2">
-              Registrations :
-              {" "}
-              {dashboard.mostPopularEvent.totalRegistrations}
+              Society:{" "}
+              <span className="font-medium text-slate-700">
+                {dashboard.mostPopularEvent.organizer?.societyName}
+              </span>
+            </p>
+
+            <p className="text-gray-500 mt-2">
+              Registrations: {dashboard.mostPopularEvent.totalRegistrations}
             </p>
           </>
         ) : (

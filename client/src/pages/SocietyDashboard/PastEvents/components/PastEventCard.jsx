@@ -1,181 +1,327 @@
 import {
-  Calendar,
-  MapPin,
-  Users,
-  Eye,
+    Calendar,
+    MapPin,
+    Eye,
+    Heart,
+    MoreVertical,
+    Award,
 } from "lucide-react";
+import GenerateCertificateModal from "./GenerateCertificateModal";
+import { useState, useRef, useEffect } from "react";
 
 function PastEventCard({
-  event,
-  onView,
+    event,
+    onView,
+    onGenerateCertificates,
+    loadingCertificate
 }) {
-  return (
-    <div className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition">
+    const [confirmOpen, setConfirmOpen] = useState(false);
+    const [openMenu, setOpenMenu] =
+        useState(false);
+    const menuRef = useRef(null);
+    useEffect(() => {
 
-      {/* Banner */}
+        const handleClickOutside = (event) => {
 
-      {event.banner ? (
-        <img
-          src={event.banner}
-          alt={event.title}
-          className="
+            if (
+                menuRef.current &&
+                !menuRef.current.contains(event.target)
+            ) {
+
+                setOpenMenu(false);
+
+            }
+
+        };
+
+        document.addEventListener(
+            "mousedown",
+            handleClickOutside
+        );
+
+        return () => {
+
+            document.removeEventListener(
+                "mousedown",
+                handleClickOutside
+            );
+
+        };
+
+    }, []);
+
+    return (
+
+        <div
+            className="
             w-full
-            h-56
-            object-cover
-          "
-        />
-      ) : (
-        <div
-          className="
-            w-full
-            h-56
-            bg-slate-200
-            flex
-            items-center
-            justify-center
-            text-gray-500
-          "
+            bg-white
+            rounded-3xl
+            shadow-md
+            hover:shadow-xl
+            transition-all
+            duration-300
+            overflow-hidden
+        "
         >
-          No Banner
-        </div>
-      )}
 
-      <div className="p-6">
+            {/* Banner */}
 
-        {/* Title */}
+            <div
+                className="relative"
+                ref={menuRef}
+            >
 
-        <h2
-          className="
-            text-2xl
-            font-bold
-            text-slate-800
-            break-words
-          "
-        >
-          {event.title}
-        </h2>
+                {
+                    event.banner ? (
 
-        {/* Venue */}
+                        <img
+                            src={event.banner}
+                            alt={event.title}
+                            className="w-full h-36 object-cover"
+                        />
 
-        <div
-          className="
-            flex
-            items-center
-            gap-3
-            mt-5
-          "
-        >
-          <MapPin
-            size={18}
-            className="text-red-500"
-          />
+                    ) : (
 
-          <span>
-            {event.venue}
-          </span>
+                        <div className="w-full h-36 bg-slate-200 flex items-center justify-center text-gray-500">
 
-        </div>
+                            No Banner
 
-        {/* Date */}
+                        </div>
 
-        <div
-          className="
-            flex
-            items-center
-            gap-3
-            mt-3
-          "
-        >
-          <Calendar
-            size={18}
-            className="text-blue-600"
-          />
+                    )
+                }
 
-          <span>
-            {new Date(
-              event.date
-            ).toLocaleDateString()}
-          </span>
+                {/* Three Dot Menu */}
 
-        </div>
+                <div className="absolute top-3 right-3">
 
-        {/* Registration */}
+                    <div className="relative">
 
-        <div
-          className="
-            flex
-            justify-between
-            mt-6
-            p-4
+                        <button
+                            onClick={() =>
+                                setOpenMenu(!openMenu)
+                            }
+                            className="bg-white rounded-full p-2 shadow hover:bg-slate-100"
+                        >
+
+                            <MoreVertical size={18} />
+
+                        </button>
+
+                        {openMenu && (
+
+                            <div
+                                className="
+            absolute
+            right-0
+            mt-2
+            w-56
+            bg-white
             rounded-2xl
-            bg-slate-50
-          "
-        >
-          <div>
+            shadow-xl
+            border
+            overflow-hidden
+            z-50
+        "
+                            >
 
-            <p className="text-gray-500 text-sm">
-              Mode
-            </p>
+                                {/* View Report */}
 
-            <p className="font-semibold">
-              {event.registrationMode}
-            </p>
+                                <button
+                                    onClick={() => {
 
-          </div>
+                                        setOpenMenu(false);
 
-          <div className="text-right">
+                                        onView(event);
 
-            <p className="text-gray-500 text-sm">
-              Registered
-            </p>
-
-            <p
-              className="
-                font-semibold
+                                    }}
+                                    className="
+                w-full
                 flex
                 items-center
-                gap-2
-                justify-end
-              "
-            >
-              <Users size={18} />
+                gap-3
+                px-4
+                py-3
+                hover:bg-slate-100
+                transition
+            "
+                                >
 
-              {event.totalRegistrations}
+                                    <Eye size={18} />
 
-            </p>
+                                    View Report
 
-          </div>
+                                </button>
+
+                                {/* Generate Certificate */}
+
+                                {event.registrationMode === "Participant" && (
+
+                                    event.certificateGenerated ? (
+
+
+                                        <button
+                                            disabled
+                                            className="
+        w-full
+        flex
+        items-center
+        gap-3
+        px-4
+        py-3
+        bg-slate-50
+        text-slate-700
+        font-semibold
+        border-t
+        cursor-default
+    "
+                                        >
+
+                                            <Award
+                                                size={18}
+                                                className="text-amber-500"
+                                            />
+
+                                            Certificates Generated
+
+                                        </button>
+
+                                    ) : (
+
+                                        <button
+                                            onClick={() => {
+
+                                                setOpenMenu(false);
+
+                                                setConfirmOpen(true);
+
+                                            }}
+                                            className="
+                        w-full
+                        flex
+                        items-center
+                        gap-3
+                        px-4
+                        py-3
+                        hover:bg-slate-100
+                        transition
+                    "
+                                        >
+
+                                            <Award size={18} />
+
+                                            Generate Certificates
+
+                                        </button>
+
+                                    )
+
+                                )}
+
+                            </div>
+
+                        )}
+                    </div>
+                </div>
+            </div>
+            {/* Body */}
+
+            <div className="p-4">
+
+                <h2 className="text-lg font-bold leading-6 line-clamp-2">
+
+                    {event.title}
+
+                </h2>
+
+                <div className="flex items-center gap-2 mt-4 text-gray-600">
+
+                    <MapPin
+                        size={16}
+                        className="text-red-500"
+                    />
+
+                    <span className="text-sm line-clamp-1">
+
+                        {event.venue}
+
+                    </span>
+
+                </div>
+
+                <div className="flex items-center gap-2 mt-2 text-gray-600">
+
+                    <Calendar
+                        size={16}
+                        className="text-blue-600"
+                    />
+
+                    <span className="text-sm">
+
+                        {
+                            new Date(event.date).toLocaleDateString(
+                                "en-IN",
+                                {
+                                    day: "numeric",
+                                    month: "short",
+                                    year: "numeric",
+                                }
+                            )
+                        }
+
+                    </span>
+
+                </div>
+                {/* Registration Mode + Likes */}
+
+                <div className="mt-4 flex items-center justify-between">
+
+                    <span
+                        className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${event.registrationMode === "Participant"
+                            ? "bg-emerald-100 text-emerald-700"
+                            : "bg-blue-100 text-blue-700"
+                            }`}
+                    >
+                        {event.registrationMode}
+                    </span>
+
+                    <div className="flex items-center gap-1.5 text-slate-600">
+
+                        <Heart
+                            size={16}
+                            className={
+                                event.likes > 0
+                                    ? "text-red-500 fill-red-500"
+                                    : "text-gray-400"
+                            }
+                        />
+
+                        <span className="text-sm font-medium">
+                            {event.likes}
+                        </span>
+
+                    </div>
+
+                </div>
+                <GenerateCertificateModal
+                    open={confirmOpen}
+                    setOpen={setConfirmOpen}
+                    loading={loadingCertificate}
+                    onConfirm={async () => {
+
+                        await onGenerateCertificates(event._id);
+
+                        setConfirmOpen(false);
+
+                    }}
+                />
+            </div>
 
         </div>
 
-        {/* Button */}
+    );
 
-        <button
-          onClick={() => onView(event)}
-          className="
-            w-full
-            mt-6
-            bg-blue-600
-            hover:bg-blue-700
-            text-white
-            py-3
-            rounded-xl
-            flex
-            items-center
-            justify-center
-            gap-2
-          "
-        >
-          <Eye size={18} />
-
-          View Details
-
-        </button>
-
-      </div>
-
-    </div>
-  );
 }
 
 export default PastEventCard;

@@ -66,3 +66,71 @@ export const getPastEventDetails = async (id) => {
   const response = await api.get(`/event/past-events/${id}`);
   return response.data;
 };
+
+// Get Event Participants
+export const getEventParticipants = async (
+  eventId,
+  search,
+  attendance
+) => {
+
+  const response = await api.get(
+    `/event/${eventId}/participants`,
+    {
+      params: {
+        search,
+        attendance,
+      },
+    }
+  );
+
+  return response.data;
+
+};
+
+
+
+// Mark Attendance
+export const markAttendance = async (
+  eventId,
+  registrationId
+) => {
+
+  const response = await api.patch(
+    `/event/${eventId}/attendance/${registrationId}`
+  );
+
+  return response.data;
+
+};
+
+export const exportParticipantsCSV = async (
+  eventId,
+  attendance
+) => {
+
+  return api.get(
+    `/event/${eventId}/participants/export`,
+    {
+      params: {
+        attendance,
+      },
+      responseType: "blob",
+    }
+  );
+
+};
+
+
+
+export const toggleEventLike = async (id) => {
+  const response = await api.put(`/event/${id}/like`);
+  return response.data;
+};
+export const generateCertificates = async (id) => {
+    const response = await api.post(
+        `/society/event/${id}/generate-certificates`
+    );
+
+    return response.data;
+};

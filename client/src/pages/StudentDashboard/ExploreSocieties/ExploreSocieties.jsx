@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import {
-  getAllSocieties,
-  getSocietyDetails,
+    getAllSocieties,
+    getSocietyDetails,
 } from "../../../services/studentServices";
 
 import SearchBar from "./components/SearchBar";
@@ -12,134 +12,135 @@ import EmptyState from "./components/EmptyState";
 import SocietyDetailsModal from "./components/SocietyDetailsModal";
 
 function ExploreSocieties() {
-  const [societies, setSocieties] = useState([]);
-  const [loading, setLoading] = useState(true);
+    const [societies, setSocieties] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-  const [search, setSearch] = useState("");
-  const [type, setType] = useState("");
+    const [search, setSearch] = useState("");
+    const [type, setType] = useState("");
 
-  const [selectedSociety, setSelectedSociety] =
-    useState(null);
+    const [selectedSociety, setSelectedSociety] =
+        useState(null);
 
-  const [openModal, setOpenModal] =
-    useState(false);
+    const [openModal, setOpenModal] =
+        useState(false);
 
-  const fetchSocieties = async () => {
-    try {
-      setLoading(true);
+    const fetchSocieties = async () => {
+        try {
+            setLoading(true);
 
-      const response = await getAllSocieties(
-        search,
-        type
-      );
+            const response = await getAllSocieties(
+                search,
+                type
+            );
 
-      setSocieties(response.societies);
+            setSocieties(response.societies);
 
-    } catch (error) {
+        } catch (error) {
 
-      toast.error(
-        error.response?.data?.message ||
-          "Failed to load societies"
-      );
+            toast.error(
+                error.response?.data?.message ||
+                "Failed to load societies"
+            );
 
-    } finally {
+        } finally {
 
-      setLoading(false);
+            setLoading(false);
 
-    }
-  };
+        }
+    };
 
-  useEffect(() => {
-    fetchSocieties();
-  }, [search, type]);
+    useEffect(() => {
+        fetchSocieties();
+    }, [search, type]);
 
-  // Fetch details first, then open modal
-  const handleView = async (society) => {
-    try {
+    // Fetch details first, then open modal
+    const handleView = async (society) => {
+        try {
 
-      const response =
-        await getSocietyDetails(
-          society._id
-        );
+            const response =
+                await getSocietyDetails(
+                    society._id
+                );
 
-      setSelectedSociety(response);
+            setSelectedSociety(response);
 
-      setOpenModal(true);
+            setOpenModal(true);
 
-    } catch (error) {
+        } catch (error) {
 
-      toast.error(
-        error.response?.data?.message ||
-          "Failed to load society details"
-      );
+            toast.error(
+                error.response?.data?.message ||
+                "Failed to load society details"
+            );
 
-    }
-  };
+        }
+    };
 
-  return (
-    <div className="bg-slate-100 min-h-screen p-8">
+    return (
+        <div className="bg-slate-100 min-h-screen p-8">
 
-      {/* Heading */}
+            {/* Heading */}
 
-      <div className="mb-8">
+            <div className="mb-8">
 
-        <h1 className="text-4xl font-bold text-slate-800">
-          Explore Societies
-        </h1>
+                <h1 className="text-4xl font-bold text-slate-800">
+                    Explore Societies
+                </h1>
 
-        <p className="text-gray-500 mt-2">
-          Discover and join student societies.
-        </p>
+                <p className="text-gray-500 mt-2">
+                    Discover and join student societies.
+                </p>
 
-      </div>
+            </div>
 
-      {/* Search */}
+            {/* Search */}
 
-      <SearchBar
-        search={search}
-        setSearch={setSearch}
-      />
+            <div className="mb-8">
+                <SearchBar
+                    search={search}
+                    setSearch={setSearch}
+                />
+            </div>
 
-      {/* Loading */}
+            {/* Loading */}
 
-      {loading ? (
+            {loading ? (
 
-        <div className="text-center py-20 text-lg text-gray-500">
-          Loading...
-        </div>
+                <div className="text-center py-20 text-lg text-gray-500">
+                    Loading...
+                </div>
 
-      ) : societies.length === 0 ? (
+            ) : societies.length === 0 ? (
 
-        <EmptyState />
+                <EmptyState />
 
-      ) : (
+            ) : (
 
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 justify-items-center">
+                    {societies.map((society) => (
 
-          {societies.map((society) => (
+                        <SocietyCard
+                            key={society._id}
+                            society={society}
+                            onView={handleView}
+                        />
 
-            <SocietyCard
-              key={society._id}
-              society={society}
-              onView={handleView}
+                    ))}
+
+                </div>
+
+            )}
+
+            {/* Details Modal */}
+
+            <SocietyDetailsModal
+                open={openModal}
+                setOpen={setOpenModal}
+                societyData={selectedSociety}
             />
 
-          ))}
-
         </div>
-
-      )}
-
-      {/* Details Modal */}
-
-      <SocietyDetailsModal
-        open={openModal}
-        setOpen={setOpenModal}
-        societyData={selectedSociety}
-      />
-
-    </div>
-  );
+    );
 }
 
 export default ExploreSocieties;

@@ -53,11 +53,7 @@ function RegisterConfirmModal({
           Are you sure you want to register
           for this event?
 
-          <br />
-
-          Once registered, you cannot
-          register again.
-
+         
         </p>
 
         <div className="flex gap-4 mt-10">

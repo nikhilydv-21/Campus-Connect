@@ -87,7 +87,6 @@ function PendingSocieties() {
       ) : (
 
         <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
-
           {filteredSocieties.map((society) => (
 
             <SocietyCard

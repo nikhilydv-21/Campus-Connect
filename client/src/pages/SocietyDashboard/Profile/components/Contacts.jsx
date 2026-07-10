@@ -8,6 +8,9 @@ function Contacts({
 }) {
 
   const addContact = () => {
+
+    if (formData.contacts.length >= 2) return;
+
     setFormData({
       ...formData,
       contacts: [
@@ -19,20 +22,27 @@ function Contacts({
         },
       ],
     });
+
   };
 
   const removeContact = (index) => {
+
     const updated = [...formData.contacts];
+
     updated.splice(index, 1);
 
     setFormData({
       ...formData,
       contacts: updated,
     });
+
   };
 
   return (
+
     <div className="mt-8 bg-white rounded-3xl shadow-lg p-8">
+
+      {/* Header */}
 
       <div className="flex justify-between items-center mb-8">
 
@@ -41,16 +51,39 @@ function Contacts({
         </h2>
 
         {editMode && (
+
           <button
             onClick={addContact}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl flex items-center gap-2"
+            disabled={formData.contacts.length >= 2}
+            className={`px-5 py-2 rounded-xl flex items-center gap-2 transition ${
+              formData.contacts.length >= 2
+                ? "bg-gray-400 text-white cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700 text-white"
+            }`}
           >
+
             <Plus size={18} />
+
             Add Contact
+
           </button>
+
         )}
 
       </div>
+
+      {/* Limit Message */}
+
+      {editMode &&
+        formData.contacts.length >= 2 && (
+
+          <p className="text-sm text-red-500 mb-5">
+
+            Maximum 2 contacts are allowed.
+
+          </p>
+
+        )}
 
       {editMode ? (
 
@@ -137,9 +170,23 @@ function Contacts({
 
               <button
                 onClick={() => removeContact(index)}
-                className="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl"
+                className="
+                  mt-4
+                  h-11
+                  w-11
+                  flex
+                  items-center
+                  justify-center
+                  rounded-full
+                  bg-red-50
+                  hover:bg-red-100
+                  text-red-600
+                  transition
+                "
               >
+
                 <Trash2 size={18} />
+
               </button>
 
             </div>
@@ -158,26 +205,61 @@ function Contacts({
 
               <div
                 key={index}
-                className="border rounded-2xl p-5 bg-slate-50 flex gap-4 items-start"
+                className="
+                  border
+                  rounded-2xl
+                  p-5
+                  bg-slate-50
+                  flex
+                  gap-4
+                  items-start
+                  hover:shadow-md
+                  transition
+                "
               >
 
-                <Phone
-                  size={22}
-                  className="text-blue-600 mt-1"
-                />
+                {/* Icon */}
+
+                <div
+                  className="
+                    h-11
+                    w-11
+                    rounded-full
+                    bg-slate-200
+                    flex
+                    items-center
+                    justify-center
+                    flex-shrink-0
+                  "
+                >
+
+                  <Phone
+                    size={20}
+                    className="text-black"
+                  />
+
+                </div>
+
+                {/* Details */}
 
                 <div>
 
-                  <h3 className="font-bold text-lg">
+                  <h3 className="font-bold text-lg text-slate-900">
+
                     {contact.name}
+
                   </h3>
 
-                  <p className="text-gray-600">
+                  <p className="text-gray-500 mt-1">
+
                     {contact.position}
+
                   </p>
 
-                  <p className="text-blue-600 font-medium mt-1">
+                  <p className="text-black font-semibold mt-2">
+
                     {contact.phone}
+
                   </p>
 
                 </div>
@@ -199,7 +281,9 @@ function Contacts({
       )}
 
     </div>
+
   );
+
 }
 
 export default Contacts;

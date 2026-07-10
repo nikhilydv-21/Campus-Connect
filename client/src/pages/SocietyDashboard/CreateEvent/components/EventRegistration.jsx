@@ -57,37 +57,57 @@ function EventRegistration({
         {formData.registrationMode ===
           "Participant" && (
 
-          <div>
+            <div>
 
-            <label className="block text-sm text-gray-500 mb-2">
-              Maximum Participants
-            </label>
+              <label className="block text-sm text-gray-500 mb-2">
+                Maximum Participants
+              </label>
 
-            <input
-              type="number"
-              min="1"
-              placeholder="Enter Maximum Participants"
-              value={formData.maximumParticipants}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  maximumParticipants: e.target.value,
-                })
-              }
-              className="
-                w-full
-                border
-                rounded-xl
-                px-4
-                py-3
-                outline-none
-                focus:border-blue-600
-              "
-            />
+              <input
+                type="text"
+                inputMode="numeric"
+                placeholder="Enter Maximum Participants"
+                value={formData.maximumParticipants}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, "");
 
-          </div>
+                  setFormData({
+                    ...formData,
+                    maximumParticipants: value,
+                  });
+                }}
+                onKeyDown={(e) => {
+                  if (
+                    ["e", "E", "+", "-", ".", ","].includes(e.key)
+                  ) {
+                    e.preventDefault();
+                  }
+                }}
+                onPaste={(e) => {
+                  e.preventDefault();
 
-        )}
+                  const pasted = e.clipboardData
+                    .getData("text")
+                    .replace(/\D/g, "");
+
+                  setFormData({
+                    ...formData,
+                    maximumParticipants: pasted,
+                  });
+                }}
+                className="
+    w-full
+    border
+    rounded-xl
+    px-4
+    py-3
+    outline-none
+    focus:border-blue-600
+  "
+              />
+            </div>
+
+          )}
 
       </div>
 
@@ -109,7 +129,7 @@ function EventRegistration({
         </h3>
 
         {formData.registrationMode ===
-        "Participant" ? (
+          "Participant" ? (
           <p className="text-gray-700 leading-7">
             Students will register as participants.
             Registration will automatically close once

@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import {
-  getPastEvents,
-  getPastEventDetails,
+    getPastEvents,
+    getPastEventDetails,
+    generateCertificates,
 } from "../../../services/eventServices";
 
 import SearchBar from "./components/SearchBar";
@@ -12,119 +13,156 @@ import EmptyState from "./components/EmptyState";
 import EventDetailsModal from "./components/EventDetailsModal";
 
 function PastEvents() {
-  const [events, setEvents] = useState([]);
+    const [loadingCertificate, setLoadingCertificate] =
+        useState(false);
 
-  const [loading, setLoading] = useState(true);
+    const [events, setEvents] = useState([]);
 
-  const [search, setSearch] = useState("");
+    const [loading, setLoading] = useState(true);
 
-  const [selectedEvent, setSelectedEvent] =
-    useState(null);
+    const [search, setSearch] = useState("");
 
-  const [openModal, setOpenModal] =
-    useState(false);
+    const [selectedEvent, setSelectedEvent] =
+        useState(null);
 
-  const fetchEvents = async () => {
-    try {
-      setLoading(true);
+    const [openModal, setOpenModal] =
+        useState(false);
 
-      const response =
-        await getPastEvents(search);
+    const fetchEvents = async () => {
+        try {
+            setLoading(true);
 
-      setEvents(response.events);
-    } catch (error) {
-      toast.error(
-        error.response?.data?.message ||
-          "Failed to load past events"
-      );
-    } finally {
-      setLoading(false);
+            const response =
+                await getPastEvents(search);
+
+            setEvents(response.events);
+        } catch (error) {
+            toast.error(
+                error.response?.data?.message ||
+                "Failed to load past events"
+            );
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchEvents();
+    }, [search]);
+
+    const handleView = async (event) => {
+        try {
+            const response = await getPastEventDetails(
+                event._id
+            );
+
+            setSelectedEvent(response);
+
+            setOpenModal(true);
+
+        } catch (error) {
+
+            toast.error(
+                error.response?.data?.message ||
+                "Failed to load event details"
+            );
+
+        }
+    };
+    const handleGenerateCertificates = async (id) => {
+
+        try {
+
+            setLoadingCertificate(true);
+
+            await generateCertificates(id);
+
+            toast.success(
+                "Certificates generated successfully."
+            );
+
+            fetchEvents();
+
+        }
+        catch (error) {
+
+            toast.error(
+                error.response?.data?.message ||
+                "Something went wrong"
+            );
+
+        }
+        finally {
+
+            setLoadingCertificate(false);
+
+        }
+
     }
-  };
+    return (
+        <div className="bg-slate-100 min-h-screen p-8">
 
-  useEffect(() => {
-    fetchEvents();
-  }, [search]);
+            <div className="mb-8">
 
-const handleView = async (event) => {
-  try {
-    const response = await getPastEventDetails(
-      event._id
-    );
+                <h1 className="text-4xl font-bold text-slate-800">
+                    Past Events
+                </h1>
 
-    setSelectedEvent(response.event);
+                <p className="text-gray-500 mt-2">
+                    View completed events.
+                </p>
 
-    setOpenModal(true);
+            </div>
 
-  } catch (error) {
+            <div className="mb-8">
 
-    toast.error(
-      error.response?.data?.message ||
-      "Failed to load event details"
-    );
+                <SearchBar
+                    search={search}
+                    setSearch={setSearch}
+                />
 
-  }
-};
-  return (
-    <div className="bg-slate-100 min-h-screen p-8">
+            </div>
 
-      <div className="mb-8">
+            {loading ? (
 
-        <h1 className="text-4xl font-bold text-slate-800">
-          Past Events
-        </h1>
+                <div className="text-center py-20 text-lg text-gray-500">
+                    Loading...
+                </div>
 
-        <p className="text-gray-500 mt-2">
-          View completed events.
-        </p>
+            ) : events.length === 0 ? (
 
-      </div>
+                <EmptyState />
 
-      <div className="mb-8">
+            ) : (
 
-        <SearchBar
-          search={search}
-          setSearch={setSearch}
-        />
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 justify-items-center">
 
-      </div>
+                    {events.map((event) => (
 
-      {loading ? (
+                        <PastEventCard
+                            key={event._id}
+                            event={event}
+                            onView={handleView}
+                            onGenerateCertificates={handleGenerateCertificates}
+                            loadingCertificate={loadingCertificate}
+                        />
+                    ))}
 
-        <div className="text-center py-20 text-lg text-gray-500">
-          Loading...
-        </div>
+                </div>
 
-      ) : events.length === 0 ? (
+            )}
 
-        <EmptyState />
-
-      ) : (
-
-        <div className="grid lg:grid-cols-2 gap-8">
-
-          {events.map((event) => (
-
-            <PastEventCard
-              key={event._id}
-              event={event}
-              onView={handleView}
+            <EventDetailsModal
+                open={openModal}
+                setOpen={setOpenModal}
+                event={selectedEvent}
             />
 
-          ))}
 
         </div>
 
-      )}
+    );
 
-      <EventDetailsModal
-        open={openModal}
-        setOpen={setOpenModal}
-        event={selectedEvent}
-      />
-
-    </div>
-  );
 }
 
 export default PastEvents;

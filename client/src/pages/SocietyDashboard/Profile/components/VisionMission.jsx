@@ -19,6 +19,7 @@ function VisionMission({
 
           <textarea
             rows={8}
+            maxLength={250}
             value={formData.vision}
             placeholder="Write Society Vision..."
             onChange={(e) =>
@@ -96,6 +97,7 @@ function VisionMission({
 
           <textarea
             rows={8}
+            maxLength={250}
             value={formData.mission}
             placeholder="Write Society Mission..."
             onChange={(e) =>
@@ -123,6 +125,7 @@ function VisionMission({
               overflow-hidden
             "
           />
+          
 
         ) : (
 

@@ -7,62 +7,75 @@ function SearchBar({
   setStatus,
 }) {
   return (
-    <div className="bg-white rounded-2xl shadow-md p-6 mb-8">
 
-      <div className="grid md:grid-cols-2 gap-5">
+    <div className="grid md:grid-cols-4 gap-5 mb-8">
 
-        {/* Search */}
+      {/* Search */}
 
-        <div className="relative">
+      <div className="relative md:col-span-3">
 
-          <Search
-            size={20}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-          />
+        <Search
+          size={20}
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+        />
 
-          <input
-            type="text"
-            placeholder="Search by event or society..."
-            value={search}
-            onChange={(e) =>
-              setSearch(e.target.value)
-            }
-            className="w-full border rounded-xl pl-11 pr-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
-          />
+        <input
+          type="text"
+          placeholder="Search by event or society..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="
+            w-full
+            border
+            border-slate-300
+            rounded-xl
+            pl-11
+            pr-4
+            py-3
+            bg-white
+            outline-none
+            focus:border-slate-500
+            transition
+          "
+        />
 
-        </div>
+      </div>
 
-        {/* Status */}
+      {/* Status Filter */}
+
+      <div className="md:col-span-1">
 
         <select
           value={status}
-          onChange={(e) =>
-            setStatus(e.target.value)
-          }
-          className="border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+          onChange={(e) => setStatus(e.target.value)}
+          className="
+            w-full
+            border
+            border-slate-300
+            rounded-xl
+            px-4
+            py-3
+            bg-white
+            outline-none
+            focus:border-slate-500
+            transition
+          "
         >
 
-          <option value="">
-            All Status
-          </option>
+          <option value="">All Events</option>
 
-          <option value="Upcoming">
-            Upcoming
-          </option>
+          <option value="Upcoming">Upcoming</option>
 
-          <option value="Ongoing">
-            Ongoing
-          </option>
+          <option value="Ongoing">Ongoing</option>
 
-          <option value="Completed">
-            Completed
-          </option>
+          <option value="Completed">Completed</option>
 
         </select>
 
       </div>
 
     </div>
+
   );
 }
 

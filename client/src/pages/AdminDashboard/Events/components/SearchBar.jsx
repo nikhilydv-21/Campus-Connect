@@ -11,14 +11,14 @@ function SearchBar({
 
   return (
 
-    <div className="bg-white rounded-2xl shadow-sm p-5 flex flex-col lg:flex-row gap-4">
+    <div className="flex flex-col lg:flex-row gap-4 mb-8">
 
       {/* Search */}
 
       <div className="relative flex-1">
 
         <Search
-          size={18}
+          size={20}
           className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
         />
 
@@ -29,7 +29,19 @@ function SearchBar({
           onChange={(e) =>
             setSearch(e.target.value)
           }
-          className="w-full pl-11 pr-4 py-3 rounded-xl border focus:ring-2 focus:ring-blue-500 outline-none"
+          className="
+            w-full
+            pl-12
+            pr-4
+            py-3
+            bg-white
+            border
+            border-slate-300
+            rounded-xl
+            outline-none
+            focus:border-slate-500
+            transition
+          "
         />
 
       </div>
@@ -41,48 +53,29 @@ function SearchBar({
         onChange={(e) =>
           setCategory(e.target.value)
         }
-        className="border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+        className="
+          bg-white
+          border
+          border-slate-300
+          rounded-xl
+          px-4
+          py-3
+          outline-none
+          focus:border-slate-500
+          transition
+        "
       >
 
-        <option value="">
-          All Categories
-        </option>
-
-        <option value="Technical">
-          Technical
-        </option>
-
-        <option value="Workshop">
-          Workshop
-        </option>
-
-        <option value="Hackathon">
-          Hackathon
-        </option>
-
-        <option value="Seminar">
-          Seminar
-        </option>
-
-        <option value="Sports">
-          Sports
-        </option>
-
-        <option value="Cultural">
-          Cultural
-        </option>
-
-        <option value="Placement">
-          Placement
-        </option>
-
-        <option value="Competition">
-          Competition
-        </option>
-
-        <option value="Other">
-          Other
-        </option>
+        <option value="">All Categories</option>
+        <option value="Technical">Technical</option>
+        <option value="Workshop">Workshop</option>
+        <option value="Hackathon">Hackathon</option>
+        <option value="Seminar">Seminar</option>
+        <option value="Sports">Sports</option>
+        <option value="Cultural">Cultural</option>
+        <option value="Placement">Placement</option>
+        <option value="Competition">Competition</option>
+        <option value="Other">Other</option>
 
       </select>
 
@@ -93,28 +86,24 @@ function SearchBar({
         onChange={(e) =>
           setStatus(e.target.value)
         }
-        className="border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+        className="
+          bg-white
+          border
+          border-slate-300
+          rounded-xl
+          px-4
+          py-3
+          outline-none
+          focus:border-slate-500
+          transition
+        "
       >
 
-        <option value="">
-          All Status
-        </option>
-
-        <option value="Upcoming">
-          Upcoming
-        </option>
-
-        <option value="Ongoing">
-          Ongoing
-        </option>
-
-        <option value="Completed">
-          Completed
-        </option>
-
-        <option value="Cancelled">
-          Cancelled
-        </option>
+        <option value="">All Events</option>
+        <option value="Upcoming">Upcoming</option>
+        <option value="Ongoing">Ongoing</option>
+        <option value="Completed">Completed</option>
+        <option value="Cancelled">Cancelled</option>
 
       </select>
 

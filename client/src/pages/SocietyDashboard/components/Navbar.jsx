@@ -1,14 +1,25 @@
 import {
-  Bell,
   ChevronDown,
 } from "lucide-react";
-import { useState } from "react";
+
+import {
+  useState,
+  useRef,
+  useEffect,
+} from "react";
+
 import { useNavigate } from "react-router-dom";
 
+import LogoutModal from "../Settings/components/LogoutModal";
+
 function Navbar({ setActivePage }) {
+
   const [showMenu, setShowMenu] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   const navigate = useNavigate();
+
+  const menuRef = useRef(null);
 
   const society =
     JSON.parse(localStorage.getItem("society")) || {
@@ -18,114 +29,170 @@ function Navbar({ setActivePage }) {
     };
 
   const handleLogout = () => {
-    localStorage.clear();
-    navigate("/");
+
+    setShowMenu(false);
+
+    setLogoutOpen(true);
+
   };
 
+  const confirmLogout = () => {
+
+    localStorage.clear();
+
+    navigate("/");
+
+  };
+
+  // Close dropdown when clicked outside
+
+  useEffect(() => {
+
+    const handleClickOutside = (event) => {
+
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target)
+      ) {
+
+        setShowMenu(false);
+
+      }
+
+    };
+
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside
+    );
+
+    return () => {
+
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
+
+    };
+
+  }, []);
+
   return (
-    <div className="bg-white shadow-sm h-20 px-8 flex items-center justify-between">
 
-      {/* Left */}
+    <>
 
-      <div>
+      <div className="bg-white shadow-sm h-20 px-8 flex items-center justify-between">
 
-        <h1 className="text-2xl font-bold text-slate-800">
-          Society Portal
-        </h1>
+        {/* Left */}
 
-        <p className="text-sm text-gray-500">
-          Manage your society activities
-        </p>
+        <div>
 
-      </div>
+          <h1 className="text-2xl font-bold text-slate-800">
+            Society Portal
+          </h1>
 
-      {/* Right */}
+          <p className="text-sm text-gray-500">
+            Manage your society activities
+          </p>
 
-      <div className="flex items-center gap-6">
+        </div>
 
-        {/* Notification */}
+        {/* Right */}
 
-        <button className="relative hover:scale-110 transition">
+        <div className="flex items-center gap-6">
 
-          <Bell
-            size={24}
-            className="text-gray-700"
-          />
+        
 
-          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] h-5 w-5 rounded-full flex items-center justify-center">
-            3
-          </span>
+          {/* Profile */}
 
-        </button>
-
-        {/* Profile */}
-
-        <div className="relative">
-
-          <button
-            onClick={() => setShowMenu(!showMenu)}
-            className="flex items-center gap-3"
+          <div
+            className="relative"
+            ref={menuRef}
           >
 
-            <img
-              src={
-                society.logo
-                  ? society.logo
-                  : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                      society.societyName
-                    )}&background=2563eb&color=fff`
+            <button
+              onClick={() =>
+                setShowMenu(!showMenu)
               }
-              alt="Society Logo"
-              className="w-11 h-11 rounded-full object-cover"
-            />
+              className="flex items-center gap-3"
+            >
 
-            <div className="text-left">
+              <img
+                src={
+                  society.logo
+                    ? society.logo
+                    : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                        society.societyName
+                      )}&background=2563eb&color=fff`
+                }
+                alt="Society Logo"
+                className="w-11 h-11 rounded-full object-cover"
+              />
 
-              <h3 className="font-semibold">
-                {society.societyName}
-              </h3>
+              <div className="text-left">
 
-              <p className="text-xs text-gray-500">
-                {society.societyType || "Society"}
-              </p>
+                <h3 className="font-semibold">
+                  {society.societyName}
+                </h3>
 
-            </div>
+                <p className="text-xs text-gray-500">
+                  {society.societyType || "Society"}
+                </p>
 
-            <ChevronDown size={18} />
+              </div>
 
-          </button>
+              <ChevronDown size={18} />
 
-          {showMenu && (
+            </button>
 
-            <div className="absolute right-0 mt-3 bg-white rounded-xl shadow-xl border w-52 overflow-hidden z-50">
+            {showMenu && (
 
-              <button
-                onClick={() => {
-                  setActivePage("settings");
-                  setShowMenu(false);
-                }}
-                className="w-full text-left px-5 py-3 hover:bg-gray-100 transition"
-              >
-                Settings
-              </button>
+              <div className="absolute right-0 mt-3 bg-white rounded-xl shadow-xl border w-52 overflow-hidden z-50">
 
-              <button
-                onClick={handleLogout}
-                className="w-full text-left px-5 py-3 text-red-600 hover:bg-red-50 transition"
-              >
-                Logout
-              </button>
+                <button
+                  onClick={() => {
 
-            </div>
+                    setActivePage("settings");
 
-          )}
+                    setShowMenu(false);
+
+                  }}
+                  className="w-full text-left px-5 py-3 hover:bg-gray-100 transition"
+                >
+
+                  Settings
+
+                </button>
+
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-5 py-3 text-red-600 hover:bg-red-50 transition"
+                >
+
+                  Logout
+
+                </button>
+
+              </div>
+
+            )}
+
+          </div>
 
         </div>
 
       </div>
 
-    </div>
+      <LogoutModal
+        open={logoutOpen}
+        setOpen={setLogoutOpen}
+        onLogout={confirmLogout}
+      />
+
+    </>
+
   );
+
 }
 
 export default Navbar;

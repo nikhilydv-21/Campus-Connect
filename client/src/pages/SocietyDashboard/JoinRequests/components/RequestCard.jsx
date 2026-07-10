@@ -1,119 +1,319 @@
+import { useState } from "react";
 import toast from "react-hot-toast";
-import { Check, X } from "lucide-react";
+import ConfirmActionModal from "./ConfirmActionModal";
 
 import {
-  acceptJoinRequest,
-  rejectJoinRequest,
+    Check,
+    X,
+    Hash,
+    GraduationCap,
+    MessageSquare,
+} from "lucide-react";
+
+import {
+    acceptJoinRequest,
+    rejectJoinRequest,
 } from "../../../../services/joinRequestServices";
 
 function RequestCard({
-  request,
-  refreshRequests,
+    request,
+    refreshRequests,
 }) {
-  const handleAccept = async () => {
-    try {
-      const response = await acceptJoinRequest(
-        request._id
-      );
+    const [showReason, setShowReason] =
+        useState(false);
+    const [confirmOpen, setConfirmOpen] = useState(false);
 
-      toast.success(response.message);
+    const [action, setAction] = useState("");
 
-      refreshRequests();
+    const [loading, setLoading] = useState(false);
 
-    } catch (error) {
-      toast.error(
-        error.response?.data?.message ||
-          "Failed to accept request"
-      );
-    }
-  };
+    const handleAccept = async () => {
+        setLoading(true);
+        try {
+            const response =
+                await acceptJoinRequest(request._id);
 
-  const handleReject = async () => {
-    try {
-      const response = await rejectJoinRequest(
-        request._id
-      );
+            toast.success(response.message);
 
-      toast.success(response.message);
+            setConfirmOpen(false);
 
-      refreshRequests();
+            refreshRequests();
 
-    } catch (error) {
-      toast.error(
-        error.response?.data?.message ||
-          "Failed to reject request"
-      );
-    }
-  };
+        } catch (error) {
 
-  return (
-    <div className="bg-white rounded-2xl shadow-lg p-6">
+            toast.error(
+                error.response?.data?.message ||
+                "Failed to accept request"
+            );
+        } finally {
 
-      <h2 className="text-2xl font-bold mb-5">
-        Join Request
-      </h2>
+            setLoading(false);
+        }
+    };
 
-      <div className="space-y-3">
+    const handleReject = async () => {
+        setLoading(true);
+        try {
 
-        <p>
-          <span className="font-semibold">
-            Student Name :
-          </span>{" "}
-          {request.student?.fullName}
-        </p>
+            const response =
+                await rejectJoinRequest(request._id);
 
-        <p>
-          <span className="font-semibold">
-            Roll Number :
-          </span>{" "}
-          {request.student?.rollNumber}
-        </p>
+            toast.success(response.message);
 
-        <p>
-          <span className="font-semibold">
-            Branch :
-          </span>{" "}
-          {request.student?.branch}
-        </p>
+            setConfirmOpen(false);
 
-        <p>
-          <span className="font-semibold">
-            Year :
-          </span>{" "}
-          {request.student?.year}
-        </p>
+            refreshRequests();
 
-        <p>
-          <span className="font-semibold">
-            Reason :
-          </span>{" "}
-          {request.reason}
-        </p>
+        } catch (error) {
 
-      </div>
+            toast.error(
+                error.response?.data?.message ||
+                "Failed to reject request"
+            );
+        } finally {
 
-      <div className="flex gap-4 mt-8">
+            setLoading(false);
 
-        <button
-          onClick={handleAccept}
-          className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl flex justify-center items-center gap-2"
+
+        }
+    };
+
+    return (
+
+        <div
+            className="
+        w-full
+        max-w-[330px]
+        bg-white
+        rounded-3xl
+        border
+        shadow-sm
+        hover:shadow-lg
+        transition-all
+        duration-300
+        overflow-hidden
+      "
         >
-          <Check size={18} />
-          Accept
-        </button>
 
-        <button
-          onClick={handleReject}
-          className="flex-1 bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl flex justify-center items-center gap-2"
-        >
-          <X size={18} />
-          Reject
-        </button>
+            {/* Header */}
 
-      </div>
+            <div className="px-5 py-5 border-b">
 
-    </div>
-  );
+                <h2 className="text-xl font-bold text-slate-800">
+
+                    {request.student?.fullName}
+
+                </h2>
+
+
+
+            </div>
+
+            {/* Body */}
+
+            <div className="p-5 space-y-5">
+
+                {/* Roll */}
+
+                <div className="flex items-center gap-3">
+
+                    <Hash
+                        size={18}
+                        className="text-slate-500"
+                    />
+
+                    <div>
+
+                        <p className="text-xs text-slate-500">
+
+                            Roll Number
+
+                        </p>
+
+                        <p className="font-semibold text-slate-800">
+
+                            {request.student?.rollNumber}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                {/* Branch */}
+
+                <div className="flex items-center gap-3">
+
+                    <GraduationCap
+                        size={18}
+                        className="text-slate-500"
+                    />
+
+                    <div>
+
+                        <p className="text-xs text-slate-500">
+
+                            Branch & Year
+
+                        </p>
+
+                        <p className="font-semibold text-slate-800">
+
+                            {request.student?.branch?.toUpperCase()} • Year{" "}
+                            {request.student?.year}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                {/* Reason */}
+
+                <div
+                    className="
+            bg-slate-50
+            rounded-2xl
+            p-4
+          "
+                >
+
+                    <div className="flex items-center gap-2 mb-3">
+
+                        <MessageSquare
+                            size={17}
+                            className="text-slate-500"
+                        />
+
+                        <span className="font-semibold text-slate-700">
+
+                            Reason
+
+                        </span>
+
+                    </div>
+
+                    <p className="text-sm text-slate-600 leading-6 break-words">
+
+                        {showReason
+                            ? request.reason
+                            : request.reason.length > 80
+                                ? request.reason.substring(0, 80) + "..."
+                                : request.reason}
+
+                    </p>
+
+                    {request.reason.length > 80 && (
+
+                        <button
+                            onClick={() =>
+                                setShowReason(!showReason)
+                            }
+                            className="
+                mt-3
+                text-blue-600
+                hover:text-blue-700
+                text-sm
+                font-medium
+              "
+                        >
+
+                            {showReason
+                                ? "Show Less"
+                                : "Read More"}
+
+                        </button>
+
+                    )}
+
+                </div>
+
+            </div>
+
+            {/* Footer */}
+
+            <div className="border-t p-4 flex gap-3">
+
+                <button
+                    onClick={() => {
+                        setAction("Reject");
+                        setConfirmOpen(true);
+                    }}
+                    className="
+            flex-1
+            py-2.5
+            rounded-xl
+            border
+            border-slate-300
+            hover:bg-slate-100
+            transition
+            flex
+            justify-center
+            items-center
+            gap-2
+            font-semibold
+          "
+                >
+
+                    <X size={17} />
+
+                    Reject
+
+                </button>
+
+                <button
+                    onClick={() => {
+                        setAction("Accept");
+                        setConfirmOpen(true);
+                    }}
+                    className="
+            flex-1
+            py-2.5
+            rounded-xl
+            border
+            border-slate-300
+            hover:bg-slate-100
+            transition
+            flex
+            justify-center
+            items-center
+            gap-2
+            font-semibold
+          "
+                >
+
+                    <Check size={17} />
+
+                    Accept
+
+                </button>
+
+            </div>
+            <ConfirmActionModal
+                open={confirmOpen}
+                setOpen={setConfirmOpen}
+                action={action}
+                loading={loading}
+                onConfirm={() => {
+
+                    if (action === "Accept") {
+
+                        handleAccept();
+
+                    } else {
+
+                        handleReject();
+
+                    }
+
+                }}
+            />
+
+        </div>
+
+    );
+
+
 }
 
 export default RequestCard;

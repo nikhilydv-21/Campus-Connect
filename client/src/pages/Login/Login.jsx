@@ -240,7 +240,7 @@ function Login() {
             {role !== "admin" && (
            <div className="flex justify-end">
            <Link
-            to="/forgot-password"
+            to={`/forgot-password/${role}`}
            className="text-sm text-blue-600 hover:underline"
             >
            Forgot Password?

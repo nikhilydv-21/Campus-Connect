@@ -10,6 +10,7 @@ import VerifyOTP from "../pages/VerifyOTP/VerifyOTP";
 import StudentDashboard from "../pages/StudentDashboard/StudentDashboard";
 import SocietyDashboard from "../pages/SocietyDashboard/SocietyDashboard";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
+import Feedback from "../pages/SocietyDashboard/Feedback/Feedback";
 function AppRoutes() {
   return (
     <BrowserRouter>
@@ -36,15 +37,20 @@ function AppRoutes() {
     path="/verify-otp"
     element={<VerifyOTP />}
     />
-        <Route
-          path="/forgot-password"
-          element={<ForgotPassword />}
-        />
+        
+    <Route
+    path="/forgot-password/:role"
+    element={<ForgotPassword />}
+   /> 
 
     <Route
     path="/student/dashboard"
     element={<StudentDashboard />}
     />
+    <Route
+  path="/society/feedback/:id"
+  element={<Feedback />}
+/>
 
     <Route
     path="/society/dashboard"

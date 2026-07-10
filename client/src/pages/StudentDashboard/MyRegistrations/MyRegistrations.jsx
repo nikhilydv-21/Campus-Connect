@@ -2,148 +2,205 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import {
-  getMyEvents,
-  getEventDetails,
+    getMyEvents,
+    getEventDetails,
+    downloadCertificate,
 } from "../../../services/studentServices";
 
 import SearchBar from "./components/SearchBar";
 import RegistrationCard from "./components/RegistrationCard";
 import EmptyState from "./components/EmptyState";
 import EventDetailsModal from "../ExploreEvents/components/EventDetailsModal";
-
+import FeedbackModal from "./components/FeedbackModal";
 function MyRegistrations() {
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
+    const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [feedbackOpen, setFeedbackOpen] =
+        useState(false);
 
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("");
+    const [feedbackRegistration, setFeedbackRegistration] =
+        useState(null);
+    const [search, setSearch] = useState("");
+    const [status, setStatus] = useState("");
 
-  const [selectedEvent, setSelectedEvent] =
-    useState(null);
+    const [selectedEvent, setSelectedEvent] =
+        useState(null);
 
-  const [openModal, setOpenModal] =
-    useState(false);
+    const [openModal, setOpenModal] =
+        useState(false);
 
-  const fetchEvents = async () => {
-    
-    try {
-      setLoading(true);
+    const fetchEvents = async () => {
 
-      const response =
-        await getMyEvents(
-          search,
-          status
+        try {
+            setLoading(true);
+
+            const response =
+                await getMyEvents(
+                    search,
+                    status
+                );
+
+            setEvents(response.events || []);
+
+        } catch (error) {
+
+            toast.error(
+                error.response?.data?.message ||
+                "Failed to load registered events"
+            );
+
+        } finally {
+
+            setLoading(false);
+
+        }
+    };
+
+    useEffect(() => {
+        fetchEvents();
+    }, [search, status]);
+
+    const handleView = async (
+        registration
+    ) => {
+        try {
+
+            const response =
+                await getEventDetails(
+                    registration.event._id
+                );
+
+            setSelectedEvent(response);
+
+            setOpenModal(true);
+
+        } catch (error) {
+
+            toast.error(
+                error.response?.data?.message ||
+                "Failed to load event details"
+            );
+
+        }
+    };
+    const handleFeedback = (
+        registration
+    ) => {
+
+        setFeedbackRegistration(
+            registration
         );
 
-      setEvents(response.events || []);
+        setFeedbackOpen(true);
 
-    } catch (error) {
+    };
+    const handleDownloadCertificate = async (
+        registration
+    ) => {
 
-      toast.error(
-        error.response?.data?.message ||
-        "Failed to load registered events"
-      );
+        try {
 
-    } finally {
+            const response =
+                await downloadCertificate(
+                    registration.event._id
+                );
 
-      setLoading(false);
+            const link = document.createElement("a");
 
-    }
-  };
+            link.href = response.certificateUrl;
 
-  useEffect(() => {
-    fetchEvents();
-  }, [search, status]);
+            link.download = "Certificate.pdf";
 
-  const handleView = async (
-    registration
-  ) => {
-    try {
+            document.body.appendChild(link);
 
-      const response =
-        await getEventDetails(
-          registration.event._id
-        );
+            link.click();
 
-      setSelectedEvent(response);
+            document.body.removeChild(link);
 
-      setOpenModal(true);
+        } catch (error) {
 
-    } catch (error) {
+            toast.error(
+                error.response?.data?.message ||
+                "Failed to download certificate"
+            );
 
-      toast.error(
-        error.response?.data?.message ||
-        "Failed to load event details"
-      );
+        }
 
-    }
-  };
+    };
 
-  return (
-    <div className="bg-slate-100 min-h-screen p-8">
 
-      {/* Heading */}
+    return (
+        <div className="bg-slate-100 min-h-screen p-8">
 
-      <div className="mb-8">
+            {/* Heading */}
 
-        <h1 className="text-4xl font-bold text-slate-800">
-          My Registrations
-        </h1>
+            <div className="mb-8">
 
-        <p className="text-gray-500 mt-2">
-          Manage all your registered events.
-        </p>
+                <h1 className="text-4xl font-bold text-slate-800">
+                    My Registrations
+                </h1>
 
-      </div>
+                <p className="text-gray-500 mt-2">
+                    Manage all your registered events.
+                </p>
 
-      {/* Search */}
+            </div>
 
-      <SearchBar
-        search={search}
-        setSearch={setSearch}
-        status={status}
-        setStatus={setStatus}
-      />
+            {/* Search */}
 
-      {/* Events */}
-
-      {loading ? (
-
-        <div className="text-center py-20 text-lg text-gray-500">
-          Loading...
-        </div>
-
-      ) : events.length === 0 ? (
-
-        <EmptyState />
-
-      ) : (
-
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
-
-          {events.map((registration) => (
-
-            <RegistrationCard
-              key={registration._id}
-              registration={registration}
-              onView={handleView}
+            <SearchBar
+                search={search}
+                setSearch={setSearch}
+                status={status}
+                setStatus={setStatus}
             />
 
-          ))}
+            {/* Events */}
 
+            {loading ? (
+
+                <div className="text-center py-20 text-lg text-gray-500">
+                    Loading...
+                </div>
+
+            ) : events.length === 0 ? (
+
+                <EmptyState />
+
+            ) : (
+
+                <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
+
+                    {events.map((registration) => (
+
+                        <RegistrationCard
+                            key={registration._id}
+                            registration={registration}
+                            onView={handleView}
+                            onFeedback={handleFeedback}
+                            onCertificate={handleDownloadCertificate}
+                        />
+
+                    ))}
+
+                </div>
+
+            )}
+
+            <EventDetailsModal
+                open={openModal}
+                setOpen={setOpenModal}
+                eventData={selectedEvent}
+                hideRegisterButton={true}
+            />
+            <FeedbackModal
+                open={feedbackOpen}
+                setOpen={setFeedbackOpen}
+                registration={feedbackRegistration}
+                onSuccess={fetchEvents}
+            />
         </div>
-
-      )}
-
-      <EventDetailsModal
-        open={openModal}
-        setOpen={setOpenModal}
-        eventData={selectedEvent}
-        hideRegisterButton={true}
-      />
-
-    </div>
-  );
+    );
 }
 
 export default MyRegistrations;

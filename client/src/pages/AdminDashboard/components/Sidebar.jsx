@@ -64,7 +64,6 @@ function Sidebar({
   ];
 
   return (
-
     <>
 
       <div
@@ -78,11 +77,9 @@ function Sidebar({
         <div className="flex items-center justify-between p-5 border-b border-slate-800">
 
           {!collapsed && (
-
             <h1 className="text-xl font-bold">
               Campus Connect
             </h1>
-
           )}
 
           <button
@@ -91,17 +88,11 @@ function Sidebar({
             }
             className="p-2 rounded-lg hover:bg-slate-800 transition"
           >
-
             {collapsed ? (
-
               <ChevronRight size={20} />
-
             ) : (
-
               <ChevronLeft size={20} />
-
             )}
-
           </button>
 
         </div>
@@ -127,11 +118,9 @@ function Sidebar({
               {item.icon}
 
               {!collapsed && (
-
                 <span className="font-medium">
                   {item.name}
                 </span>
-
               )}
 
             </button>
@@ -154,11 +143,9 @@ function Sidebar({
             <LogOut size={22} />
 
             {!collapsed && (
-
               <span className="font-medium">
                 Logout
               </span>
-
             )}
 
           </button>
@@ -174,9 +161,7 @@ function Sidebar({
       />
 
     </>
-
   );
-
 }
 
 export default Sidebar;

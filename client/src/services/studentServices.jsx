@@ -5,24 +5,8 @@ export const getStudentProfile = async () => {
   return response.data;
 };
 
-export const updateStudentProfile = async (data) => {
-  const response = await api.put("/student/profile", data);
-  return response.data;
-};
 
-export const uploadProfilePicture = async (formData) => {
-  const response = await api.put(
-    "/student/profile-picture",
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
 
-  return response.data;
-};
 
 // ==========================
 // Explore Societies
@@ -147,4 +131,36 @@ export const changePassword = async (data) => {
   );
 
   return response.data;
+};
+
+export const submitFeedback = async (
+  id,
+  data
+) => {
+
+  const response = await api.post(
+    `/student/events/${id}/feedback`,
+    data
+  );
+
+  return response.data;
+
+};
+
+export const leaveSociety = async (societyId) => {
+  const response = await api.patch(
+    `/student/society/${societyId}/leave`
+  );
+
+  return response.data;
+};
+
+export const downloadCertificate = async (eventId) => {
+
+  const response = await api.get(
+    `/student/event/${eventId}/certificate`
+  );
+
+  return response.data;
+
 };

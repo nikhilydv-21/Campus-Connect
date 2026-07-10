@@ -1,65 +1,107 @@
-import { Building2, Eye } from "lucide-react";
+import { Eye } from "lucide-react";
 
 function SocietyCard({
-  society,
-  onView,
+    society,
+    onView,
 }) {
-  return (
-    <div className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition">
+    return (
 
-      {/* Logo */}
+        <div
+            className="
+    w-full
+    bg-white
+    rounded-3xl
+    border
+    border-slate-200
+    shadow-sm
+    hover:shadow-lg
+    transition-all
+    duration-300
+  "
+        >
 
-      <div className="flex justify-center pt-8">
+            {/* Logo */}
 
-        <img
-          src={
-            society.logo
-              ? society.logo
-              : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                  society.societyName
-                )}&background=2563eb&color=fff`
-          }
-          alt={society.societyName}
-          className="w-24 h-24 rounded-full object-cover border-4 border-blue-100"
-        />
+            <div className="flex justify-center pt-10">
+                <img
+                    src={
+                        society.logo
+                            ? society.logo
+                            : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                                society.societyName
+                            )}&background=f8fafc&color=111827`
+                    }
+                    alt={society.societyName}
+                    className="
+  w-24
+  h-24
+  rounded-full
+  object-cover
+  border-2
+  border-slate-300
+  p-1
+  bg-white
+  shadow-sm
+"
+                />
+            </div>
 
-      </div>
+            {/* Content */}
 
-      {/* Content */}
+            <div className="p-6 text-center">
 
-      <div className="p-6 text-center">
+                <h2
+                    className="
+    text-2xl
+    font-semibold
+    text-slate-700
+    tracking-tight
+  "
+                >
+                    {society.societyName}
+                </h2>
 
-        <h2 className="text-2xl font-bold text-slate-800">
-          {society.societyName}
-        </h2>
+                <p
+                    className="
+    mt-3
+    text-base
+    font-semibold
+    text-slate-600
+    tracking-wide
+  "
+                >
+                    {society.societyType}
+                </p>
 
-        <div className="flex justify-center mt-3">
+                {/* Button */}
 
-          <span className="bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-medium">
-            {society.societyType}
-          </span>
+                <button
+                    onClick={() => onView(society)}
+                    className="
+            mt-6
+            w-full
+            bg-white
+            border
+            border-slate-300
+            hover:bg-slate-100
+            text-slate-800
+            py-2.5
+            rounded-xl
+            flex
+            justify-center
+            items-center
+            gap-2
+            font-semibold
+            transition
+          "
+                >
+                    <Eye size={17} />
+                    View Details
+                </button>
 
+            </div>
         </div>
-
-        <div className="mt-8">
-
-          <button
-            onClick={() => onView(society)}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl flex justify-center items-center gap-2 transition"
-          >
-
-            <Eye size={18} />
-
-            View Details
-
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-  );
+    );
 }
 
 export default SocietyCard;

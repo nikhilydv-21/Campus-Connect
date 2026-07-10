@@ -1,13 +1,12 @@
 import {
-  Mail,
-  Users,
+  MoreVertical,
   Eye,
   Trash2,
   Ban,
   CheckCircle,
 } from "lucide-react";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import toast from "react-hot-toast";
 
 import {
@@ -24,9 +23,11 @@ function SocietyCard({
   society,
   refresh,
 }) {
- 
- const [selectedSociety, setSelectedSociety] =
-  useState(null);
+
+  const menuRef = useRef(null);
+
+  const [selectedSociety, setSelectedSociety] =
+    useState(null);
 
   const [loading, setLoading] =
     useState(false);
@@ -39,6 +40,69 @@ function SocietyCard({
 
   const [disableOpen, setDisableOpen] =
     useState(false);
+
+  const [menuOpen, setMenuOpen] =
+    useState(false);
+
+  useEffect(() => {
+
+    const handleClickOutside = (event) => {
+
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target)
+      ) {
+
+        setMenuOpen(false);
+
+      }
+
+    };
+
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside
+    );
+
+    return () => {
+
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
+
+    };
+
+  }, []);
+
+  const handleView = async () => {
+
+    try {
+
+      const response =
+        await getSocietyDetails(
+          society._id
+        );
+
+      setSelectedSociety({
+        ...response.society,
+        totalMembers: response.totalMembers,
+      });
+
+      setOpenDetails(true);
+
+      setMenuOpen(false);
+
+    } catch (error) {
+
+      toast.error(
+        error.response?.data?.message ||
+        "Failed to load society details"
+      );
+
+    }
+
+  };
 
   const handleDisable = async () => {
 
@@ -103,153 +167,228 @@ function SocietyCard({
     }
 
   };
-const handleView = async () => {
-  try {
 
-    const response =
-      await getSocietyDetails(
-        society._id
-      );
-
-    setSelectedSociety({
-      ...response.society,
-      totalMembers: response.totalMembers,
-    });
-
-    setOpenDetails(true);
-
-  } catch (error) {
-
-    toast.error(
-      error.response?.data?.message ||
-      "Failed to load society details"
-    );
-
-  }
-};
   return (
     <>
 
-      <div className="bg-white rounded-3xl shadow-md hover:shadow-xl transition overflow-hidden">
+      <div
+        className="
+          w-full
+          bg-white
+          rounded-3xl
+          border
+          border-slate-200
+          shadow-sm
+          hover:shadow-lg
+          transition-all
+          duration-300
+          relative
+          p-6
+        "
+      >
 
-        {/* Header */}
+        {/* Three Dots */}
 
-        <div className="p-6 flex justify-between">
+        <div
+          ref={menuRef}
+          className="absolute top-5 right-5"
+        >
 
-          <div className="flex gap-4">
+          <button
+            onClick={() =>
+              setMenuOpen(!menuOpen)
+            }
+            className="
+              h-10
+              w-10
+              rounded-full
+              hover:bg-slate-100
+              flex
+              items-center
+              justify-center
+              transition
+            "
+          >
 
-            <img
-              src={
-                society.logo
-                  ? society.logo
-                  : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                      society.societyName
-                    )}&background=2563eb&color=fff`
-              }
-              alt={society.societyName}
-              className="w-16 h-16 rounded-2xl object-cover"
-            />
+            <MoreVertical size={20} />
 
-            <div>
+          </button>
 
-              <h2 className="text-xl font-bold">
-                {society.societyName}
-              </h2>
+          {menuOpen && (
 
-              <p className="text-blue-600">
-                {society.societyType}
-              </p>
+            <div
+              className="
+                absolute
+                right-0
+                mt-2
+                w-52
+                bg-white
+                border
+                border-slate-200
+                rounded-2xl
+                shadow-xl
+                overflow-hidden
+                z-50
+              "
+            >
+
+              <button
+                onClick={handleView}
+                className="
+                  w-full
+                  flex
+                  items-center
+                  gap-3
+                  px-5
+                  py-3
+                  hover:bg-slate-100
+                  transition
+                  text-slate-700
+                "
+              >
+
+                <Eye size={17} />
+
+                View Details
+
+              </button>
+
+              <button
+                onClick={() => {
+
+                  setMenuOpen(false);
+
+                  setDisableOpen(true);
+
+                }}
+                className="
+                  w-full
+                  flex
+                  items-center
+                  gap-3
+                  px-5
+                  py-3
+                  hover:bg-slate-100
+                  transition
+                  text-slate-700
+                "
+              >
+
+                {society.isDisabled ? (
+
+                  <CheckCircle size={17} />
+
+                ) : (
+
+                  <Ban size={17} />
+
+                )}
+
+                {society.isDisabled
+                  ? "Enable Society"
+                  : "Disable Society"}
+
+              </button>
+
+              <button
+                onClick={() => {
+
+                  setMenuOpen(false);
+
+                  setDeleteOpen(true);
+
+                }}
+                className="
+                  w-full
+                  flex
+                  items-center
+                  gap-3
+                  px-5
+                  py-3
+                  hover:bg-red-50
+                  transition
+                  text-red-600
+                "
+              >
+
+                <Trash2 size={17} />
+
+                Delete Society
+
+              </button>
 
             </div>
 
-          </div>
-
-          <span
-            className={`px-3 py-1 h-fit rounded-full text-xs font-semibold ${
-              society.isDisabled
-                ? "bg-red-100 text-red-600"
-                : "bg-green-100 text-green-600"
-            }`}
-          >
-            {society.isDisabled
-              ? "Disabled"
-              : "Active"}
-          </span>
+          )}
 
         </div>
 
-        {/* Body */}
+        {/* Logo */}
 
-        <div className="px-6 pb-6 space-y-3">
+        <div className="flex justify-center pt-4">
 
-          <div className="flex items-center gap-2 text-gray-600">
+          <img
+            src={
+              society.logo
+                ? society.logo
+                : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                    society.societyName
+                  )}&background=f8fafc&color=111827`
+            }
+            alt={society.societyName}
+            className="
+              w-24
+              h-24
+              rounded-full
+              object-cover
+              border-2
+              border-slate-300
+              p-1
+              bg-white
+              shadow-sm
+            "
+          />
 
-            <Users size={18} />
+        </div>
 
-            {society.facultyCoordinator}
+        {/* Content */}
 
-          </div>
+        <div className="text-center mt-6">
 
-          <div className="flex items-center gap-2 text-gray-600">
+          <h2 className="text-2xl font-semibold text-slate-700">
 
-            <Mail size={18} />
+            {society.societyName}
 
-            <span className="truncate">
-              {society.email}
-            </span>
+          </h2>
 
-          </div>
+          <p className="mt-2 text-slate-500 font-medium">
 
-          {/* Buttons */}
+            {society.societyType}
 
-          <div className="grid grid-cols-3 gap-3 pt-5">
+          </p>
 
-            <button
-              onClick={handleView}
-              className="flex items-center justify-center gap-2 border border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-xl py-3 transition font-medium"
-            >
-              <Eye size={16} />
-              <span className="text-sm">
-                View
-              </span>
-            </button>
-
-            <button
-              onClick={() =>
-                setDisableOpen(true)
-              }
-              className={`flex items-center justify-center gap-2 rounded-xl py-3 transition font-medium ${
+          <span
+            className={`
+              inline-flex
+              mt-4
+              px-3
+              py-1
+              rounded-full
+              text-xs
+              font-medium
+              ${
                 society.isDisabled
-                  ? "border border-green-200 bg-green-50 hover:bg-green-100 text-green-600"
-                  : "border border-yellow-200 bg-yellow-50 hover:bg-yellow-100 text-yellow-700"
-              }`}
-            >
-              {society.isDisabled ? (
-                <CheckCircle size={16} />
-              ) : (
-                <Ban size={16} />
-              )}
-
-              <span className="text-sm">
-                {society.isDisabled
-                  ? "Enable"
-                  : "Disable"}
-              </span>
-            </button>
-
-            <button
-              onClick={() =>
-                setDeleteOpen(true)
+                  ? "bg-slate-300 text-slate-700"
+                  : "bg-slate-100 text-slate-700"
               }
-              className="flex items-center justify-center gap-2 border border-red-200 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl py-3 transition font-medium"
-            >
-              <Trash2 size={16} />
-              <span className="text-sm">
-                Delete
-              </span>
-            </button>
+            `}
+          >
 
-          </div>
+            {society.isDisabled
+              ? "Disabled"
+              : "Active"}
+
+          </span>
 
         </div>
 
@@ -258,8 +397,7 @@ const handleView = async () => {
       <SocietyDetailsModal
         open={openDetails}
         setOpen={setOpenDetails}
-        society={society}
-        
+        society={selectedSociety}
       />
 
       <DisableConfirmModal

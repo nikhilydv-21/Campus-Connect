@@ -12,7 +12,8 @@ import PastEvents from "./PastEvents/PastEvents";
 import JoinRequests from "./JoinRequests/JoinRequests";
 import Analytics from "./Analytics/Analytics";
 import Settings from "./Settings/Settings";
-
+import Participants from "./Participants/Participants";
+import Feedback from "./Feedback/Feedback";
 function SocietyDashboard() {
   const [activePage, setActivePage] =
     useState("dashboard");
@@ -44,6 +45,14 @@ function SocietyDashboard() {
           />
         );
 
+      case "participants":
+        return (
+          <Participants
+            eventId={selectedEventId}
+            setActivePage={setActivePage}
+          />
+        );
+
       case "past-events":
         return <PastEvents />;
 
@@ -55,6 +64,16 @@ function SocietyDashboard() {
 
       case "settings":
         return <Settings />;
+        
+      case "feedback":
+        return (
+          <Feedback
+            eventId={selectedEventId}
+            setActivePage={setActivePage}
+          />
+        );
+
+
 
       default:
         return <DashboardHome />;

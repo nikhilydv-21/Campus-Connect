@@ -5,6 +5,9 @@ function Input({
   onChange,
   placeholder,
   options = [],
+  maxLength,
+  inputMode,
+  pattern,
 }) {
 
   if (type === "select") {
@@ -51,6 +54,9 @@ function Input({
       value={value}
       onChange={onChange}
       placeholder={placeholder}
+      maxLength={maxLength}
+      inputMode={inputMode}
+      pattern={pattern}
       className="
         w-full
         px-4

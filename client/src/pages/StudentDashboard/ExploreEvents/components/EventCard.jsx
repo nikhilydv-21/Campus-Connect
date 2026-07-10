@@ -18,6 +18,7 @@ function EventCard({
   onView,
   onUnlike,
 }) {
+
   const [likes, setLikes] = useState(
     event.likes || 0
   );
@@ -27,33 +28,57 @@ function EventCard({
   );
 
   useEffect(() => {
+
     setLikes(event.likes || 0);
+
     setLiked(event.isLiked || false);
+
   }, [event]);
 
   const handleLike = async () => {
+
     try {
+
       const response =
         await toggleLikeEvent(event._id);
 
       setLiked(response.liked);
+
       setLikes(response.likes);
 
-      // Liked Events page se unlike hote hi remove
       if (!response.liked && onUnlike) {
+
         onUnlike(event._id);
+
       }
 
     } catch (error) {
+
       toast.error(
         error.response?.data?.message ||
-          "Unable to like event"
+        "Unable to like event"
       );
+
     }
+
+  };
+
+  const statusColor = {
+
+    Upcoming:
+      "bg-green-100 text-green-700",
+
+    Ongoing:
+      "bg-yellow-100 text-yellow-700",
+
+    Completed:
+      "bg-gray-100 text-gray-700",
+
   };
 
   return (
-    <div className="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition duration-300">
+
+    <div className="w-full max-w-[340px] bg-white rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
 
       {/* Banner */}
 
@@ -63,24 +88,22 @@ function EventCard({
           src={
             event.banner
               ? event.banner
-              : "https://placehold.co/700x350"
+              : "https://placehold.co/700x350/e2e8f0/64748b?text=Event"
           }
           alt={event.title}
-          className="w-full h-52 object-cover"
+          className="w-full h-36 object-cover"
         />
 
-        <div className="absolute top-4 right-4">
+        {/* Status */}
+
+        <div className="absolute top-3 right-3">
 
           <span
-            className={`px-3 py-1 rounded-full text-xs font-semibold ${
-              event.status === "Upcoming"
-                ? "bg-green-100 text-green-700"
-                : event.status === "Ongoing"
-                ? "bg-yellow-100 text-yellow-700"
-                : "bg-gray-100 text-gray-700"
-            }`}
+            className={`px-3 py-1 rounded-full text-xs font-semibold ${statusColor[event.status]}`}
           >
+
             {event.status}
+
           </span>
 
         </div>
@@ -89,64 +112,118 @@ function EventCard({
 
       {/* Body */}
 
-      <div className="p-6">
+      <div className="p-4">
 
-        <p className="text-sm text-blue-600 font-semibold">
+        {/* Society */}
+
+        <p className="text-blue-600 text-sm font-medium">
+
           {event.organizer?.societyName}
+
         </p>
 
-        <h2 className="text-2xl font-bold mt-2 line-clamp-2">
+        {/* Title */}
+
+        <h2 className="text-lg font-bold leading-6 mt-2 line-clamp-2">
+
           {event.title}
+
         </h2>
 
-        <div className="mt-5 space-y-3">
+        {/* Venue */}
 
-          <div className="flex items-center gap-2 text-gray-600">
+        <div className="flex items-center gap-2 mt-4 text-gray-600">
 
-            <MapPin size={18} />
+          <MapPin
+            size={16}
+            className="text-red-500"
+          />
 
-            <span>{event.venue}</span>
+          <span className="text-sm line-clamp-1">
 
-          </div>
+            {event.venue}
 
-          <div className="flex items-center gap-2 text-gray-600">
+          </span>
 
-            <Calendar size={18} />
+        </div>
 
-            <span>
-              {new Date(event.date).toLocaleDateString(
-                "en-IN",
-                {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                }
-              )}
-            </span>
+        {/* Date */}
 
-          </div>
+        <div className="flex items-center gap-2 mt-2 text-gray-600">
+
+          <Calendar
+            size={16}
+            className="text-blue-600"
+          />
+
+          <span className="text-sm">
+
+            {new Date(event.date).toLocaleDateString(
+              "en-IN",
+              {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              }
+            )}
+
+          </span>
+
+        </div>
+
+        {/* Registration */}
+
+        <div className="mt-4">
 
           {event.registrationMode ===
-            "Participant" && (
+          "Participant" ? (
 
-            <div className="flex items-center gap-2 text-gray-600">
+            <span
+              className="
+                inline-flex
+                items-center
+                px-3
+                py-1
+                rounded-full
+                text-xs
+                font-semibold
+                bg-emerald-100
+                text-emerald-700
+              "
+            >
 
-              <Users size={18} />
+              {event.totalRegistrations} / {event.maximumParticipants} Registered
 
-              <span>
-                {event.totalRegistrations} /
-                {event.maximumParticipants}
-              </span>
+            </span>
 
-            </div>
+          ) : (
+
+            <span
+              className="
+                inline-flex
+                items-center
+                px-3
+                py-1
+                rounded-full
+                text-xs
+                font-semibold
+                bg-blue-100
+                text-blue-700
+              "
+            >
+
+              👀 View Only Event
+
+            </span>
 
           )}
 
         </div>
+                {/* Footer */}
 
-        {/* Footer */}
+        <div className="flex justify-between items-center mt-6">
 
-        <div className="flex justify-between items-center mt-8">
+          {/* Like */}
 
           <button
             onClick={handleLike}
@@ -158,7 +235,7 @@ function EventCard({
           >
 
             <Heart
-              size={20}
+              size={19}
               fill={
                 liked
                   ? "currentColor"
@@ -166,20 +243,38 @@ function EventCard({
               }
             />
 
-            <span className="font-medium">
+            <span className="font-medium text-sm">
+
               {likes}
+
             </span>
 
           </button>
 
+          {/* View Details */}
+
           <button
             onClick={() => onView(event)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl flex items-center gap-2 transition"
+            className="
+              bg-white
+              border
+              border-slate-300
+              hover:bg-slate-100
+              text-slate-800
+              px-4
+              py-2.5
+              rounded-xl
+              flex
+              items-center
+              gap-2
+              font-semibold
+              transition
+            "
           >
 
             View Details
 
-            <ArrowRight size={18} />
+            <ArrowRight size={17} />
 
           </button>
 
@@ -188,7 +283,9 @@ function EventCard({
       </div>
 
     </div>
+
   );
+
 }
 
 export default EventCard;

@@ -15,6 +15,7 @@ function AboutSociety({
 
         <textarea
           rows={8}
+          maxlength={500}
           placeholder="Write about your society..."
           value={formData.description}
           onChange={(e) =>
@@ -38,6 +39,7 @@ function AboutSociety({
             leading-7
             text-slate-700
           "
+          
         />
 
       ) : (

@@ -10,17 +10,35 @@ function LogoModal({
   useEffect(() => {
 
     const handleKeyDown = (e) => {
+
       if (e.key === "Escape") {
+
         setShowLogo(false);
+
       }
+
     };
 
     if (showLogo) {
-      document.addEventListener("keydown", handleKeyDown);
+
+      document.body.style.overflow = "hidden";
+
+      document.addEventListener(
+        "keydown",
+        handleKeyDown
+      );
+
     }
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+
+      document.body.style.overflow = "auto";
+
+      document.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
+
     };
 
   }, [showLogo, setShowLogo]);
@@ -28,33 +46,39 @@ function LogoModal({
   if (!showLogo) return null;
 
   return (
+
     <div
       onClick={() => setShowLogo(false)}
       className="
         fixed
         inset-0
-        bg-black/80
-        backdrop-blur-sm
+        z-50
+        bg-black/70
+        backdrop-blur-md
         flex
         items-center
         justify-center
-        z-50
-        p-4
+        p-6
+        animate-[fadeIn_.25s_ease]
       "
     >
 
       <div
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) =>
+          e.stopPropagation()
+        }
         className="
           relative
-          animate-[fadeIn_.25s_ease]
+          animate-[zoomIn_.25s_ease]
         "
       >
 
         {/* Close Button */}
 
         <button
-          onClick={() => setShowLogo(false)}
+          onClick={() =>
+            setShowLogo(false)
+          }
           className="
             absolute
             -top-5
@@ -63,15 +87,20 @@ function LogoModal({
             h-11
             rounded-full
             bg-white
-            shadow-lg
+            shadow-xl
             flex
             items-center
             justify-center
-            hover:bg-gray-100
-            transition
+            hover:scale-110
+            hover:bg-slate-100
+            transition-all
+            duration-200
+            z-20
           "
         >
+
           <X size={22} />
+
         </button>
 
         {/* Logo */}
@@ -80,25 +109,71 @@ function LogoModal({
           src={
             society?.logo ||
             `https://ui-avatars.com/api/?name=${encodeURIComponent(
-              society?.societyName || "Society"
+              society?.societyName ||
+                "Society"
             )}`
           }
           alt="Society Logo"
           className="
-            max-w-[85vw]
-            max-h-[85vh]
-            rounded-3xl
+            max-w-[80vw]
+            max-h-[80vh]
             object-contain
+            rounded-3xl
             bg-white
+            p-3
             shadow-2xl
-            p-2
+            transition-transform
+            duration-300
+            hover:scale-[1.02]
+            select-none
           "
+          draggable={false}
         />
 
       </div>
 
+      {/* Custom Animations */}
+
+      <style>{`
+
+        @keyframes fadeIn {
+
+          from {
+            opacity: 0;
+          }
+
+          to {
+            opacity: 1;
+          }
+
+        }
+
+        @keyframes zoomIn {
+
+          from {
+
+            opacity: 0;
+
+            transform: scale(.9);
+
+          }
+
+          to {
+
+            opacity: 1;
+
+            transform: scale(1);
+
+          }
+
+        }
+
+      `}</style>
+
     </div>
+
   );
+
 }
 
 export default LogoModal;

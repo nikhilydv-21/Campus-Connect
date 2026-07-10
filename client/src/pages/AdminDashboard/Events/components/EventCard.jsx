@@ -1,4 +1,9 @@
-import { CalendarDays, MapPin, Users, Eye } from "lucide-react";
+import {
+  Calendar,
+  MapPin,
+  Eye,
+} from "lucide-react";
+
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -43,96 +48,152 @@ function EventCard({
   return (
     <>
 
-      <div className="bg-white rounded-3xl shadow-md hover:shadow-xl transition overflow-hidden">
+      <div
+        className="
+          w-full
+          bg-white
+          rounded-3xl
+          shadow-md
+          hover:shadow-xl
+          transition-all
+          duration-300
+          overflow-hidden
+        "
+      >
 
         {/* Banner */}
 
-        <img
-          src={
-            event.banner
-              ? event.banner
-              : "https://placehold.co/600x300?text=Campus+Connect"
-          }
-          alt={event.title}
-          className="w-full h-48 object-cover"
-        />
+        <div className="relative">
 
-        {/* Content */}
+          {event.banner ? (
 
-        <div className="p-6">
+            <img
+              src={event.banner}
+              alt={event.title}
+              className="w-full h-36 object-cover"
+            />
 
-          <div className="flex justify-between items-start">
+          ) : (
 
-            <h2 className="text-xl font-bold">
+            <div className="w-full h-36 bg-slate-200 flex items-center justify-center text-gray-500">
 
-              {event.title}
+              No Banner
 
-            </h2>
+            </div>
+
+          )}
+
+          {/* Status */}
+
+          <div className="absolute top-3 right-3">
 
             <span
-              className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                event.status === "Upcoming"
-                  ? "bg-blue-100 text-blue-700"
-                  : event.status === "Ongoing"
-                  ? "bg-green-100 text-green-700"
-                  : event.status === "Completed"
-                  ? "bg-gray-100 text-gray-700"
-                  : "bg-red-100 text-red-700"
-              }`}
+              className={`px-3 py-1 rounded-full text-xs font-semibold
+                ${
+                  event.status === "Upcoming"
+                    ? "bg-green-100 text-green-700"
+                    : event.status === "Ongoing"
+                    ? "bg-yellow-100 text-yellow-700"
+                    : "bg-gray-100 text-gray-700"
+                }`}
             >
+
               {event.status}
+
             </span>
 
           </div>
 
-          <p className="text-blue-600 mt-2 font-medium">
+        </div>
+
+        {/* Body */}
+
+        <div className="p-4">
+
+          {/* Title */}
+
+          <h2 className="text-lg font-bold leading-6 line-clamp-2">
+
+            {event.title}
+
+          </h2>
+
+          {/* Society */}
+
+          <p className="mt-2 text-slate-600 font-medium">
 
             {event.organizer?.societyName}
 
           </p>
 
-          <div className="space-y-3 mt-5">
+          {/* Venue */}
 
-            <div className="flex items-center gap-2 text-gray-600">
+          <div className="flex items-center gap-2 mt-4 text-gray-600">
 
-              <CalendarDays size={18} />
+            <MapPin
+              size={16}
+              className="text-red-500"
+            />
 
-              <span>
+            <span className="text-sm line-clamp-1">
 
-                {new Date(event.date).toLocaleDateString("en-GB")}
+              {event.venue}
 
-              </span>
-
-            </div>
-
-            <div className="flex items-center gap-2 text-gray-600">
-
-              <MapPin size={18} />
-
-              <span>{event.venue}</span>
-
-            </div>
-
-            <div className="flex items-center gap-2 text-gray-600">
-
-              <Users size={18} />
-
-              <span>
-
-                Registrations : {event.totalRegistrations}
-
-              </span>
-
-            </div>
+            </span>
 
           </div>
 
+          {/* Date */}
+
+          <div className="flex items-center gap-2 mt-2 text-gray-600">
+
+            <Calendar
+              size={16}
+              className="text-blue-600"
+            />
+
+            <span className="text-sm">
+
+              {new Date(event.date).toLocaleDateString(
+                "en-IN",
+                {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                }
+              )}
+
+            </span>
+
+          </div>
+                   
+
+          
+
+          {/* View Details */}
+
           <button
             onClick={handleView}
-            className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl flex justify-center items-center gap-2 transition"
+            className="
+              mt-5
+              w-full
+              bg-white
+              border
+              border-slate-300
+              hover:bg-slate-100
+              text-slate-800
+              py-2.5
+              rounded-xl
+              flex
+              justify-center
+              items-center
+              gap-2
+              font-semibold
+              transition
+            "
           >
 
-            <Eye size={18} />
+            <Eye size={17} />
 
             View Details
 
@@ -151,6 +212,7 @@ function EventCard({
       />
 
     </>
+
   );
 
 }

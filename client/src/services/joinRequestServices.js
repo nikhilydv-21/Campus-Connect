@@ -26,3 +26,20 @@ export const rejectJoinRequest = async (id) => {
 
   return response.data;
 };
+
+export const sendAnnouncement = async (data) => {
+  const response = await api.post(
+    "/society/announcement",
+    data
+  );
+
+  return response.data;
+};
+
+export const removeMember = async (id) => {
+  const response = await api.patch(
+    `/society/member/${id}/remove`
+  );
+
+  return response.data;
+};

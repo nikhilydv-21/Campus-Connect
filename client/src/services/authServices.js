@@ -64,6 +64,15 @@ export const uploadProfilePicture = async (image) => {
 
   return response.data;
 };
+export const removeProfilePicture = async () => {
+
+  const response = await api.delete(
+    "/student/remove-profile-picture"
+  );
+
+  return response.data;
+
+};
 // ======================
 // SOCIETY PROFILE
 // ======================
@@ -97,4 +106,124 @@ export const uploadSocietyLogo = async (image) => {
   );
 
   return response.data;
+};
+
+export const removeSocietyLogo = async () => {
+
+  const response = await api.delete(
+    "/society/logo"
+  );
+
+  return response.data;
+
+};
+// ==========================
+// Student Forgot Password
+// ==========================
+
+export const studentForgotPassword = async (
+  data
+) => {
+
+  const response = await api.post(
+    "/student/forgot-password",
+    data
+  );
+
+  return response.data;
+
+};
+
+export const studentResetPassword = async (
+  data
+) => {
+
+  const response = await api.post(
+    "/student/reset-password",
+    data
+  );
+
+  return response.data;
+
+};
+
+// ==========================
+// Society Forgot Password
+// ==========================
+
+export const societyForgotPassword = async (
+  data
+) => {
+
+  const response = await api.post(
+    "/society/forgot-password",
+    data
+  );
+
+  return response.data;
+
+};
+
+export const societyResetPassword = async (
+  data
+) => {
+
+  const response = await api.post(
+    "/society/reset-password",
+    data
+  );
+
+  return response.data;
+
+};
+
+export const getAllFeedback = async () => {
+  const response = await api.get(
+    "/society/feedback"
+  );
+
+  return response.data;
+};
+
+export const getEventFeedback = async (id) => {
+  const response = await api.get(
+    `/society/event/${id}/feedback`
+  );
+
+  return response.data;
+};
+
+// ==========================
+// Society Members
+// ==========================
+
+// Get Members
+export const getMembers = async (
+  search = ""
+) => {
+
+  const response = await api.get(
+    "/society/members",
+    {
+      params: {
+        search,
+      },
+    }
+  );
+
+  return response.data;
+
+};
+
+// Remove Member
+export const removeMember = async (
+  id
+) => {
+
+  const response = await api.patch(
+    `/society/member/${id}/remove`
+  );
+
+  return response.data;
+
 };

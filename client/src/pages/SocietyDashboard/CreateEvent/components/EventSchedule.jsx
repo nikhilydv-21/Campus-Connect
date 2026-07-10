@@ -2,6 +2,11 @@ function EventSchedule({
   formData,
   setFormData,
 }) {
+  const today = new Date().toISOString().split("T")[0];
+
+  const currentTime = new Date()
+    .toTimeString()
+    .slice(0, 5);
   return (
     <div className="bg-white rounded-3xl shadow-lg p-8 mb-8">
 
@@ -85,21 +90,27 @@ function EventSchedule({
           <input
             type="time"
             value={formData.startTime}
+            min={
+              formData.date === today
+                ? currentTime
+                : ""
+            }
             onChange={(e) =>
               setFormData({
                 ...formData,
                 startTime: e.target.value,
+                endTime: "",
               })
             }
             className="
-              w-full
-              border
-              rounded-xl
-              px-4
-              py-3
-              outline-none
-              focus:border-blue-600
-            "
+    w-full
+    border
+    rounded-xl
+    px-4
+    py-3
+    outline-none
+    focus:border-blue-600
+  "
           />
 
         </div>
@@ -115,7 +126,25 @@ function EventSchedule({
           <input
             type="time"
             value={formData.endTime}
-            min={formData.startTime || ""}
+            min={
+              formData.startTime
+                ? (() => {
+                  const [h, m] =
+                    formData.startTime
+                      .split(":")
+                      .map(Number);
+
+                  const date = new Date();
+
+                  date.setHours(h);
+                  date.setMinutes(m + 60);
+
+                  return date
+                    .toTimeString()
+                    .slice(0, 5);
+                })()
+                : ""
+            }
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -123,16 +152,15 @@ function EventSchedule({
               })
             }
             className="
-              w-full
-              border
-              rounded-xl
-              px-4
-              py-3
-              outline-none
-              focus:border-blue-600
-            "
+    w-full
+    border
+    rounded-xl
+    px-4
+    py-3
+    outline-none
+    focus:border-blue-600
+  "
           />
-
         </div>
 
       </div>
@@ -145,15 +173,35 @@ function EventSchedule({
           <p className="text-red-500 mt-4">
             Registration deadline cannot be after the event date.
           </p>
-      )}
+        )}
 
       {formData.startTime &&
         formData.endTime &&
-        formData.endTime <= formData.startTime && (
+        (() => {
+
+          const [sh, sm] =
+            formData.startTime
+              .split(":")
+              .map(Number);
+
+          const [eh, em] =
+            formData.endTime
+              .split(":")
+              .map(Number);
+
+          const start =
+            sh * 60 + sm;
+
+          const end =
+            eh * 60 + em;
+
+          return end - start < 60;
+
+        })() && (
           <p className="text-red-500 mt-2">
-            End time must be later than start time.
+            Event duration must be at least 1 hour.
           </p>
-      )}
+        )}
 
     </div>
   );
