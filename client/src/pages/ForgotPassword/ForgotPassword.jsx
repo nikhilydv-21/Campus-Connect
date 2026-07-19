@@ -24,16 +24,13 @@ import {
 } from "../../services/authServices";
 
 function ForgotPassword() {
-
   const navigate = useNavigate();
 
   const { role } = useParams();
 
-  const [step, setStep] =
-    useState(1);
+  const [step, setStep] = useState(1);
 
-  const [loading, setLoading] =
-    useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [showPassword, setShowPassword] =
     useState(false);
@@ -43,61 +40,43 @@ function ForgotPassword() {
 
   const [formData, setFormData] =
     useState({
-
       email: "",
-
       otp: "",
-
       newPassword: "",
-
       confirmPassword: "",
-
     });
 
   const handleChange = (e) => {
-
     setFormData({
-
       ...formData,
-
       [e.target.name]: e.target.value,
-
     });
-
   };
 
   // Send OTP
 
   const handleSendOTP = async () => {
-
     if (!formData.email) {
-
       return toast.error(
         "Email is required"
       );
-
     }
 
     try {
-
       setLoading(true);
 
       let response;
 
       if (role === "student") {
-
         response =
           await studentForgotPassword({
             email: formData.email,
           });
-
       } else {
-
         response =
           await societyForgotPassword({
             email: formData.email,
           });
-
       }
 
       toast.success(response.message);
@@ -107,11 +86,8 @@ function ForgotPassword() {
     } catch (error) {
 
       toast.error(
-
         error.response?.data?.message ||
-
-        "Failed to send OTP"
-
+          "Failed to send OTP"
       );
 
     } finally {
@@ -119,7 +95,6 @@ function ForgotPassword() {
       setLoading(false);
 
     }
-
   };
 
   // Reset Password
@@ -128,13 +103,9 @@ function ForgotPassword() {
     async () => {
 
       if (
-
         !formData.otp ||
-
         !formData.newPassword ||
-
         !formData.confirmPassword
-
       ) {
 
         return toast.error(
@@ -150,17 +121,12 @@ function ForgotPassword() {
         let response;
 
         const payload = {
-
           email: formData.email,
-
           otp: formData.otp,
-
           newPassword:
             formData.newPassword,
-
           confirmPassword:
             formData.confirmPassword,
-
         };
 
         if (role === "student") {
@@ -186,11 +152,8 @@ function ForgotPassword() {
       } catch (error) {
 
         toast.error(
-
           error.response?.data?.message ||
-
-          "Password reset failed"
-
+            "Password reset failed"
         );
 
       } finally {
@@ -200,9 +163,9 @@ function ForgotPassword() {
       }
 
     };
-      return (
 
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center px-6">
+  return (
+    <div className="min-h-screen bg-slate-100 flex items-center justify-center px-4 sm:px-6 py-8">
 
       <div className="w-full max-w-lg">
 
@@ -210,31 +173,28 @@ function ForgotPassword() {
           onClick={() =>
             navigate(`/login/${role}`)
           }
-          className="mb-5 flex items-center gap-2 text-gray-500 hover:text-blue-600 transition"
+          className="mb-5 flex items-center gap-2 text-sm sm:text-base text-gray-500 hover:text-blue-600 transition"
         >
 
-          <ArrowLeft size={18} />
+          <ArrowLeft
+            size={18}
+            className="shrink-0"
+          />
 
           Back to Login
 
         </button>
 
-        <div className="bg-white rounded-3xl shadow-xl p-10">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-10">
 
-          <h1 className="text-4xl font-bold text-center text-slate-900">
-
+          <h1 className="text-3xl sm:text-4xl font-bold text-center text-slate-900">
             Forgot Password
-
           </h1>
 
-          <p className="text-center text-gray-500 mt-2">
-
+          <p className="text-sm sm:text-base text-center text-gray-500 mt-2">
             {step === 1
-
               ? "Enter your registered email"
-
               : "Enter OTP and new password"}
-
           </p>
 
           <div className="w-20 h-1 bg-blue-600 rounded-full mx-auto mt-4 mb-8"></div>
@@ -246,9 +206,7 @@ function ForgotPassword() {
             <div>
 
               <label className="block mb-2 text-sm font-medium text-gray-600">
-
                 Email Address
-
               </label>
 
               <Input
@@ -263,7 +221,6 @@ function ForgotPassword() {
             </div>
 
             {step === 2 && (
-
               <>
 
                 {/* OTP */}
@@ -271,9 +228,7 @@ function ForgotPassword() {
                 <div>
 
                   <label className="block mb-2 text-sm font-medium text-gray-600">
-
                     OTP
-
                   </label>
 
                   <Input
@@ -290,9 +245,7 @@ function ForgotPassword() {
                 <div>
 
                   <label className="block mb-2 text-sm font-medium text-gray-600">
-
                     New Password
-
                   </label>
 
                   <div className="relative">
@@ -316,17 +269,13 @@ function ForgotPassword() {
                           !showPassword
                         )
                       }
-                      className="absolute right-4 top-1/2 -translate-y-1/2"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500"
                     >
 
                       {showPassword ? (
-
                         <Eye size={20} />
-
                       ) : (
-
                         <EyeOff size={20} />
-
                       )}
 
                     </button>
@@ -340,9 +289,7 @@ function ForgotPassword() {
                 <div>
 
                   <label className="block mb-2 text-sm font-medium text-gray-600">
-
                     Confirm Password
-
                   </label>
 
                   <div className="relative">
@@ -366,17 +313,13 @@ function ForgotPassword() {
                           !showConfirmPassword
                         )
                       }
-                      className="absolute right-4 top-1/2 -translate-y-1/2"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500"
                     >
 
                       {showConfirmPassword ? (
-
                         <Eye size={20} />
-
                       ) : (
-
                         <EyeOff size={20} />
-
                       )}
 
                     </button>
@@ -386,7 +329,6 @@ function ForgotPassword() {
                 </div>
 
               </>
-
             )}
 
             <Button
@@ -398,17 +340,11 @@ function ForgotPassword() {
                   : handleResetPassword
               }
             >
-
               {loading
-
                 ? "Please Wait..."
-
                 : step === 1
-
                 ? "Send OTP"
-
                 : "Reset Password"}
-
             </Button>
 
           </div>
@@ -418,9 +354,7 @@ function ForgotPassword() {
       </div>
 
     </div>
-
   );
-
 }
 
 export default ForgotPassword;

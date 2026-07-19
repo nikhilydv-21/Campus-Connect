@@ -11,23 +11,32 @@ function RoleSelection() {
       <div className="w-full max-w-5xl">
 
         {/* Back Button */}
+
         <button
           onClick={() => navigate("/")}
           className="mb-6 flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition"
         >
-          <ArrowLeft size={16} />
+          <ArrowLeft
+            size={16}
+            className="shrink-0"
+          />
+
           Back
+
         </button>
 
         {/* Heading */}
+
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 text-center">
           Campus Connect
         </h1>
 
         {/* Cards */}
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 md:mt-12">
 
           {/* Student */}
+
           <div
             className="
               bg-white
@@ -46,17 +55,17 @@ function RoleSelection() {
               Student
             </h2>
 
-            <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">
 
               <Button
-                fullWidth
+                className="w-full sm:w-auto sm:min-w-[140px]"
                 onClick={() => navigate("/login/student")}
               >
                 Login
               </Button>
 
               <Button
-                fullWidth
+                className="w-full sm:w-auto sm:min-w-[140px]"
                 variant="outline"
                 onClick={() => navigate("/register/student")}
               >
@@ -68,6 +77,7 @@ function RoleSelection() {
           </div>
 
           {/* Society */}
+
           <div
             className="
               bg-white
@@ -86,17 +96,17 @@ function RoleSelection() {
               Society
             </h2>
 
-            <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">
 
               <Button
-                fullWidth
+                className="w-full sm:w-auto sm:min-w-[140px]"
                 onClick={() => navigate("/login/society")}
               >
                 Login
               </Button>
 
               <Button
-                fullWidth
+                className="w-full sm:w-auto sm:min-w-[140px]"
                 variant="outline"
                 onClick={() => navigate("/register/society")}
               >
@@ -110,6 +120,7 @@ function RoleSelection() {
         </div>
 
         {/* Admin Login */}
+
         <div className="flex justify-center mt-8 md:mt-10">
 
           <button
@@ -126,8 +137,14 @@ function RoleSelection() {
               hover:scale-105
             "
           >
-            <ShieldCheck size={18} />
+
+            <ShieldCheck
+              size={18}
+              className="shrink-0"
+            />
+
             Admin Login
+
           </button>
 
         </div>

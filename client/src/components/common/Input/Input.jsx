@@ -8,7 +8,30 @@ function Input({
   maxLength,
   inputMode,
   pattern,
+  disabled = false,
+  className = "",
 }) {
+  const baseStyle = `
+    w-full
+    px-4
+    py-3
+    text-sm
+    sm:text-base
+    rounded-xl
+    sm:rounded-2xl
+    border
+    border-gray-300
+    text-gray-800
+    placeholder:text-gray-400
+    outline-none
+    transition-all
+    duration-300
+    focus:border-blue-600
+    focus:ring-4
+    focus:ring-blue-100
+    disabled:bg-gray-100
+    disabled:cursor-not-allowed
+  `;
 
   if (type === "select") {
     return (
@@ -16,24 +39,10 @@ function Input({
         name={name}
         value={value}
         onChange={onChange}
-        className="
-          w-full
-          px-4
-          py-3
-          rounded-2xl
-          border
-          border-gray-300
-          outline-none
-          transition-all
-          duration-300
-          focus:border-blue-600
-          focus:ring-4
-          focus:ring-blue-100
-        "
+        disabled={disabled}
+        className={`${baseStyle} ${className}`}
       >
-        <option value="">
-          Select
-        </option>
+        <option value="">Select</option>
 
         {options.map((option) => (
           <option
@@ -57,22 +66,8 @@ function Input({
       maxLength={maxLength}
       inputMode={inputMode}
       pattern={pattern}
-      className="
-        w-full
-        px-4
-        py-3
-        rounded-2xl
-        border
-        border-gray-300
-        text-gray-800
-        placeholder:text-gray-400
-        outline-none
-        transition-all
-        duration-300
-        focus:border-blue-600
-        focus:ring-4
-        focus:ring-blue-100
-      "
+      disabled={disabled}
+      className={`${baseStyle} ${className}`}
     />
   );
 }

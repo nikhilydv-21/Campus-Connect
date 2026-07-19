@@ -146,27 +146,30 @@ const handleSubmit = async (e) => {
 };
 
 return (
-  <div className="min-h-screen bg-white flex items-center justify-center px-6 py-10">
+  <div className="min-h-screen bg-white flex items-center justify-center px-4 sm:px-6 py-8 sm:py-10">
 
     <div className="w-full max-w-lg">
 
       <button
         onClick={() => navigate("/choose-role")}
-        className="mb-5 flex items-center gap-2 text-gray-500 hover:text-blue-600 transition"
+        className="mb-5 flex items-center gap-2 text-sm sm:text-base text-gray-500 hover:text-blue-600 transition"
       >
-        <ArrowLeft size={18} />
+        <ArrowLeft
+          size={18}
+          className="shrink-0"
+        />
         Back
       </button>
 
-      <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-10">
+      <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-gray-100 p-6 sm:p-10">
 
-        <h1 className="text-4xl font-extrabold text-center text-slate-900">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-center text-slate-900">
           {role === "student"
             ? "Student Registration"
             : "Society Registration"}
         </h1>
 
-        <p className="text-center text-gray-500 mt-3">
+        <p className="text-sm sm:text-base text-center text-gray-500 mt-3 leading-6">
           {role === "student"
             ? "Create your account to continue."
             : "Your account will be activated after admin approval."}
@@ -178,7 +181,9 @@ return (
           onSubmit={handleSubmit}
           className="space-y-6"
         >
+
           {fields.map((field) => (
+
             <div key={field.name}>
 
               <label className="block mb-2 text-sm font-medium text-gray-600">
@@ -207,7 +212,7 @@ return (
                       onClick={() =>
                         setShowPassword(!showPassword)
                       }
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-blue-600"
                     >
                       {showPassword ? (
                         <Eye size={20} />
@@ -219,6 +224,7 @@ return (
                   </div>
 
                   {formData.password && (
+
                     <div className="mt-3 space-y-1 text-sm">
 
                       <p className={passwordChecks.length ? "text-green-600" : "text-red-500"}>
@@ -242,11 +248,13 @@ return (
                       </p>
 
                     </div>
+
                   )}
 
                 </>
 
               ) : field.name === "confirmPassword" ? (
+
                 <div className="relative">
 
                   <Input
@@ -257,9 +265,7 @@ return (
                         : "password"
                     }
                     placeholder={field.placeholder}
-                    value={
-                      formData[field.name] || ""
-                    }
+                    value={formData[field.name] || ""}
                     onChange={handleChange}
                   />
 
@@ -270,7 +276,7 @@ return (
                         !showConfirmPassword
                       )
                     }
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-blue-600"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-blue-600"
                   >
                     {showConfirmPassword ? (
                       <Eye size={20} />
@@ -281,7 +287,6 @@ return (
 
                 </div>
 
-
               ) : (
 
                 <Input
@@ -289,26 +294,24 @@ return (
                   type={field.type}
                   placeholder={field.placeholder}
                   options={field.options}
-                  value={
-                    formData[field.name] || ""
-                  }
+                  value={formData[field.name] || ""}
                   onChange={handleChange}
                   maxLength={
                     field.name === "rollNumber"
                       ? 11
                       : field.name === "contactNumber"
-                        ? 10
-                        : undefined
+                      ? 10
+                      : undefined
                   }
                   inputMode={
                     field.name === "rollNumber" ||
-                      field.name === "contactNumber"
+                    field.name === "contactNumber"
                       ? "numeric"
                       : undefined
                   }
                   pattern={
                     field.name === "rollNumber" ||
-                      field.name === "contactNumber"
+                    field.name === "contactNumber"
                       ? "[0-9]*"
                       : undefined
                   }
@@ -317,6 +320,7 @@ return (
               )}
 
             </div>
+
           ))}
 
           <Button
@@ -327,22 +331,25 @@ return (
             {loading
               ? "Please wait..."
               : role === "student"
-                ? "Create Account"
-                : "Send Request for Admin Approval"}
+              ? "Create Account"
+              : "Send Request for Admin Approval"}
           </Button>
 
         </form>
 
         <div className="border-t border-gray-200 my-6"></div>
 
-        <p className="text-center text-sm text-gray-500">
+        <p className="text-center text-sm text-gray-500 leading-6">
+
           Already have an account?{" "}
+
           <Link
             to={`/login/${role}`}
             className="text-blue-600 font-semibold hover:underline"
           >
             Login
           </Link>
+
         </p>
 
       </div>
@@ -352,5 +359,4 @@ return (
   </div>
 );
 }
-
 export default Register;

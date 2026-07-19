@@ -5,7 +5,7 @@ function Button({
   variant = "primary",
   disabled = false,
   fullWidth = false,
-  className= "",
+  className = "",
 }) {
   const baseStyle =
     "px-6 py-3 rounded-xl font-semibold transition-all duration-300";
@@ -35,6 +35,7 @@ function Button({
             ? "opacity-50 cursor-not-allowed"
             : "cursor-pointer"
         }
+        ${className}
       `}
     >
       {children}
