@@ -17,14 +17,12 @@ function EventDetailsModal({
   registrations,
   seatsLeft,
 }) {
-
   const [showBanner, setShowBanner] =
     useState(false);
 
   if (!open || !event) return null;
 
   const formatDate = (date) => {
-
     return new Date(date).toLocaleDateString(
       "en-IN",
       {
@@ -33,12 +31,10 @@ function EventDetailsModal({
         year: "numeric",
       }
     );
-
   };
 
   return (
     <>
-
       {/* Modal */}
 
       <div
@@ -52,7 +48,8 @@ function EventDetailsModal({
           justify-center
           items-center
           z-50
-          p-5
+          px-4
+          py-4
         "
       >
 
@@ -82,7 +79,9 @@ function EventDetailsModal({
                 onClick={() => setShowBanner(true)}
                 className="
                   w-full
-                  h-80
+                  h-56
+                  sm:h-72
+                  lg:h-80
                   object-cover
                   cursor-pointer
                 "
@@ -93,13 +92,16 @@ function EventDetailsModal({
               <div
                 className="
                   w-full
-                  h-80
+                  h-56
+                  sm:h-72
+                  lg:h-80
                   bg-slate-200
                   flex
                   items-center
                   justify-center
                   text-gray-500
-                  text-lg
+                  text-base
+                  sm:text-lg
                 "
               >
 
@@ -128,8 +130,10 @@ function EventDetailsModal({
               onClick={() => setOpen(false)}
               className="
                 absolute
-                top-5
-                right-5
+                top-4
+                right-4
+                sm:top-5
+                sm:right-5
                 bg-white/90
                 p-2
                 rounded-full
@@ -147,30 +151,35 @@ function EventDetailsModal({
             <div
               className="
                 absolute
-                bottom-8
-                left-8
+                bottom-5
+                left-5
+                sm:bottom-8
+                sm:left-8
                 text-white
+                pr-5
               "
             >
 
-              <h1 className="text-4xl font-bold">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold break-words">
 
                 {event.title}
 
               </h1>
 
-              {/* Only Category */}
+              {/* Category */}
 
-              <div className="mt-5">
+              <div className="mt-4 sm:mt-5">
 
                 <span
                   className="
+                    inline-block
                     px-4
                     py-2
                     rounded-full
                     bg-white/20
                     backdrop-blur
-                    text-sm
+                    text-xs
+                    sm:text-sm
                     font-medium
                   "
                 >
@@ -187,12 +196,16 @@ function EventDetailsModal({
 
           {/* Body */}
 
-          <div className="p-8">
+          <div className="p-5 sm:p-8">
 
             {/* Information */}
 
-            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
-                              {/* Organizer */}
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
+                        {/* Information */}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+
+              {/* Organizer */}
 
               <div className="border rounded-2xl p-5 hover:shadow-md transition">
 
@@ -200,7 +213,7 @@ function EventDetailsModal({
 
                   <Building2
                     size={20}
-                    className="text-slate-700"
+                    className="text-slate-700 shrink-0"
                   />
 
                   <span className="font-semibold">
@@ -209,7 +222,7 @@ function EventDetailsModal({
 
                 </div>
 
-                <p className="mt-4 text-slate-700">
+                <p className="mt-4 text-slate-700 break-words">
                   {event.organizer?.societyName}
                 </p>
 
@@ -223,7 +236,7 @@ function EventDetailsModal({
 
                   <MapPin
                     size={20}
-                    className="text-red-500"
+                    className="text-red-500 shrink-0"
                   />
 
                   <span className="font-semibold">
@@ -232,7 +245,7 @@ function EventDetailsModal({
 
                 </div>
 
-                <p className="mt-4 text-slate-700">
+                <p className="mt-4 text-slate-700 break-words">
                   {event.venue}
                 </p>
 
@@ -246,7 +259,7 @@ function EventDetailsModal({
 
                   <Calendar
                     size={20}
-                    className="text-blue-600"
+                    className="text-blue-600 shrink-0"
                   />
 
                   <span className="font-semibold">
@@ -269,7 +282,7 @@ function EventDetailsModal({
 
                   <Clock
                     size={20}
-                    className="text-amber-600"
+                    className="text-amber-600 shrink-0"
                   />
 
                   <span className="font-semibold">
@@ -278,7 +291,7 @@ function EventDetailsModal({
 
                 </div>
 
-                <p className="mt-4 text-slate-700">
+                <p className="mt-4 text-slate-700 break-words">
                   {event.startTime} - {event.endTime}
                 </p>
 
@@ -292,7 +305,7 @@ function EventDetailsModal({
 
                   <Tag
                     size={20}
-                    className="text-slate-700"
+                    className="text-slate-700 shrink-0"
                   />
 
                   <span className="font-semibold">
@@ -301,7 +314,7 @@ function EventDetailsModal({
 
                 </div>
 
-                <p className="mt-4 text-slate-700">
+                <p className="mt-4 text-slate-700 break-words">
                   {event.category}
                 </p>
 
@@ -315,7 +328,7 @@ function EventDetailsModal({
 
                   <Users
                     size={20}
-                    className="text-emerald-600"
+                    className="text-emerald-600 shrink-0"
                   />
 
                   <span className="font-semibold">
@@ -324,15 +337,13 @@ function EventDetailsModal({
 
                 </div>
 
-                <p className="mt-4 text-3xl font-bold text-slate-800">
-
+                <p className="mt-4 text-2xl sm:text-3xl font-bold text-slate-800">
                   {registrations}
-
                 </p>
 
               </div>
 
-              {/* Seats Left (Hide when Completed) */}
+              {/* Seats Left */}
 
               {event.status !== "Completed" && (
 
@@ -342,7 +353,7 @@ function EventDetailsModal({
 
                     <Users
                       size={20}
-                      className="text-indigo-600"
+                      className="text-indigo-600 shrink-0"
                     />
 
                     <span className="font-semibold">
@@ -351,10 +362,8 @@ function EventDetailsModal({
 
                   </div>
 
-                  <p className="mt-4 text-3xl font-bold text-slate-800">
-
+                  <p className="mt-4 text-2xl sm:text-3xl font-bold text-slate-800">
                     {seatsLeft}
-
                   </p>
 
                 </div>
@@ -362,46 +371,38 @@ function EventDetailsModal({
               )}
 
             </div>
-                        {/* About Event */}
 
-            <div className="mt-10 border rounded-2xl p-6">
+            {/* About Event */}
 
-              <h2 className="text-2xl font-bold mb-5">
+            <div className="mt-8 sm:mt-10 border rounded-2xl p-5 sm:p-6">
+
+              <h2 className="text-xl sm:text-2xl font-bold mb-5">
                 About Event
               </h2>
 
-              <p className="text-gray-600 leading-7 whitespace-pre-wrap">
-
+              <p className="text-gray-600 leading-7 whitespace-pre-wrap break-words">
                 {event.description}
-
               </p>
 
             </div>
+                        {/* Registration Details */}
 
-            {/* Registration Details */}
+            <div className="mt-8 sm:mt-10 border rounded-2xl p-5 sm:p-6">
 
-            <div className="mt-10 border rounded-2xl p-6">
-
-              <h2 className="text-2xl font-bold mb-6">
-
+              <h2 className="text-xl sm:text-2xl font-bold mb-6">
                 Registration Details
-
               </h2>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                 <div>
 
                   <p className="text-gray-500">
-
                     Registration Mode
-
                   </p>
 
-                  <h3 className="font-semibold mt-2">
-
+                  <h3 className="font-semibold mt-2 break-words">
                     {event.registrationMode}
-
                   </h3>
 
                 </div>
@@ -409,17 +410,13 @@ function EventDetailsModal({
                 <div>
 
                   <p className="text-gray-500">
-
                     Registration Deadline
-
                   </p>
 
                   <h3 className="font-semibold mt-2">
-
                     {formatDate(
                       event.registrationDeadline
                     )}
-
                   </h3>
 
                 </div>
@@ -427,16 +424,12 @@ function EventDetailsModal({
                 <div>
 
                   <p className="text-gray-500">
-
                     Maximum Participants
-
                   </p>
 
-                  <h3 className="font-semibold mt-2">
-
+                  <h3 className="font-semibold mt-2 break-words">
                     {event.maximumParticipants ??
                       "Unlimited"}
-
                   </h3>
 
                 </div>
@@ -447,18 +440,14 @@ function EventDetailsModal({
 
             {/* Event Created */}
 
-            <div className="mt-10 border rounded-2xl p-6">
+            <div className="mt-8 sm:mt-10 border rounded-2xl p-5 sm:p-6">
 
               <p className="text-gray-500">
-
                 Event Created On
-
               </p>
 
               <h3 className="font-semibold mt-2">
-
                 {formatDate(event.createdAt)}
-
               </h3>
 
             </div>
@@ -474,9 +463,7 @@ function EventDetailsModal({
       {showBanner && (
 
         <div
-          onClick={() =>
-            setShowBanner(false)
-          }
+          onClick={() => setShowBanner(false)}
           className="
             fixed
             inset-0
@@ -485,6 +472,7 @@ function EventDetailsModal({
             items-center
             justify-center
             z-[100]
+            p-4
           "
         >
 
@@ -496,10 +484,12 @@ function EventDetailsModal({
             }
             alt={event.title}
             className="
-              max-w-[90vw]
+              max-w-[95vw]
               max-h-[90vh]
-              rounded-3xl
+              rounded-2xl
+              sm:rounded-3xl
               shadow-2xl
+              object-contain
             "
           />
 
@@ -508,7 +498,6 @@ function EventDetailsModal({
       )}
 
     </>
-
   );
 
 }

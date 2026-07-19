@@ -14,24 +14,17 @@ import EventDetailsModal from "./EventDetailsModal";
 function EventCard({
   event,
 }) {
-
-  const [open, setOpen] =
-    useState(false);
-
-  const [eventData, setEventData] =
-    useState(null);
+  const [open, setOpen] = useState(false);
+  const [eventData, setEventData] = useState(null);
 
   const handleView = async () => {
-
     try {
-
       const response =
         await getEventDetails(
           event._id
         );
 
       setEventData(response);
-
       setOpen(true);
 
     } catch (error) {
@@ -42,12 +35,10 @@ function EventCard({
       );
 
     }
-
   };
 
   return (
     <>
-
       <div
         className="
           w-full
@@ -70,12 +61,12 @@ function EventCard({
             <img
               src={event.banner}
               alt={event.title}
-              className="w-full h-36 object-cover"
+              className="w-full h-36 sm:h-40 object-cover"
             />
 
           ) : (
 
-            <div className="w-full h-36 bg-slate-200 flex items-center justify-center text-gray-500">
+            <div className="w-full h-36 sm:h-40 bg-slate-200 flex items-center justify-center text-gray-500">
 
               No Banner
 
@@ -97,9 +88,7 @@ function EventCard({
                     : "bg-gray-100 text-gray-700"
                 }`}
             >
-
               {event.status}
-
             </span>
 
           </div>
@@ -108,22 +97,18 @@ function EventCard({
 
         {/* Body */}
 
-        <div className="p-4">
+        <div className="p-4 sm:p-5">
 
           {/* Title */}
 
-          <h2 className="text-lg font-bold leading-6 line-clamp-2">
-
+          <h2 className="text-lg sm:text-xl font-bold leading-6 line-clamp-2 break-words">
             {event.title}
-
           </h2>
 
           {/* Society */}
 
-          <p className="mt-2 text-slate-600 font-medium">
-
+          <p className="mt-2 text-sm sm:text-base text-slate-600 font-medium break-words">
             {event.organizer?.societyName}
-
           </p>
 
           {/* Venue */}
@@ -132,13 +117,11 @@ function EventCard({
 
             <MapPin
               size={16}
-              className="text-red-500"
+              className="text-red-500 shrink-0"
             />
 
-            <span className="text-sm line-clamp-1">
-
+            <span className="text-sm line-clamp-1 break-words">
               {event.venue}
-
             </span>
 
           </div>
@@ -149,11 +132,10 @@ function EventCard({
 
             <Calendar
               size={16}
-              className="text-blue-600"
+              className="text-blue-600 shrink-0"
             />
 
             <span className="text-sm">
-
               {new Date(event.date).toLocaleDateString(
                 "en-IN",
                 {
@@ -162,13 +144,9 @@ function EventCard({
                   year: "numeric",
                 }
               )}
-
             </span>
 
           </div>
-                   
-
-          
 
           {/* View Details */}
 
@@ -210,11 +188,8 @@ function EventCard({
         registrations={eventData?.registrations}
         seatsLeft={eventData?.seatsLeft}
       />
-
     </>
-
   );
-
 }
 
 export default EventCard;

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import {
-    getAllEvents,
+  getAllEvents,
 } from "../../../services/adminServices";
 
 import SearchBar from "./components/SearchBar";
@@ -10,128 +10,94 @@ import EventCard from "./components/EventCard";
 import EmptyState from "./components/EmptyState";
 
 function Events() {
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    const [events, setEvents] =
-        useState([]);
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
+  const [status, setStatus] = useState("");
 
-    const [loading, setLoading] =
-        useState(true);
+  const fetchEvents = async () => {
+    try {
+      setLoading(true);
 
-    const [search, setSearch] =
-        useState("");
+      const response =
+        await getAllEvents(
+          search,
+          category,
+          status
+        );
 
-    const [category, setCategory] =
-        useState("");
+      setEvents(response.events || []);
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message ||
+          "Failed to load events"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const [status, setStatus] =
-        useState("");
+  useEffect(() => {
+    fetchEvents();
+  }, [search, category, status]);
 
-    const fetchEvents = async () => {
+  return (
+    <div className="bg-slate-100 min-h-screen">
 
-        try {
+      {/* Heading */}
 
-            setLoading(true);
+      <div className="mb-6 sm:mb-8">
 
-            const response =
-                await getAllEvents(
-                    search,
-                    category,
-                    status
-                );
+        <h1 className="text-3xl sm:text-4xl font-bold text-slate-800">
+          All Events
+        </h1>
 
-            setEvents(response.events || []);
+        <p className="text-sm sm:text-base text-gray-500 mt-2">
+          View all events organized by societies.
+        </p>
 
-        } catch (error) {
+      </div>
 
-            toast.error(
-                error.response?.data?.message ||
-                "Failed to load events"
-            );
+      <SearchBar
+        search={search}
+        setSearch={setSearch}
+        category={category}
+        setCategory={setCategory}
+        status={status}
+        setStatus={setStatus}
+      />
 
-        } finally {
+      {loading ? (
 
-            setLoading(false);
+        <div className="flex justify-center items-center h-60 text-base sm:text-lg text-gray-500">
+          Loading...
+        </div>
 
-        }
+      ) : events.length === 0 ? (
 
-    };
+        <EmptyState />
 
-    useEffect(() => {
+      ) : (
 
-        fetchEvents();
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6 mt-8">
 
-    }, [search, category, status]);
+          {events.map((event) => (
 
-    return (
-
-        <div className="bg-slate-100 min-h-screen">
-
-            {/* Heading */}
-
-            <div className="mb-8">
-
-                <h1 className="text-4xl font-bold text-slate-800">
-
-                    All Events
-
-                </h1>
-
-                <p className="text-gray-500 mt-2">
-
-                    View all events organized by societies.
-
-                </p>
-
-            </div>
-
-            <SearchBar
-
-                search={search}
-                setSearch={setSearch}
-
-                category={category}
-                setCategory={setCategory}
-
-                status={status}
-                setStatus={setStatus}
-
+            <EventCard
+              key={event._id}
+              event={event}
             />
 
-            {loading ? (
-
-                <div className="text-center py-20">
-
-                    Loading...
-
-                </div>
-
-            ) : events.length === 0 ? (
-
-                <EmptyState />
-
-            ) : (
-
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 justify-items-center mt-8">
-                    {events.map((event) => (
-
-                        <EventCard
-
-                            key={event._id}
-
-                            event={event}
-
-                        />
-
-                    ))}
-
-                </div>
-
-            )}
+          ))}
 
         </div>
 
-    );
+      )}
 
+    </div>
+  );
 }
 
 export default Events;

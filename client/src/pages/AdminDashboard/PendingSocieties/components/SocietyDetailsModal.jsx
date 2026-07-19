@@ -3,18 +3,16 @@ function SocietyDetailsModal({
   setOpen,
   society,
 }) {
-
   if (!open || !society) return null;
 
   return (
+    <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4 py-4">
 
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-5">
-
-      <div className="bg-white rounded-3xl w-full max-w-3xl overflow-hidden">
+      <div className="w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-white rounded-3xl shadow-2xl">
 
         {/* Header */}
 
-        <div className="flex items-center gap-5 p-8 border-b">
+        <div className="flex flex-col sm:flex-row items-center sm:items-center gap-5 p-5 sm:p-8 border-b">
 
           <img
             src={
@@ -25,16 +23,16 @@ function SocietyDetailsModal({
                   )}&background=2563eb&color=fff`
             }
             alt={society.societyName}
-            className="w-24 h-24 rounded-2xl object-cover"
+            className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover"
           />
 
-          <div>
+          <div className="text-center sm:text-left flex-1">
 
-            <h2 className="text-3xl font-bold">
+            <h2 className="text-2xl sm:text-3xl font-bold break-words">
               {society.societyName}
             </h2>
 
-            <p className="text-blue-600 font-semibold mt-2">
+            <p className="text-blue-600 font-semibold mt-2 break-words">
               {society.societyType}
             </p>
 
@@ -44,7 +42,7 @@ function SocietyDetailsModal({
 
         {/* Body */}
 
-        <div className="p-8 space-y-5">
+        <div className="p-5 sm:p-8 space-y-5">
 
           <div>
 
@@ -52,8 +50,8 @@ function SocietyDetailsModal({
               Faculty Coordinator
             </h3>
 
-            <p className="text-gray-600">
-              {society.facultyCoordinator}
+            <p className="text-gray-600 break-words">
+              {society.facultyCoordinator || "-"}
             </p>
 
           </div>
@@ -64,8 +62,8 @@ function SocietyDetailsModal({
               Email
             </h3>
 
-            <p className="text-gray-600">
-              {society.email}
+            <p className="text-gray-600 break-all">
+              {society.email || "-"}
             </p>
 
           </div>
@@ -76,7 +74,7 @@ function SocietyDetailsModal({
               Vision
             </h3>
 
-            <p className="text-gray-600">
+            <p className="text-gray-600 break-words whitespace-pre-wrap">
               {society.vision || "-"}
             </p>
 
@@ -88,7 +86,7 @@ function SocietyDetailsModal({
               Mission
             </h3>
 
-            <p className="text-gray-600">
+            <p className="text-gray-600 break-words whitespace-pre-wrap">
               {society.mission || "-"}
             </p>
 
@@ -100,7 +98,7 @@ function SocietyDetailsModal({
               Description
             </h3>
 
-            <p className="text-gray-600">
+            <p className="text-gray-600 break-words whitespace-pre-wrap">
               {society.description || "-"}
             </p>
 
@@ -109,9 +107,7 @@ function SocietyDetailsModal({
           <div className="pt-4">
 
             <button
-              onClick={() =>
-                setOpen(false)
-              }
+              onClick={() => setOpen(false)}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition"
             >
               Close
@@ -124,9 +120,7 @@ function SocietyDetailsModal({
       </div>
 
     </div>
-
   );
-
 }
 
 export default SocietyDetailsModal;

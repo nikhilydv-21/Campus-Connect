@@ -5,12 +5,11 @@ function SearchBar({
   setSearch,
 }) {
   return (
-
-    <div className="relative mb-8">
+    <div className="relative mb-6 sm:mb-8">
 
       <Search
         size={20}
-        className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400"
+        className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 text-gray-400"
       />
 
       <input
@@ -20,13 +19,19 @@ function SearchBar({
         placeholder="Search by Name or Roll Number..."
         className="
           w-full
-          pl-14
-          pr-5
-          py-4
+          h-11
+          sm:h-14
+          pl-10
+          sm:pl-14
+          pr-4
+          sm:pr-5
+          text-sm
+          sm:text-base
           bg-white
           border
           border-slate-300
-          rounded-2xl
+          rounded-xl
+          sm:rounded-2xl
           outline-none
           focus:border-slate-500
           transition
@@ -34,7 +39,6 @@ function SearchBar({
       />
 
     </div>
-
   );
 }
 

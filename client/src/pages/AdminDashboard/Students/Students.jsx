@@ -8,16 +8,13 @@ import StudentCard from "./components/StudentCard";
 import EmptyState from "./components/EmptyState";
 
 function Students() {
-
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [search, setSearch] = useState("");
 
   const fetchStudents = async () => {
-
     try {
-
       setLoading(true);
 
       const response =
@@ -37,7 +34,6 @@ function Students() {
       setLoading(false);
 
     }
-
   };
 
   useEffect(() => {
@@ -45,16 +41,17 @@ function Students() {
   }, [search]);
 
   return (
-
     <div className="bg-slate-100 min-h-screen">
 
-      <div className="mb-8">
+      {/* Heading */}
 
-        <h1 className="text-4xl font-bold text-slate-800">
+      <div className="mb-6 sm:mb-8">
+
+        <h1 className="text-3xl sm:text-4xl font-bold text-slate-800">
           Students
         </h1>
 
-        <p className="text-gray-500 mt-2">
+        <p className="text-sm sm:text-base text-gray-500 mt-2">
           View all registered students.
         </p>
 
@@ -67,7 +64,7 @@ function Students() {
 
       {loading ? (
 
-        <div className="text-center py-20">
+        <div className="flex justify-center items-center h-60 text-base sm:text-lg text-gray-500">
           Loading...
         </div>
 
@@ -77,7 +74,7 @@ function Students() {
 
       ) : (
 
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6 mt-8">
 
           {students.map((student) => (
 
@@ -93,9 +90,7 @@ function Students() {
       )}
 
     </div>
-
   );
-
 }
 
 export default Students;

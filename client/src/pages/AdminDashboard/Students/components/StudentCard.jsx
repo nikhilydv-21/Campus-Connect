@@ -10,16 +10,13 @@ import StudentDetailsModal from "./StudentDetailsModal";
 function StudentCard({
   student,
 }) {
-
   const [open, setOpen] = useState(false);
 
   const [studentData, setStudentData] =
     useState(null);
 
   const handleView = async () => {
-
     try {
-
       const response =
         await getStudentDetails(
           student._id
@@ -37,12 +34,10 @@ function StudentCard({
       );
 
     }
-
   };
 
   return (
     <>
-
       <div
         className="
           w-full
@@ -59,7 +54,7 @@ function StudentCard({
 
         {/* Profile Picture */}
 
-        <div className="flex justify-center pt-10">
+        <div className="flex justify-center pt-8 sm:pt-10">
 
           <img
             src={
@@ -71,8 +66,10 @@ function StudentCard({
             }
             alt={student.fullName}
             className="
-              w-24
-              h-24
+              w-20
+              h-20
+              sm:w-24
+              sm:h-24
               rounded-full
               object-cover
               border-2
@@ -87,14 +84,16 @@ function StudentCard({
 
         {/* Content */}
 
-        <div className="p-6 text-center">
+        <div className="p-5 sm:p-6 text-center">
 
           <h2
             className="
-              text-2xl
+              text-xl
+              sm:text-2xl
               font-semibold
               text-slate-700
               tracking-tight
+              break-words
             "
           >
             {student.fullName}
@@ -105,6 +104,7 @@ function StudentCard({
               mt-2
               text-sm
               text-slate-500
+              break-words
             "
           >
             {student.rollNumber}
@@ -122,9 +122,12 @@ function StudentCard({
             "
           >
 
-            <GraduationCap size={18} />
+            <GraduationCap
+              size={18}
+              className="shrink-0"
+            />
 
-            <span>
+            <span className="text-sm sm:text-base break-words">
               {student.branch} • Year {student.year}
             </span>
 
@@ -171,7 +174,6 @@ function StudentCard({
 
     </>
   );
-
 }
 
 export default StudentCard;

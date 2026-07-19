@@ -8,10 +8,8 @@ function SearchBar({
   status,
   setStatus,
 }) {
-
   return (
-
-    <div className="flex flex-col lg:flex-row gap-4 mb-8">
+    <div className="flex flex-col lg:flex-row gap-4 mb-6 sm:mb-8">
 
       {/* Search */}
 
@@ -19,7 +17,7 @@ function SearchBar({
 
         <Search
           size={20}
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+          className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-400"
         />
 
         <input
@@ -31,9 +29,13 @@ function SearchBar({
           }
           className="
             w-full
-            pl-12
+            h-11
+            sm:h-12
+            pl-10
+            sm:pl-12
             pr-4
-            py-3
+            text-sm
+            sm:text-base
             bg-white
             border
             border-slate-300
@@ -54,12 +56,17 @@ function SearchBar({
           setCategory(e.target.value)
         }
         className="
+          w-full
+          lg:w-auto
+          h-11
+          sm:h-12
+          px-4
+          text-sm
+          sm:text-base
           bg-white
           border
           border-slate-300
           rounded-xl
-          px-4
-          py-3
           outline-none
           focus:border-slate-500
           transition
@@ -87,12 +94,17 @@ function SearchBar({
           setStatus(e.target.value)
         }
         className="
+          w-full
+          lg:w-auto
+          h-11
+          sm:h-12
+          px-4
+          text-sm
+          sm:text-base
           bg-white
           border
           border-slate-300
           rounded-xl
-          px-4
-          py-3
           outline-none
           focus:border-slate-500
           transition
@@ -103,14 +115,11 @@ function SearchBar({
         <option value="Upcoming">Upcoming</option>
         <option value="Ongoing">Ongoing</option>
         <option value="Completed">Completed</option>
-       
 
       </select>
 
     </div>
-
   );
-
 }
 
 export default SearchBar;

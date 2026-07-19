@@ -1,6 +1,5 @@
 import {
   MoreVertical,
-  Eye,
   CheckCircle,
   XCircle,
 } from "lucide-react";
@@ -26,37 +25,22 @@ function SocietyCard({
   society,
   refresh,
 }) {
-
   const menuRef = useRef(null);
 
-  const [loading, setLoading] =
-    useState(false);
-
-  const [openDetails, setOpenDetails] =
-    useState(false);
-
-  const [approveOpen, setApproveOpen] =
-    useState(false);
-
-  const [rejectOpen, setRejectOpen] =
-    useState(false);
-
-  const [menuOpen, setMenuOpen] =
-    useState(false);
+  const [loading, setLoading] = useState(false);
+  const [openDetails, setOpenDetails] = useState(false);
+  const [approveOpen, setApproveOpen] = useState(false);
+  const [rejectOpen, setRejectOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-
     const handleClickOutside = (event) => {
-
       if (
         menuRef.current &&
         !menuRef.current.contains(event.target)
       ) {
-
         setMenuOpen(false);
-
       }
-
     };
 
     document.addEventListener(
@@ -65,20 +49,15 @@ function SocietyCard({
     );
 
     return () => {
-
       document.removeEventListener(
         "mousedown",
         handleClickOutside
       );
-
     };
-
   }, []);
 
   const handleApprove = async () => {
-
     try {
-
       setLoading(true);
 
       const response =
@@ -91,26 +70,18 @@ function SocietyCard({
       setApproveOpen(false);
 
       refresh();
-
     } catch (error) {
-
       toast.error(
         error.response?.data?.message ||
-        "Approval failed"
+          "Approval failed"
       );
-
     } finally {
-
       setLoading(false);
-
     }
-
   };
 
   const handleReject = async () => {
-
     try {
-
       setLoading(true);
 
       const response =
@@ -123,27 +94,21 @@ function SocietyCard({
       setRejectOpen(false);
 
       refresh();
-
     } catch (error) {
-
       toast.error(
         error.response?.data?.message ||
-        "Rejection failed"
+          "Rejection failed"
       );
-
     } finally {
-
       setLoading(false);
-
     }
-
   };
 
   return (
     <>
-
       <div
         className="
+          relative
           w-full
           bg-white
           rounded-3xl
@@ -153,27 +118,28 @@ function SocietyCard({
           hover:shadow-lg
           transition-all
           duration-300
-          relative
-          p-6
+          p-5
+          sm:p-6
         "
       >
-
         {/* Logo */}
 
-        <div className="flex justify-center pt-4">
+        <div className="flex justify-center pt-2 sm:pt-4">
 
           <img
             src={
               society.logo
                 ? society.logo
                 : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                  society.societyName
-                )}&background=f8fafc&color=111827`
+                    society.societyName
+                  )}&background=f8fafc&color=111827`
             }
             alt={society.societyName}
             className="
-              w-24
-              h-24
+              w-20
+              h-20
+              sm:w-24
+              sm:h-24
               rounded-full
               object-cover
               border-2
@@ -188,42 +154,39 @@ function SocietyCard({
 
         {/* Content */}
 
-        <div className="text-center mt-6">
+        <div className="text-center mt-5 sm:mt-6">
 
-          <h2 className="text-2xl font-semibold text-slate-700">
-
+          <h2 className="text-xl sm:text-2xl font-semibold text-slate-700 break-words">
             {society.societyName}
-
           </h2>
 
-          <p className="mt-2 text-slate-500 font-medium">
-
+          <p className="mt-2 text-sm sm:text-base text-slate-500 font-medium break-words">
             {society.societyType}
-
           </p>
-
 
           <span
             className="
-      inline-flex
-      mt-4
-      px-3
-      py-1
-      rounded-full
-      text-xs
-      font-medium
-      bg-slate-100
-      text-slate-700
-    "
+              inline-flex
+              mt-4
+              px-3
+              py-1
+              rounded-full
+              text-xs
+              font-medium
+              bg-slate-100
+              text-slate-700
+            "
           >
             Pending
           </span>
+
         </div>
+
         {/* Three Dots */}
 
         <div
           ref={menuRef}
-          className="absolute top-5 right-5"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5"
         >
 
           <button
@@ -241,9 +204,7 @@ function SocietyCard({
               transition
             "
           >
-
             <MoreVertical size={20} />
-
           </button>
 
           {menuOpen && (
@@ -263,18 +224,10 @@ function SocietyCard({
                 z-50
               "
             >
-
-             
-
-              {/* Approve */}
-
               <button
                 onClick={() => {
-
                   setMenuOpen(false);
-
                   setApproveOpen(true);
-
                 }}
                 className="
                   w-full
@@ -288,22 +241,14 @@ function SocietyCard({
                   text-slate-700
                 "
               >
-
                 <CheckCircle size={17} />
-
                 Approve Society
-
               </button>
-
-              {/* Reject */}
 
               <button
                 onClick={() => {
-
                   setMenuOpen(false);
-
                   setRejectOpen(true);
-
                 }}
                 className="
                   w-full
@@ -317,13 +262,9 @@ function SocietyCard({
                   text-red-600
                 "
               >
-
                 <XCircle size={17} />
-
                 Reject Society
-
               </button>
-
             </div>
 
           )}
@@ -353,10 +294,8 @@ function SocietyCard({
         loading={loading}
         society={society}
       />
-
     </>
   );
-
 }
 
 export default SocietyCard;
