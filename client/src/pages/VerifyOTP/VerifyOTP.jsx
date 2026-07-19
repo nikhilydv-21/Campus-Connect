@@ -122,7 +122,7 @@ function VerifyOTP() {
           <p className="text-center text-gray-500 mb-8">
             Enter the verification code sent to
             <br />
-            <span className="font-semibold text-blue-600">
+            <span className="font-semibold text-slate-900 break-all">
               {email}
             </span>
           </p>

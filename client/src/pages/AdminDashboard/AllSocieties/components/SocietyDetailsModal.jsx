@@ -22,10 +22,10 @@ function SocietyDetailsModal({
                                 ? society.logo
                                 : `https://ui-avatars.com/api/?name=${encodeURIComponent(
                                     society.societyName
-                                )}&background=2563eb&color=fff`
+                                )}&background=f8fafc&color=111827`
                         }
                         alt={society.societyName}
-                        className="w-24 h-24 rounded-2xl object-cover border-4 border-blue-100"
+                        className="w-24 h-24 rounded-2xl object-cover border-2 border-slate-300 p-1 bg-white shadow-sm"
                     />
 
                     <div className="flex-1">
