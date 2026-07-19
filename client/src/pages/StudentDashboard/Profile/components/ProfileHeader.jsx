@@ -22,25 +22,19 @@ function ProfileHeader({
   handleRemovePicture,
   setShowImage,
 }) {
-
   const [pictureMenu, setPictureMenu] =
     useState(false);
 
   const menuRef = useRef(null);
 
   useEffect(() => {
-
     const handleClickOutside = (e) => {
-
       if (
         menuRef.current &&
         !menuRef.current.contains(e.target)
       ) {
-
         setPictureMenu(false);
-
       }
-
     };
 
     document.addEventListener(
@@ -49,24 +43,19 @@ function ProfileHeader({
     );
 
     return () => {
-
       document.removeEventListener(
         "mousedown",
         handleClickOutside
       );
-
     };
-
   }, []);
 
   const handleCancel = () => {
-
     setEditMode(false);
 
     setPictureMenu(false);
 
     setFormData({
-
       fullName:
         student?.fullName || "",
 
@@ -84,13 +73,10 @@ function ProfileHeader({
 
       interests:
         student?.interests || [],
-
     });
-
   };
 
   return (
-
     <div className="flex flex-col items-center">
 
       {/* Profile Picture */}
@@ -99,7 +85,8 @@ function ProfileHeader({
         src={
           student?.profilePicture ||
           `https://ui-avatars.com/api/?name=${encodeURIComponent(
-            student?.fullName || "Student"
+            student?.fullName ||
+              "Student"
           )}`
         }
         alt="Profile"
@@ -107,8 +94,10 @@ function ProfileHeader({
           setShowImage(true)
         }
         className="
-          w-36
-          h-36
+          w-28
+          h-28
+          sm:w-36
+          sm:h-36
           rounded-full
           object-cover
           border-4
@@ -116,21 +105,17 @@ function ProfileHeader({
           cursor-pointer
           hover:scale-105
           transition
+          shrink-0
         "
       />
 
       {/* Manage Picture */}
 
       {editMode && (
-
         <div
           ref={menuRef}
-          className="
-            relative
-            mt-4
-          "
+          className="relative mt-4"
         >
-
           <button
             onClick={() =>
               setPictureMenu(
@@ -147,17 +132,14 @@ function ProfileHeader({
               transition
             "
           >
-
             Picture
 
             <ChevronDown
               size={16}
             />
-
           </button>
 
           {pictureMenu && (
-
             <div
               className="
                 absolute
@@ -173,7 +155,6 @@ function ProfileHeader({
                 z-50
               "
             >
-
               {/* Change Picture */}
 
               <label
@@ -189,8 +170,10 @@ function ProfileHeader({
                   transition
                 "
               >
-
-                <Upload size={16} />
+                <Upload
+                  size={16}
+                  className="shrink-0"
+                />
 
                 Change Picture
 
@@ -199,27 +182,20 @@ function ProfileHeader({
                   hidden
                   accept="image/*"
                   onChange={(e) => {
-
                     handleImageUpload(e);
-
                     setPictureMenu(false);
-
                   }}
                 />
-
               </label>
-                            {/* Remove Picture */}
+
+              {/* Remove Picture */}
 
               {student?.profilePicture && (
-
                 <button
                   type="button"
                   onClick={() => {
-
                     handleRemovePicture();
-
                     setPictureMenu(false);
-
                   }}
                   className="
                     w-full
@@ -234,51 +210,56 @@ function ProfileHeader({
                     transition
                   "
                 >
-
-                  <Trash2 size={16} />
+                  <Trash2
+                    size={16}
+                    className="shrink-0"
+                  />
 
                   Remove Picture
-
                 </button>
-
               )}
-
             </div>
-
           )}
-
         </div>
-
       )}
 
       {/* Name */}
 
-      <h2 className="text-3xl font-bold mt-6 text-center break-words">
-
+      <h2 className="mt-5 sm:mt-6 text-2xl sm:text-3xl font-bold text-center break-words">
         {editMode
           ? formData.fullName
           : student?.fullName}
-
       </h2>
 
       {/* Roll Number */}
 
-      <p className="text-gray-500 mt-2">
-
+      <p className="mt-2 text-sm sm:text-base text-gray-500 break-all text-center">
         {student?.rollNumber}
-
       </p>
+
       {/* Buttons */}
 
-      <div className="flex gap-4 mt-5">
-
+      <div
+        className="
+          flex
+          flex-col
+          sm:flex-row
+          gap-3
+          sm:gap-4
+          mt-5
+          w-full
+          sm:w-auto
+        "
+      >
         {editMode ? (
-
           <>
-
             <button
-              onClick={updateProfile}
+              onClick={
+                updateProfile
+              }
               className="
+                w-full
+                sm:w-auto
                 bg-green-600
                 hover:bg-green-700
                 text-white
@@ -286,16 +267,19 @@ function ProfileHeader({
                 py-3
                 rounded-xl
                 transition
+                font-semibold
               "
             >
-
               Save Changes
-
             </button>
 
             <button
-              onClick={handleCancel}
+              onClick={
+                handleCancel
+              }
               className="
+                w-full
+                sm:w-auto
                 bg-gray-500
                 hover:bg-gray-600
                 text-white
@@ -303,22 +287,20 @@ function ProfileHeader({
                 py-3
                 rounded-xl
                 transition
+                font-semibold
               "
             >
-
               Cancel
-
             </button>
-
           </>
-
         ) : (
-
           <button
             onClick={() =>
               setEditMode(true)
             }
             className="
+              w-full
+              sm:w-auto
               bg-blue-600
               hover:bg-blue-700
               text-white
@@ -326,26 +308,25 @@ function ProfileHeader({
               py-3
               rounded-xl
               transition
+              font-semibold
+              flex
+              items-center
+              justify-center
+              gap-2
             "
           >
-
             <Pencil
               size={18}
-              className="inline mr-2"
+              className="shrink-0"
             />
 
             Edit Profile
-
           </button>
-
         )}
-
       </div>
 
     </div>
-
   );
-
 }
 
 export default ProfileHeader;

@@ -26,7 +26,6 @@ function LikedEvents() {
 
   const fetchEvents = async () => {
     try {
-
       setLoading(true);
 
       const response =
@@ -38,7 +37,7 @@ function LikedEvents() {
 
       toast.error(
         error.response?.data?.message ||
-        "Failed to load liked events"
+          "Failed to load liked events"
       );
 
     } finally {
@@ -68,24 +67,24 @@ function LikedEvents() {
 
       toast.error(
         error.response?.data?.message ||
-        "Failed to load event details"
+          "Failed to load event details"
       );
 
     }
   };
 
   return (
-    <div className="bg-slate-100 min-h-screen p-8">
+    <div className="bg-slate-100 min-h-screen p-4 sm:p-6 lg:p-8">
 
       {/* Heading */}
 
-      <div className="mb-8">
+      <div className="mb-6 sm:mb-8">
 
-        <h1 className="text-4xl font-bold text-slate-800">
+        <h1 className="text-3xl sm:text-4xl font-bold text-slate-800">
           Liked Events
         </h1>
 
-        <p className="text-gray-500 mt-2">
+        <p className="text-sm sm:text-base text-gray-500 mt-2">
           All the events you've liked.
         </p>
 
@@ -93,16 +92,20 @@ function LikedEvents() {
 
       {/* Search */}
 
-      <SearchBar
-        search={search}
-        setSearch={setSearch}
-      />
+      <div className="mb-6 sm:mb-8">
 
-      {/* Cards */}
+        <SearchBar
+          search={search}
+          setSearch={setSearch}
+        />
+
+      </div>
+
+      {/* Content */}
 
       {loading ? (
 
-        <div className="text-center py-20 text-lg text-gray-500">
+        <div className="flex justify-center items-center h-60 text-base sm:text-lg text-gray-500">
           Loading...
         </div>
 
@@ -112,7 +115,7 @@ function LikedEvents() {
 
       ) : (
 
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6">
 
           {events.map((event) => (
 
@@ -120,11 +123,13 @@ function LikedEvents() {
               key={event._id}
               event={event}
               onView={handleView}
-               onUnlike={(id) =>
+              onUnlike={(id) =>
                 setEvents((prev) =>
-                 prev.filter((event) => event._id !== id)
-            )
-        }
+                  prev.filter(
+                    (event) => event._id !== id
+                  )
+                )
+              }
             />
 
           ))}

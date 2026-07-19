@@ -2,21 +2,47 @@ import { HeartCrack } from "lucide-react";
 
 function EmptyState() {
   return (
-    <div className="bg-white rounded-3xl shadow-md p-14 text-center">
+    <div
+      className="
+        bg-white
+        rounded-2xl
+        sm:rounded-3xl
+        shadow-md
+        py-14
+        sm:py-20
+        px-6
+        flex
+        flex-col
+        items-center
+        text-center
+      "
+    >
+      <div
+        className="
+          w-20
+          h-20
+          sm:w-24
+          sm:h-24
+          rounded-full
+          bg-slate-100
+          flex
+          items-center
+          justify-center
+        "
+      >
+        <HeartCrack
+          size={36}
+          className="text-gray-400 sm:w-[42px] sm:h-[42px]"
+        />
+      </div>
 
-      <HeartCrack
-        size={70}
-        className="mx-auto text-gray-300"
-      />
-
-      <h2 className="text-2xl font-bold mt-6 text-slate-700">
+      <h2 className="text-xl sm:text-2xl font-bold mt-5 text-slate-700">
         No Liked Events
       </h2>
 
-      <p className="text-gray-500 mt-3">
+      <p className="mt-3 text-sm sm:text-base text-gray-500 leading-7 max-w-md">
         You haven't liked any events yet.
       </p>
-
     </div>
   );
 }

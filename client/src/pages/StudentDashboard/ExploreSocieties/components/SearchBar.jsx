@@ -5,11 +5,22 @@ function SearchBar({
   setSearch,
 }) {
   return (
-    <div className="bg-white rounded-2xl shadow-md p-4 flex items-center">
-
+    <div
+      className="
+        bg-white
+        rounded-2xl
+        shadow-md
+        px-4
+        py-3
+        sm:px-5
+        sm:py-4
+        flex
+        items-center
+      "
+    >
       <Search
-        className="text-gray-400 mr-3"
-        size={22}
+        className="text-gray-400 mr-3 shrink-0"
+        size={20}
       />
 
       <input
@@ -19,9 +30,15 @@ function SearchBar({
           setSearch(e.target.value)
         }
         placeholder="Search societies..."
-        className="w-full outline-none text-lg"
+        className="
+          w-full
+          outline-none
+          text-sm
+          sm:text-base
+          lg:text-lg
+          placeholder:text-gray-400
+        "
       />
-
     </div>
   );
 }

@@ -2,129 +2,131 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 import {
-    Calendar,
-    Clock,
-    MapPin,
-    Users,
-    X,
-    Building2,
-    CalendarDays,
-    Tag,
+  Calendar,
+  Clock,
+  MapPin,
+  Users,
+  X,
+  Building2,
+  CalendarDays,
+  Tag,
 } from "lucide-react";
 
 import {
-    registerEvent,
+  registerEvent,
 } from "../../../../services/studentServices";
 
 import RegisterConfirmModal from "./RegisterConfirmModal";
 
 function EventDetailsModal({
-    open,
-    setOpen,
-    eventData,
-    onRegisterSuccess,
-    hideRegisterButton = false,
+  open,
+  setOpen,
+  eventData,
+  onRegisterSuccess,
+  hideRegisterButton = false,
 }) {
 
-    const [loading, setLoading] =
-        useState(false);
+  const [loading, setLoading] =
+    useState(false);
 
-    const [confirmOpen, setConfirmOpen] =
-        useState(false);
+  const [confirmOpen, setConfirmOpen] =
+    useState(false);
 
-    if (!open || !eventData) return null;
+  if (!open || !eventData) return null;
 
-    const event = eventData.event;
+  const event = eventData.event;
 
-    const seatsLeft =
-        eventData.seatsLeft;
+  const seatsLeft =
+    eventData.seatsLeft;
 
-    const isRegistered =
-        eventData.isRegistered;
+  const isRegistered =
+    eventData.isRegistered;
 
-    const isDeadlinePassed =
-        event.registrationMode === "Participant" &&
-        event.registrationDeadline &&
-        new Date(event.registrationDeadline) < new Date();
-    const handleRegister = async () => {
+  const isDeadlinePassed =
+    event.registrationMode === "Participant" &&
+    event.registrationDeadline &&
+    new Date(event.registrationDeadline) <
+      new Date();
 
-        try {
+  const handleRegister = async () => {
 
-            setLoading(true);
+    try {
 
-            const response =
-                await registerEvent(event._id);
+      setLoading(true);
 
-            toast.success(response.message);
+      const response =
+        await registerEvent(event._id);
 
-            setConfirmOpen(false);
+      toast.success(response.message);
 
-            setOpen(false);
+      setConfirmOpen(false);
 
-            if (onRegisterSuccess) {
+      setOpen(false);
 
-                onRegisterSuccess();
+      if (onRegisterSuccess) {
 
-            }
+        onRegisterSuccess();
 
-        } catch (error) {
+      }
 
-            toast.error(
-                error.response?.data?.message ||
-                "Registration failed"
-            );
+    } catch (error) {
 
-        } finally {
+      toast.error(
+        error.response?.data?.message ||
+          "Registration failed"
+      );
 
-            setLoading(false);
+    } finally {
 
-        }
+      setLoading(false);
 
-    };
+    }
 
-    const formatDate = (date) => {
+  };
 
-        return new Date(date).toLocaleDateString(
-            "en-IN",
-            {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-            }
-        );
+  const formatDate = (date) => {
 
-    };
+    return new Date(date).toLocaleDateString(
+      "en-IN",
+      {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }
+    );
 
-    const formatTime = (time) => {
+  };
 
-        if (!time) return "N/A";
+  const formatTime = (time) => {
 
-        const [hour, minute] = time.split(":");
+    if (!time) return "N/A";
 
-        const date = new Date();
+    const [hour, minute] = time.split(":");
 
-        date.setHours(Number(hour));
+    const date = new Date();
 
-        date.setMinutes(Number(minute));
+    date.setHours(Number(hour));
 
-        return date.toLocaleTimeString(
-            "en-IN",
-            {
-                hour: "numeric",
-                minute: "2-digit",
-                hour12: true,
-            }
-        );
+    date.setMinutes(Number(minute));
 
-    };
+    return date.toLocaleTimeString(
+      "en-IN",
+      {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      }
+    );
 
-    const infoCard =
-        "border rounded-2xl p-5 hover:shadow-md transition";
+  };
 
-    return (
+  const infoCard =
+    "border rounded-2xl p-5 hover:shadow-md transition";
 
-        <div
-            className="
+  return (
+
+    <div
+      className="
         fixed
         inset-0
         bg-black/60
@@ -133,40 +135,49 @@ function EventDetailsModal({
         justify-center
         items-center
         z-50
-        p-5
+        px-4
+        py-4
       "
-        >
+    >
 
-            <div
-                className="
+      <div
+        className="
           bg-white
           w-full
           max-w-6xl
-          rounded-3xl
+          rounded-2xl
+          sm:rounded-3xl
           overflow-hidden
           shadow-2xl
-          max-h-[94vh]
+          max-h-[95vh]
           overflow-y-auto
         "
-            >
-                {/* Banner */}
+      >
 
-                <div className="relative">
+        {/* Banner */}
 
-                    <img
-                        src={
-                            event.banner
-                                ? event.banner
-                                : "https://placehold.co/1200x450/e2e8f0/64748b?text=Event"
-                        }
-                        alt={event.title}
-                        className="w-full h-80 object-cover"
-                    />
+        <div className="relative">
 
-                    {/* Dark Overlay */}
+          <img
+            src={
+              event.banner
+                ? event.banner
+                : "https://placehold.co/1200x450/e2e8f0/64748b?text=Event"
+            }
+            alt={event.title}
+            className="
+              w-full
+              h-56
+              sm:h-72
+              lg:h-80
+              object-cover
+            "
+          />
 
-                    <div
-                        className="
+          {/* Overlay */}
+
+          <div
+            className="
               absolute
               inset-0
               bg-gradient-to-t
@@ -174,18 +185,22 @@ function EventDetailsModal({
               via-black/30
               to-transparent
             "
-                    />
+          />
 
-                    {/* Close */}
+          {/* Close Button */}
 
-                    <button
-                        onClick={() => setOpen(false)}
-                        className="
+          <button
+            onClick={() => setOpen(false)}
+            className="
               absolute
-              top-5
-              right-5
-              h-11
-              w-11
+              top-4
+              right-4
+              sm:top-5
+              sm:right-5
+              h-10
+              w-10
+              sm:h-11
+              sm:w-11
               rounded-full
               bg-white/95
               hover:bg-white
@@ -195,49 +210,50 @@ function EventDetailsModal({
               justify-center
               transition
             "
-                    >
+          >
 
-                        <X size={22} />
+            <X
+              size={20}
+              className="sm:w-[22px] sm:h-[22px]"
+            />
 
-                    </button>
+          </button>
 
-                    {/* Event Information */}
+          {/* Event Info */}
 
-                    <div
-                        className="
+          <div
+            className="
               absolute
-              left-8
-              right-8
-              bottom-8
+              left-5
+              right-5
+              bottom-5
+              sm:left-8
+              sm:right-8
+              sm:bottom-8
             "
-                    >
+          >
 
-                        {/* Event Title */}
-
-                        <h1
-                            className="
+            <h1
+              className="
                 text-white
-                text-xl
-                md:text-2xl
+                text-2xl
+                sm:text-3xl
+                lg:text-4xl
                 font-bold
                 leading-tight
-                tracking-tight
                 drop-shadow-xl
-                max-w-4xl
                 break-words
               "
-                        >
+            >
 
-                            {event.title}
+              {event.title}
 
-                        </h1>
+            </h1>
 
-                        {/* Category */}
+            <div className="mt-4">
 
-                        <div className="mt-4">
-
-                            <span
-                                className="
+              <span
+                className="
                   inline-flex
                   items-center
                   px-3.5
@@ -249,310 +265,313 @@ function EventDetailsModal({
                   border-white/20
                   text-white
                   text-xs
-                  font-medim
+                  font-medium
+                  break-words
                 "
-                            >
+              >
 
-                                <Tag
-                                    size={14}
-                                    className="mr-1.5"
-                                />
+                <Tag
+                  size={14}
+                  className="mr-1.5 shrink-0"
+                />
 
-                                {event.category}
+                {event.category}
 
-                            </span>
+              </span>
 
-                        </div>
+            </div>
 
-                    </div>
+          </div>
+
+        </div>
+
+        {/* Body */}
+
+        <div className="p-5 sm:p-6 lg:p-8">
+                  {/* Information */}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+
+            {/* Organizer */}
+
+            <div className={infoCard}>
+
+              <div className="flex items-center gap-3">
+
+                <Building2
+                  size={20}
+                  className="text-slate-700 shrink-0"
+                />
+
+                <span className="font-semibold text-slate-800">
+                  Organizer
+                </span>
+
+              </div>
+
+              <p className="mt-4 text-slate-700 break-words">
+
+                {event.organizer?.societyName}
+
+              </p>
+
+            </div>
+
+            {/* Venue */}
+
+            <div className={infoCard}>
+
+              <div className="flex items-center gap-3">
+
+                <MapPin
+                  size={20}
+                  className="text-red-500 shrink-0"
+                />
+
+                <span className="font-semibold text-slate-800">
+                  Venue
+                </span>
+
+              </div>
+
+              <p className="mt-4 text-slate-700 break-words">
+
+                {event.venue}
+
+              </p>
+
+            </div>
+
+            {/* Event Date */}
+
+            <div className={infoCard}>
+
+              <div className="flex items-center gap-3">
+
+                <Calendar
+                  size={20}
+                  className="text-blue-600 shrink-0"
+                />
+
+                <span className="font-semibold text-slate-800">
+                  Event Date
+                </span>
+
+              </div>
+
+              <p className="mt-4 text-slate-700">
+
+                {formatDate(event.date)}
+
+              </p>
+
+            </div>
+
+            {/* Time */}
+
+            <div className={infoCard}>
+
+              <div className="flex items-center gap-3">
+
+                <Clock
+                  size={20}
+                  className="text-orange-500 shrink-0"
+                />
+
+                <span className="font-semibold text-slate-800">
+                  Time
+                </span>
+
+              </div>
+
+              <p className="mt-4 text-slate-700 break-words">
+
+                {formatTime(event.startTime)} -{" "}
+                {formatTime(event.endTime)}
+
+              </p>
+
+            </div>
+
+            {/* Category */}
+
+            <div className={infoCard}>
+
+              <div className="flex items-center gap-3">
+
+                <Tag
+                  size={20}
+                  className="text-indigo-600 shrink-0"
+                />
+
+                <span className="font-semibold text-slate-800">
+                  Category
+                </span>
+
+              </div>
+
+              <p className="mt-4 text-slate-700 break-words">
+
+                {event.category}
+
+              </p>
+
+            </div>
+
+            {/* Registration Deadline */}
+
+            {event.registrationMode === "Participant" &&
+              event.status !== "Completed" && (
+
+                <div className={infoCard}>
+
+                  <div className="flex items-center gap-3">
+
+                    <CalendarDays
+                      size={20}
+                      className="text-purple-600 shrink-0"
+                    />
+
+                    <span className="font-semibold text-slate-800">
+                      Registration Deadline
+                    </span>
+
+                  </div>
+
+                  <p className="mt-4 text-slate-700 break-words">
+
+                    {event.registrationDeadline
+                      ? formatDate(
+                          event.registrationDeadline
+                        )
+                      : "Not Available"}
+
+                  </p>
 
                 </div>
 
-                {/* Body */}
+              )}
 
-                <div className="p-8">
-                    {/* Information */}
+            {/* Registration Mode */}
 
-                    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+            <div className={infoCard}>
 
-                        {/* Organizer */}
+              <div className="flex items-center gap-3">
 
-                        <div className={infoCard}>
+                <Users
+                  size={20}
+                  className="text-emerald-600 shrink-0"
+                />
 
-                            <div className="flex items-center gap-3">
+                <span className="font-semibold text-slate-800">
+                  Registration Mode
+                </span>
 
-                                <Building2 size={20} className="text-slate-700" />
+              </div>
 
-                                <span className="font-semibold text-slate-800">
+              <p className="mt-4 text-slate-700 break-words">
 
-                                    Organizer
+                {event.registrationMode}
 
-                                </span>
+              </p>
 
-                            </div>
+            </div>
 
-                            <p className="mt-4 text-slate-700">
-
-                                {event.organizer?.societyName}
-
-                            </p>
-
-                        </div>
-
-                        {/* Venue */}
-
-                        <div className={infoCard}>
-
-                            <div className="flex items-center gap-3">
-
-                                <MapPin size={20} className="text-red-500" />
-
-                                <span className="font-semibold text-slate-800">
-
-                                    Venue
-
-                                </span>
-
-                            </div>
-
-                            <p className="mt-4 text-slate-700">
-
-                                {event.venue}
-
-                            </p>
-
-                        </div>
-
-                        {/* Event Date */}
-
-                        <div className={infoCard}>
-
-                            <div className="flex items-center gap-3">
-
-                                <Calendar size={20} className="text-blue-600" />
-
-                                <span className="font-semibold text-slate-800">
-
-                                    Event Date
-
-                                </span>
-
-                            </div>
-
-                            <p className="mt-4 text-slate-700">
-
-                                {formatDate(event.date)}
-
-                            </p>
-
-                        </div>
-
-                        {/* Time */}
-
-                        <div className={infoCard}>
-
-                            <div className="flex items-center gap-3">
-
-                                <Clock size={20} className="text-orange-500" />
-
-                                <span className="font-semibold text-slate-800">
-
-                                    Time
-
-                                </span>
-
-                            </div>
-
-                            <p className="mt-4 text-slate-700">
-
-                                {formatTime(event.startTime)} - {formatTime(event.endTime)}
-
-                            </p>
-
-                        </div>
-
-                        {/* Category */}
-
-                        <div className={infoCard}>
-
-                            <div className="flex items-center gap-3">
-
-                                <Tag size={20} className="text-indigo-600" />
-
-                                <span className="font-semibold text-slate-800">
-
-                                    Category
-
-                                </span>
-
-                            </div>
-
-                            <p className="mt-4 text-slate-700">
-
-                                {event.category}
-
-                            </p>
-
-                        </div>
-
-                        {/* Registration Deadline */}
-
-                        {event.registrationMode === "Participant" &&
-                            event.status !== "Completed" && (
-                                <div className={infoCard}>
-
-                                    <div className="flex items-center gap-3">
-
-                                        <CalendarDays
-                                            size={20}
-                                            className="text-purple-600"
-                                        />
-
-                                        <span className="font-semibold text-slate-800">
-
-                                            Registration Deadline
-
-                                        </span>
-
-                                    </div>
-
-                                    <p className="mt-4 text-slate-700">
-
-                                        {event.registrationDeadline
-                                            ? formatDate(event.registrationDeadline)
-                                            : "Not Available"}
-
-                                    </p>
-
-                                </div>
-
-                            )}
-
-                        {/* Registration Mode */}
-
-                        <div className={infoCard}>
-
-                            <div className="flex items-center gap-3">
-
-                                <Users size={20} className="text-emerald-600" />
-
-                                <span className="font-semibold text-slate-800">
-
-                                    Registration Mode
-
-                                </span>
-
-                            </div>
-
-                            <p className="mt-4 text-slate-700">
-
-                                {event.registrationMode}
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
+          </div>
                     {/* Summary */}
 
-                    <div className="grid md:grid-cols-2 gap-5 mt-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
 
-                        {/* Total Registrations */}
+            {/* Total Registrations */}
 
+            <div className={infoCard}>
 
+              <div className="flex items-center gap-3">
 
-                        <div className={infoCard}>
+                <Users
+                  size={20}
+                  className="text-blue-600 shrink-0"
+                />
 
-                            <div className="flex items-center gap-3">
+                <span className="font-semibold text-slate-800">
+                  Total Registrations
+                </span>
 
-                                <Users
-                                    size={20}
-                                    className="text-blue-600"
-                                />
+              </div>
 
-                                <span className="font-semibold text-slate-800">
+              <p className="mt-4 text-2xl sm:text-3xl font-bold break-words">
 
-                                    Total Registrations
+                {event.totalRegistrations}
 
-                                </span>
+              </p>
 
-                            </div>
+            </div>
 
-                            <p className="mt-4 text-3xl font-bold">
+            {/* Seats Left */}
 
-                                {event.totalRegistrations}
+            {event.status !== "Completed" && (
 
-                            </p>
+              <div className={infoCard}>
 
-                        </div>
+                <div className="flex items-center gap-3">
 
-                        {/* Seats Left */}
+                  <CalendarDays
+                    size={20}
+                    className="text-purple-600 shrink-0"
+                  />
 
-                        {event.status !== "Completed" && (
+                  <span className="font-semibold text-slate-800">
 
-                            <div className={infoCard}>
+                    {event.registrationMode === "Viewer"
+                      ? "Access"
+                      : "Seats Left"}
 
-                                <div className="flex items-center gap-3">
+                  </span>
 
-                                    <CalendarDays
-                                        size={20}
-                                        className="text-purple-600"
-                                    />
+                </div>
 
-                                    <span className="font-semibold text-slate-800">
+                <p className="mt-4 text-2xl sm:text-3xl font-bold break-words">
 
-                                        {event.registrationMode === "Viewer"
-                                            ? "Access"
-                                            : "Seats Left"}
+                  {event.registrationMode === "Viewer"
+                    ? "Unlimited"
+                    : seatsLeft}
 
-                                    </span>
+                </p>
 
-                                </div>
+              </div>
 
-                                <p className="mt-4 text-3xl font-bold">
+            )}
 
-                                    {event.registrationMode === "Viewer"
-                                        ? "Unlimited"
-                                        : seatsLeft}
+          </div>
 
-                                </p>
+          {/* Description */}
 
-                            </div>
+          <div className="mt-8 border rounded-2xl p-5 sm:p-6">
 
-                        )}
-                    </div>
+            <h2 className="text-xl sm:text-2xl font-bold mb-4">
+              About Event
+            </h2>
 
-                    {/* Description */}
+            <p className="text-sm sm:text-base text-gray-600 leading-7 sm:leading-8 whitespace-pre-wrap break-words">
 
-                    <div className="mt-8 border rounded-2xl p-6">
+              {event.description ||
+                "No description available."}
 
-                        <h2 className="text-2xl font-bold mb-4">
+            </p>
 
-                            About Event
+          </div>
 
-                        </h2>
+          {/* Register Button */}
 
-                        <p className="text-gray-600 leading-8 whitespace-pre-wrap">
+          {!hideRegisterButton && (
 
-                            {event.description ||
-                                "No description available."}
+            <div className="mt-8">
 
-                        </p>
+              {isRegistered ? (
 
-                    </div>
-
-                    {/* Register Button */}
-
-                    {!hideRegisterButton && (
-
-                        <div className="mt-8">
-
-                            {isRegistered ? (
-
-                                <button
-                                    disabled
-                                    className="
+                <button
+                  disabled
+                  className="
                     w-full
                     py-4
                     rounded-2xl
@@ -563,86 +582,86 @@ function EventDetailsModal({
                     font-semibold
                     cursor-not-allowed
                   "
-                                >
+                >
 
-                                    ✓ {event.registrationMode === "Viewer"
-                                        ? "Already Joined"
-                                        : "Already Registered"}
+                  ✓ {event.registrationMode === "Viewer"
+                    ? "Already Joined"
+                    : "Already Registered"}
 
-                                </button>
+                </button>
 
+              ) : isDeadlinePassed ? (
 
-                            ) : isDeadlinePassed ? (
+                <button
+                  disabled
+                  className="
+                    w-full
+                    py-4
+                    rounded-2xl
+                    bg-gray-300
+                    text-gray-600
+                    font-semibold
+                    cursor-not-allowed
+                  "
+                >
 
-                                <button
-                                    disabled
-                                    className="
-            w-full
-            py-4
-            rounded-2xl
-            bg-gray-300
-            text-gray-600
-            font-semibold
-            cursor-not-allowed
-        "
-                                >
+                  Registration Closed
 
-                                    Registration Closed
+                </button>
 
-                                </button>
+              ) : (
 
-                            ) : (
+                <button
+                  onClick={() => setConfirmOpen(true)}
+                  disabled={loading}
+                  className="
+                    w-full
+                    py-4
+                    rounded-2xl
+                    bg-blue-600
+                    hover:bg-blue-700
+                    text-white
+                    font-semibold
+                    transition
+                  "
+                >
 
-                                <button
-                                    onClick={() => setConfirmOpen(true)}
-                                    disabled={loading}
-                                    className="
-            w-full
-            py-4
-            rounded-2xl
-            bg-blue-600
-            hover:bg-blue-700
-            text-white
-            font-semibold
-            transition
-        "
-                                >
+                  {loading
+                    ? event.registrationMode === "Viewer"
+                      ? "Joining..."
+                      : "Registering..."
+                    : event.registrationMode === "Viewer"
+                      ? "Join Event"
+                      : "Register Now"}
 
-                                    {loading
-                                        ? event.registrationMode === "Viewer"
-                                            ? "Joining..."
-                                            : "Registering..."
-                                        : event.registrationMode === "Viewer"
-                                            ? "Join Event"
-                                            : "Register Now"}
+                </button>
 
-                                </button>
-
-                            )
-
-                            }
-                        </div>
-                    )}
-                </div>
+              )}
 
             </div>
 
-            {!hideRegisterButton && (
+          )}
+                  </div>
 
-                <RegisterConfirmModal
-                    open={confirmOpen}
-                    setOpen={setConfirmOpen}
-                    loading={loading}
-                    onConfirm={handleRegister}
-                    event={event}
-                />
+      </div>
 
-            )}
+      {/* Register Confirmation Modal */}
 
-        </div>
+      {!hideRegisterButton && (
 
+        <RegisterConfirmModal
+          open={confirmOpen}
+          setOpen={setConfirmOpen}
+          loading={loading}
+          onConfirm={handleRegister}
+          event={event}
+        />
 
-    );
+      )}
+
+    </div>
+
+  );
 
 }
 

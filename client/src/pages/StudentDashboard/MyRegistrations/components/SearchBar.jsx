@@ -8,7 +8,7 @@ function SearchBar({
 }) {
   return (
 
-    <div className="grid md:grid-cols-4 gap-5 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-5 mb-6 sm:mb-8">
 
       {/* Search */}
 
@@ -16,7 +16,15 @@ function SearchBar({
 
         <Search
           size={20}
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+          className="
+            absolute
+            left-3
+            sm:left-4
+            top-1/2
+            -translate-y-1/2
+            text-gray-400
+            shrink-0
+          "
         />
 
         <input
@@ -26,13 +34,17 @@ function SearchBar({
           onChange={(e) => setSearch(e.target.value)}
           className="
             w-full
+            h-11
+            sm:h-12
+            pl-10
+            sm:pl-11
+            pr-4
             border
             border-slate-300
             rounded-xl
-            pl-11
-            pr-4
-            py-3
             bg-white
+            text-sm
+            sm:text-base
             outline-none
             focus:border-slate-500
             transition
@@ -50,12 +62,15 @@ function SearchBar({
           onChange={(e) => setStatus(e.target.value)}
           className="
             w-full
+            h-11
+            sm:h-12
             border
             border-slate-300
             rounded-xl
             px-4
-            py-3
             bg-white
+            text-sm
+            sm:text-base
             outline-none
             focus:border-slate-500
             transition

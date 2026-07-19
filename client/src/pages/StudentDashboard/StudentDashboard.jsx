@@ -17,10 +17,15 @@ import LikedEvents from "./LikedEvents/LikedEvents";
 import Settings from "./Settings/Settings";
 
 function StudentDashboard() {
+
   const [activePage, setActivePage] =
     useState("dashboard");
 
+  const [sidebarOpen, setSidebarOpen] =
+    useState(false);
+
   const renderPage = () => {
+
     switch (activePage) {
 
       case "profile":
@@ -41,30 +46,47 @@ function StudentDashboard() {
       case "liked-events":
         return <LikedEvents />;
 
-      case "notifications":
-        return <Notifications />;
 
       case "settings":
         return <Settings />;
 
       default:
         return <DashboardHome />;
+
     }
+
   };
 
   return (
-    <div className="flex bg-slate-100">
+
+    <div className="flex h-screen bg-slate-100 overflow-hidden">
+
+      {/* Mobile Overlay */}
+
+      {sidebarOpen && (
+
+        <div
+          className="fixed inset-0 bg-black/40 z-30 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+
+      )}
 
       <Sidebar
         activePage={activePage}
         setActivePage={setActivePage}
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
       />
 
-      <div className="flex-1 flex flex-col h-screen">
+      <div className="flex-1 flex flex-col overflow-hidden">
 
-       <Navbar setActivePage={setActivePage} />
+        <Navbar
+          setActivePage={setActivePage}
+          setSidebarOpen={setSidebarOpen}
+        />
 
-        <div className="flex-1 overflow-auto p-8">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
 
           {renderPage()}
 
@@ -73,7 +95,9 @@ function StudentDashboard() {
       </div>
 
     </div>
+
   );
+
 }
 
 export default StudentDashboard;

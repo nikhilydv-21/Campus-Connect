@@ -1,135 +1,159 @@
 import {
-    Calendar,
-    MapPin,
-    ArrowRight,
-    MoreVertical,
-    Award,
-    MessageSquare,
+  Calendar,
+  MapPin,
+  ArrowRight,
+  MoreVertical,
+  Award,
+  MessageSquare,
 } from "lucide-react";
 
 import { useState, useRef, useEffect } from "react";
 
 function RegistrationCard({
-    registration,
-    onView,
-    onCertificate,
-    onFeedback,
+  registration,
+  onView,
+  onCertificate,
+  onFeedback,
 }) {
+  const event = registration.event;
 
-    const event = registration.event;
+  const [menuOpen, setMenuOpen] =
+    useState(false);
 
-    const [menuOpen, setMenuOpen] =
-        useState(false);
+  const menuRef = useRef(null);
 
-    const menuRef = useRef(null);
-
-    useEffect(() => {
-
-        const handleClickOutside = (e) => {
-
-            if (
-                menuRef.current &&
-                !menuRef.current.contains(e.target)
-            ) {
-
-                setMenuOpen(false);
-
-            }
-
-        };
-
-        document.addEventListener(
-            "mousedown",
-            handleClickOutside
-        );
-
-        return () =>
-            document.removeEventListener(
-                "mousedown",
-                handleClickOutside
-            );
-
-    }, []);
-
-    const statusColor = {
-
-        Upcoming:
-            "bg-green-100 text-green-700",
-
-        Ongoing:
-            "bg-yellow-100 text-yellow-700",
-
-        Completed:
-            "bg-gray-100 text-gray-700",
-
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target)
+      ) {
+        setMenuOpen(false);
+      }
     };
 
-    return (
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside
+    );
 
-        <div className="w-full max-w-[340px] bg-white rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+    return () =>
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
+  }, []);
 
-            {/* Banner */}
+  const statusColor = {
+    Upcoming:
+      "bg-green-100 text-green-700",
 
-            <div className="relative">
+    Ongoing:
+      "bg-yellow-100 text-yellow-700",
 
-                <img
-                    src={
-                        event.banner
-                            ? event.banner
-                            : "https://placehold.co/700x350/e2e8f0/64748b?text=Event"
-                    }
-                    alt={event.title}
-                    className="w-full h-36 object-cover"
-                />
+    Completed:
+      "bg-gray-100 text-gray-700",
+  };
 
-                {/* Status */}
+  return (
+    <div
+      className="
+        w-full
+        bg-white
+        rounded-2xl
+        sm:rounded-3xl
+        shadow-md
+        hover:shadow-xl
+        transition-all
+        duration-300
+        overflow-hidden
+      "
+    >
+      {/* Banner */}
 
-                <div className="absolute top-3 right-3">
+      <div className="relative">
 
-                    <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold ${statusColor[event.status]}`}
-                    >
-                        {event.status}
-                    </span>
+        <img
+          src={
+            event.banner
+              ? event.banner
+              : "https://placehold.co/700x350/e2e8f0/64748b?text=Event"
+          }
+          alt={event.title}
+          className="
+            w-full
+            h-36
+            sm:h-40
+            object-cover
+          "
+        />
 
-                </div>
+        {/* Status */}
 
-            </div>
+        <div className="absolute top-3 right-3">
 
-            {/* Body */}
+          <span
+            className={`
+              px-3
+              py-1
+              rounded-full
+              text-xs
+              font-semibold
+              ${statusColor[event.status]}
+            `}
+          >
+            {event.status}
+          </span>
 
-            <div className="p-4">
+        </div>
 
-                <div className="flex justify-between items-start">
+      </div>
 
-                    <h2 className="text-lg font-bold leading-6 line-clamp-2 pr-2">
+      {/* Body */}
 
-                        {event.title}
+      <div className="p-4 sm:p-5">
 
-                    </h2>
+        <div className="flex justify-between items-start gap-2">
 
-                    {event.status === "Completed" && (
+          <h2
+            className="
+              flex-1
+              text-lg
+              sm:text-xl
+              font-bold
+              leading-6
+              line-clamp-2
+              break-words
+            "
+          >
+            {event.title}
+          </h2>
 
-                        <div
-                            className="relative"
-                            ref={menuRef}
-                        >
+          {event.status === "Completed" && (
 
-                            <button
-                                onClick={() =>
-                                    setMenuOpen(!menuOpen)
-                                }
-                                className="p-1.5 rounded-lg hover:bg-slate-100 transition"
-                            >
+            <div
+              className="relative shrink-0"
+              ref={menuRef}
+            >
 
-                                <MoreVertical size={18} />
+              <button
+                onClick={() =>
+                  setMenuOpen(!menuOpen)
+                }
+                className="
+                  p-2
+                  rounded-lg
+                  hover:bg-slate-100
+                  transition
+                "
+              >
+                <MoreVertical size={18} />
+              </button>
 
-                            </button>
+              {menuOpen && (
 
-                            {menuOpen && (
-
-                                <div
-                                    className="
+                <div
+                  className="
                     absolute
                     right-0
                     mt-2
@@ -141,55 +165,53 @@ function RegistrationCard({
                     overflow-hidden
                     z-50
                   "
-                                >
-                                    {
-                                        event.registrationMode ===
-                                        "Participant" &&
-                                        registration.status ===
-                                        "Attended" &&
-                                        registration.certificateGenerated && (
+                >
 
-                                            <button
-                                                onClick={() => {
+                  {event.registrationMode ===
+                    "Participant" &&
+                    registration.status ===
+                      "Attended" &&
+                    registration.certificateGenerated && (
 
-                                                    setMenuOpen(false);
+                      <button
+                        onClick={() => {
+                          setMenuOpen(false);
+                          onCertificate(
+                            registration
+                          );
+                        }}
+                        className="
+                          w-full
+                          flex
+                          items-center
+                          gap-3
+                          px-4
+                          py-3
+                          hover:bg-slate-100
+                          transition
+                          text-sm
+                        "
+                      >
 
-                                                    onCertificate(
-                                                        registration
-                                                    );
+                        <Award
+                          size={18}
+                          className="shrink-0"
+                        />
 
-                                                }}
-                                                className="
-                        w-full
-                        flex
-                        items-center
-                        gap-3
-                        px-4
-                        py-3
-                        hover:bg-slate-100
-                        transition
-                      "
-                                            >
+                        Download Certificate
 
-                                                <Award size={18} />
+                      </button>
 
-                                                Download Certificate
+                    )}
 
-                                            </button>
-
-                                        )}
-
-                                    <button
-                                        onClick={() => {
-
-                                            setMenuOpen(false);
-
-                                            onFeedback(
-                                                registration
-                                            );
-
-                                        }}
-                                        className="
+                  <button
+                    onClick={() => {
+                      setMenuOpen(false);
+                      onFeedback(
+                        registration
+                      );
+                    }}
+                    className="
                       w-full
                       flex
                       items-center
@@ -198,85 +220,97 @@ function RegistrationCard({
                       py-3
                       hover:bg-slate-100
                       transition
+                      text-sm
                     "
-                                    >
+                  >
 
-                                        <MessageSquare
-                                            size={18}
-                                        />
-
-                                        Give Feedback
-
-                                    </button>
-
-                                </div>
-
-                            )}
-
-                        </div>
-
-                    )}
-
-                </div>
-
-                {/* Society */}
-
-                <p className="text-blue-600 text-sm font-medium mt-2">
-
-                    {event.organizer?.societyName}
-
-                </p>
-
-                {/* Venue */}
-
-                <div className="flex items-center gap-2 mt-4 text-gray-600">
-
-                    <MapPin
-                        size={16}
-                        className="text-red-500"
+                    <MessageSquare
+                      size={18}
+                      className="shrink-0"
                     />
 
-                    <span className="text-sm line-clamp-1">
+                    Give Feedback
 
-                        {event.venue}
-
-                    </span>
+                  </button>
 
                 </div>
 
-                {/* Date */}
+              )}
 
-                <div className="flex items-center gap-2 mt-2 text-gray-600">
+            </div>
 
-                    <Calendar
-                        size={16}
-                        className="text-blue-600"
-                    />
+          )}
 
-                    <span className="text-sm">
+        </div>
 
-                        {new Date(
-                            event.date
-                        ).toLocaleDateString(
-                            "en-IN",
-                            {
-                                day: "numeric",
-                                month: "short",
-                                year: "numeric",
-                            }
-                        )}
+        {/* Society */}
 
-                    </span>
+        <p
+          className="
+            mt-2
+            text-blue-600
+            text-sm
+            font-medium
+            break-words
+          "
+        >
+          {event.organizer?.societyName}
+        </p>
 
-                </div>
+        {/* Venue */}
 
-                {/* View */}
+        <div className="flex items-center gap-2 mt-4 text-gray-600">
 
-                <button
-                    onClick={() =>
-                        onView(registration)
-                    }
-                    className="
+          <MapPin
+            size={16}
+            className="text-red-500 shrink-0"
+          />
+
+          <span
+            className="
+              text-sm
+              line-clamp-1
+              break-words
+            "
+          >
+            {event.venue}
+          </span>
+
+        </div>
+
+        {/* Date */}
+
+        <div className="flex items-center gap-2 mt-2 text-gray-600">
+
+          <Calendar
+            size={16}
+            className="text-blue-600 shrink-0"
+          />
+
+          <span className="text-sm">
+
+            {new Date(
+              event.date
+            ).toLocaleDateString(
+              "en-IN",
+              {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              }
+            )}
+
+          </span>
+
+        </div>
+
+        {/* View */}
+
+        <button
+          onClick={() =>
+            onView(registration)
+          }
+          className="
             mt-5
             w-full
             bg-white
@@ -290,23 +324,26 @@ function RegistrationCard({
             justify-center
             items-center
             gap-2
+            text-sm
+            sm:text-base
             font-semibold
             transition
           "
-                >
+        >
 
-                    View Details
+          View Details
 
-                    <ArrowRight size={17} />
+          <ArrowRight
+            size={17}
+            className="shrink-0"
+          />
 
-                </button>
+        </button>
 
-            </div>
+      </div>
 
-        </div>
-
-    );
-
+    </div>
+  );
 }
 
 export default RegistrationCard;

@@ -8,6 +8,7 @@ import {
   verifyOTP,
   resendOTP,
 } from "../../services/authServices";
+
 function VerifyOTP() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -90,16 +91,18 @@ function VerifyOTP() {
 
       toast.error(
         error.response?.data?.message ||
-        "Verification Failed"
+          "Verification Failed"
       );
 
     } finally {
+
       setLoading(false);
+
     }
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-6">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4 sm:px-6 py-8">
 
       <div className="w-full max-w-md">
 
@@ -111,15 +114,15 @@ function VerifyOTP() {
           Back
         </button>
 
-        <div className="bg-white rounded-3xl shadow-xl p-10">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-10">
 
-          <h1 className="text-4xl font-bold text-center text-slate-900">
+          <h1 className="text-3xl sm:text-4xl font-bold text-center text-slate-900">
             Verify OTP
           </h1>
 
           <div className="w-20 h-1 bg-blue-600 rounded-full mx-auto mt-3 mb-6"></div>
 
-          <p className="text-center text-gray-500 mb-8">
+          <p className="text-center text-sm sm:text-base text-gray-500 mb-8 leading-7">
             Enter the verification code sent to
             <br />
             <span className="font-semibold text-slate-900 break-all">
@@ -139,7 +142,7 @@ function VerifyOTP() {
               </label>
 
               <div
-                className="flex justify-between gap-2"
+                className="flex justify-between gap-2 sm:gap-3"
                 onPaste={handlePaste}
               >
 
@@ -158,7 +161,22 @@ function VerifyOTP() {
                     onKeyDown={(e) =>
                       handleKeyDown(index, e)
                     }
-                    className="w-12 h-14 rounded-xl border-2 border-gray-300 text-center text-xl font-bold outline-none focus:border-blue-600 transition"
+                    className="
+                      w-10
+                      h-12
+                      sm:w-12
+                      sm:h-14
+                      rounded-xl
+                      border-2
+                      border-gray-300
+                      text-center
+                      text-lg
+                      sm:text-xl
+                      font-bold
+                      outline-none
+                      focus:border-blue-600
+                      transition
+                    "
                   />
 
                 ))}
@@ -177,15 +195,15 @@ function VerifyOTP() {
 
           </form>
 
-
-
           <p className="text-center text-sm text-gray-500 mt-8">
             {timer > 0 ? (
               <>
                 Resend OTP in{" "}
                 <span className="font-semibold text-blue-600">
                   {Math.floor(timer / 60)}:
-                  {(timer % 60).toString().padStart(2, "0")}
+                  {(timer % 60)
+                    .toString()
+                    .padStart(2, "0")}
                 </span>
               </>
             ) : (
@@ -193,19 +211,33 @@ function VerifyOTP() {
                 type="button"
                 onClick={async () => {
                   try {
-                    const response = await resendOTP(email);
+                    const response =
+                      await resendOTP(email);
 
                     toast.success(response.message);
-                    setOtp(["", "", "", "", "", ""]);
-                    document.getElementById("otp-0")?.focus();
+
+                    setOtp([
+                      "",
+                      "",
+                      "",
+                      "",
+                      "",
+                      "",
+                    ]);
+
+                    document
+                      .getElementById("otp-0")
+                      ?.focus();
 
                     setTimer(120);
 
                   } catch (error) {
+
                     toast.error(
                       error.response?.data?.message ||
-                      "Failed to resend OTP"
+                        "Failed to resend OTP"
                     );
+
                   }
                 }}
                 className="text-blue-600 font-semibold hover:underline"

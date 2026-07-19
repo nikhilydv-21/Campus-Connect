@@ -15,16 +15,18 @@ function PersonalInformation({
   handleChange,
 }) {
   return (
-    <div className="mt-12">
+    <div className="mt-10 sm:mt-12">
 
-      <h3 className="text-2xl font-bold text-slate-800 mb-6">
+      <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-5 sm:mb-6">
         Personal Information
       </h3>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+
+        {/* Full Name */}
 
         {editMode ? (
-          <div className="border rounded-2xl p-5">
+          <div className="border rounded-2xl p-5 sm:p-6">
 
             <label className="text-sm text-gray-500">
               Full Name
@@ -42,6 +44,8 @@ function PersonalInformation({
                 rounded-xl
                 px-4
                 py-3
+                text-sm
+                sm:text-base
                 outline-none
                 focus:border-blue-500
               "
@@ -56,11 +60,15 @@ function PersonalInformation({
           />
         )}
 
+        {/* Email */}
+
         <InfoCard
           icon={<Mail />}
           title="Email"
           value={student?.email}
         />
+
+        {/* Roll Number */}
 
         <InfoCard
           icon={<BookOpen />}
@@ -68,14 +76,18 @@ function PersonalInformation({
           value={student?.rollNumber}
         />
 
+        {/* Branch */}
+
         <InfoCard
           icon={<GraduationCap />}
           title="Branch"
           value={student?.branch}
         />
 
+        {/* Year */}
+
         {editMode ? (
-          <div className="border rounded-2xl p-5">
+          <div className="border rounded-2xl p-5 sm:p-6">
 
             <label className="text-sm text-gray-500">
               Year
@@ -92,14 +104,28 @@ function PersonalInformation({
                 rounded-xl
                 px-4
                 py-3
+                text-sm
+                sm:text-base
                 outline-none
                 focus:border-blue-500
               "
             >
-              <option value={1}>1st Year</option>
-              <option value={2}>2nd Year</option>
-              <option value={3}>3rd Year</option>
-              <option value={4}>4th Year</option>
+              <option value={1}>
+                1st Year
+              </option>
+
+              <option value={2}>
+                2nd Year
+              </option>
+
+              <option value={3}>
+                3rd Year
+              </option>
+
+              <option value={4}>
+                4th Year
+              </option>
+
             </select>
 
           </div>
@@ -111,8 +137,10 @@ function PersonalInformation({
           />
         )}
 
+        {/* Contact Number */}
+
         {editMode ? (
-          <div className="border rounded-2xl p-5">
+          <div className="border rounded-2xl p-5 sm:p-6">
 
             <label className="text-sm text-gray-500">
               Contact Number
@@ -130,6 +158,8 @@ function PersonalInformation({
                 rounded-xl
                 px-4
                 py-3
+                text-sm
+                sm:text-base
                 outline-none
                 focus:border-blue-500
               "

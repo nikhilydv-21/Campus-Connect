@@ -9,17 +9,17 @@ function Settings() {
     useState(false);
 
   return (
-    <div className="bg-slate-100 min-h-screen p-8">
+    <div className="bg-slate-100 min-h-screen p-4 sm:p-6 lg:p-8">
 
       {/* Heading */}
 
-      <div className="mb-8">
+      <div className="mb-6 sm:mb-8">
 
-        <h1 className="text-4xl font-bold text-slate-800">
+        <h1 className="text-3xl sm:text-4xl font-bold text-slate-800">
           Settings
         </h1>
 
-        <p className="text-gray-500 mt-2">
+        <p className="mt-2 text-sm sm:text-base text-gray-500">
           Manage your account settings.
         </p>
 
@@ -27,7 +27,7 @@ function Settings() {
 
       {/* Settings Cards */}
 
-      <div className="max-w-3xl">
+      <div className="w-full max-w-3xl">
 
         <SettingsCard
           onClick={() =>

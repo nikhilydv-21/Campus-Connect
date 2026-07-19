@@ -10,57 +10,65 @@ function RegisterConfirmModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-[60]">
+    <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-[60] px-4 py-4">
 
-      <div className="bg-white rounded-3xl w-full max-w-md p-8">
+      <div className="bg-white rounded-2xl sm:rounded-3xl w-full max-w-md p-6 sm:p-8">
 
-        <div className="flex justify-between items-center">
+        {/* Header */}
 
-          <h2 className="text-2xl font-bold">
+        <div className="flex justify-between items-center gap-3">
+
+          <h2 className="text-xl sm:text-2xl font-bold break-words">
             Confirm Registration
           </h2>
 
           <button
             onClick={() => setOpen(false)}
-            className="hover:bg-gray-100 rounded-full p-2"
+            className="hover:bg-gray-100 rounded-full p-2 shrink-0 transition"
           >
-            <X />
+            <X size={22} />
           </button>
 
         </div>
 
-        <div className="flex justify-center mt-8">
+        {/* Icon */}
 
-          <div className="bg-blue-100 p-5 rounded-full">
+        <div className="flex justify-center mt-6 sm:mt-8">
+
+          <div className="bg-blue-100 p-4 sm:p-5 rounded-full">
 
             <CalendarCheck
-              size={42}
-              className="text-blue-600"
+              size={36}
+              className="sm:w-[42px] sm:h-[42px] text-blue-600"
             />
 
           </div>
 
         </div>
 
-        <h3 className="text-center text-xl font-bold mt-6">
+        {/* Title */}
+
+        <h3 className="text-center text-lg sm:text-xl font-bold mt-5 sm:mt-6 break-words">
 
           {event?.title}
 
         </h3>
 
-        <p className="text-center text-gray-500 mt-4 leading-7">
+        {/* Message */}
 
-          Are you sure you want to register
-          for this event?
+        <p className="text-center text-sm sm:text-base text-gray-500 mt-4 leading-7">
 
-         
+          Are you sure you want to register for this event?
+
         </p>
 
-        <div className="flex gap-4 mt-10">
+        {/* Buttons */}
+
+        <div className="flex flex-col sm:flex-row gap-4 mt-8 sm:mt-10">
 
           <button
             onClick={() => setOpen(false)}
-            className="flex-1 border rounded-xl py-3 font-semibold hover:bg-gray-100"
+            className="w-full sm:flex-1 border rounded-xl py-3 font-semibold hover:bg-gray-100 transition"
           >
             Cancel
           </button>
@@ -68,7 +76,7 @@ function RegisterConfirmModal({
           <button
             onClick={onConfirm}
             disabled={loading}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 font-semibold"
+            className="w-full sm:flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-3 font-semibold transition"
           >
             {loading
               ? "Registering..."

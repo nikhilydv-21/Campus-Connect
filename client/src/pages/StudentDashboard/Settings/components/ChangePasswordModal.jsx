@@ -12,7 +12,6 @@ function ChangePasswordModal({
   open,
   setOpen,
 }) {
-
   const [loading, setLoading] =
     useState(false);
 
@@ -32,8 +31,6 @@ function ChangePasswordModal({
   const [showConfirm, setShowConfirm] =
     useState(false);
 
-
-  
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^()_+=-])[A-Za-z\d@$!%*?&#^()_+=-]{8,}$/;
 
@@ -63,7 +60,6 @@ function ChangePasswordModal({
   };
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     if (
@@ -105,7 +101,6 @@ function ChangePasswordModal({
     }
 
     try {
-
       setLoading(true);
 
       const response =
@@ -125,7 +120,7 @@ function ChangePasswordModal({
 
       toast.error(
         error.response?.data?.message ||
-        "Failed to change password"
+          "Failed to change password"
       );
 
     } finally {
@@ -133,40 +128,74 @@ function ChangePasswordModal({
       setLoading(false);
 
     }
-
   };
+
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-
-      <div className="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden">
-
+    <div
+      className="
+        fixed
+        inset-0
+        bg-black/60
+        backdrop-blur-sm
+        flex
+        items-center
+        justify-center
+        z-50
+        px-4
+        py-4
+      "
+    >
+      <div
+        className="
+          bg-white
+          w-full
+          max-w-lg
+          rounded-2xl
+          sm:rounded-3xl
+          shadow-2xl
+          overflow-hidden
+          max-h-[95vh]
+          overflow-y-auto
+        "
+      >
         {/* Header */}
 
-        <div className="flex justify-between items-center p-6 border-b">
-
-          <h2 className="text-2xl font-bold">
+        <div
+          className="
+            flex
+            justify-between
+            items-center
+            gap-4
+            p-5
+            sm:p-6
+            border-b
+          "
+        >
+          <h2 className="text-xl sm:text-2xl font-bold break-words">
             Change Password
           </h2>
 
           <button
             onClick={() => setOpen(false)}
-            className="p-2 rounded-full hover:bg-gray-100"
+            className="
+              p-2
+              rounded-full
+              hover:bg-gray-100
+              shrink-0
+            "
           >
             <X size={22} />
           </button>
-
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="p-6 space-y-5"
+          className="p-5 sm:p-6 space-y-5"
         >
-
           {/* Current Password */}
 
           <div>
-
-            <label className="block mb-2 font-medium">
+            <label className="block mb-2 text-sm sm:text-base font-medium">
               Current Password
             </label>
 
@@ -182,7 +211,19 @@ function ChangePasswordModal({
                 value={formData.oldPassword}
                 onChange={handleChange}
                 placeholder="Enter current password"
-                className="w-full border rounded-xl px-4 py-3 pr-12 outline-none focus:ring-2 focus:ring-blue-500"
+                className="
+                  w-full
+                  border
+                  rounded-xl
+                  px-4
+                  py-3
+                  pr-12
+                  text-sm
+                  sm:text-base
+                  outline-none
+                  focus:ring-2
+                  focus:ring-blue-500
+                "
               />
 
               <button
@@ -190,7 +231,13 @@ function ChangePasswordModal({
                 onClick={() =>
                   setShowOld(!showOld)
                 }
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                className="
+                  absolute
+                  right-4
+                  top-1/2
+                  -translate-y-1/2
+                  text-gray-500
+                "
               >
                 {showOld ? (
                   <Eye size={20} />
@@ -200,14 +247,13 @@ function ChangePasswordModal({
               </button>
 
             </div>
-
           </div>
 
           {/* New Password */}
 
           <div>
 
-            <label className="block mb-2 font-medium">
+            <label className="block mb-2 text-sm sm:text-base font-medium">
               New Password
             </label>
 
@@ -223,7 +269,19 @@ function ChangePasswordModal({
                 value={formData.newPassword}
                 onChange={handleChange}
                 placeholder="Enter new password"
-                className="w-full border rounded-xl px-4 py-3 pr-12 outline-none focus:ring-2 focus:ring-blue-500"
+                className="
+                  w-full
+                  border
+                  rounded-xl
+                  px-4
+                  py-3
+                  pr-12
+                  text-sm
+                  sm:text-base
+                  outline-none
+                  focus:ring-2
+                  focus:ring-blue-500
+                "
               />
 
               <button
@@ -231,7 +289,13 @@ function ChangePasswordModal({
                 onClick={() =>
                   setShowNew(!showNew)
                 }
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                className="
+                  absolute
+                  right-4
+                  top-1/2
+                  -translate-y-1/2
+                  text-gray-500
+                "
               >
                 {showNew ? (
                   <Eye size={20} />
@@ -244,7 +308,7 @@ function ChangePasswordModal({
 
             {formData.newPassword && (
 
-              <div className="mt-3 space-y-1 text-sm">
+              <div className="mt-3 space-y-1 text-xs sm:text-sm">
 
                 <p className={passwordChecks.length ? "text-green-600" : "text-red-500"}>
                   {passwordChecks.length ? "✅" : "❌"} Minimum 8 characters
@@ -276,7 +340,7 @@ function ChangePasswordModal({
 
           <div>
 
-            <label className="block mb-2 font-medium">
+            <label className="block mb-2 text-sm sm:text-base font-medium">
               Confirm Password
             </label>
 
@@ -292,7 +356,19 @@ function ChangePasswordModal({
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 placeholder="Confirm new password"
-                className="w-full border rounded-xl px-4 py-3 pr-12 outline-none focus:ring-2 focus:ring-blue-500"
+                className="
+                  w-full
+                  border
+                  rounded-xl
+                  px-4
+                  py-3
+                  pr-12
+                  text-sm
+                  sm:text-base
+                  outline-none
+                  focus:ring-2
+                  focus:ring-blue-500
+                "
               />
 
               <button
@@ -302,7 +378,13 @@ function ChangePasswordModal({
                     !showConfirm
                   )
                 }
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                className="
+                  absolute
+                  right-4
+                  top-1/2
+                  -translate-y-1/2
+                  text-gray-500
+                "
               >
                 {showConfirm ? (
                   <Eye size={20} />
@@ -316,14 +398,15 @@ function ChangePasswordModal({
             {formData.confirmPassword && (
 
               <p
-                className={`mt-2 text-sm ${formData.newPassword ===
-                    formData.confirmPassword
+                className={`mt-2 text-xs sm:text-sm ${
+                  formData.newPassword ===
+                  formData.confirmPassword
                     ? "text-green-600"
                     : "text-red-500"
-                  }`}
+                }`}
               >
                 {formData.newPassword ===
-                  formData.confirmPassword
+                formData.confirmPassword
                   ? "✅ Passwords match"
                   : "❌ Passwords do not match"}
               </p>
@@ -334,14 +417,32 @@ function ChangePasswordModal({
 
           {/* Buttons */}
 
-          <div className="flex gap-4 pt-2">
-
+          <div
+            className="
+              flex
+              flex-col-reverse
+              sm:flex-row
+              gap-3
+              pt-2
+            "
+          >
             <button
               type="button"
               onClick={() =>
                 setOpen(false)
               }
-              className="flex-1 border border-gray-300 rounded-xl py-3 font-semibold hover:bg-gray-100 transition"
+              className="
+                w-full
+                sm:w-auto
+                flex-1
+                border
+                border-gray-300
+                rounded-xl
+                py-3
+                font-semibold
+                hover:bg-gray-100
+                transition
+              "
             >
               Cancel
             </button>
@@ -349,7 +450,19 @@ function ChangePasswordModal({
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white rounded-xl py-3 font-semibold transition"
+              className="
+                w-full
+                sm:w-auto
+                flex-1
+                bg-blue-600
+                hover:bg-blue-700
+                disabled:bg-blue-400
+                text-white
+                rounded-xl
+                py-3
+                font-semibold
+                transition
+              "
             >
               {loading
                 ? "Changing..."
@@ -365,4 +478,5 @@ function ChangePasswordModal({
     </div>
   );
 }
+
 export default ChangePasswordModal;

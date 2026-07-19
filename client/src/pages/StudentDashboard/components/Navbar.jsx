@@ -2,6 +2,7 @@ import {
   ChevronDown,
   Settings,
   LogOut,
+  Menu,
 } from "lucide-react";
 
 import {
@@ -13,8 +14,10 @@ import {
 import { useNavigate } from "react-router-dom";
 import LogoutModal from "../Settings/components/LogoutModal";
 
-
-function Navbar({ setActivePage }) {
+function Navbar({
+  setActivePage,
+  setSidebarOpen,
+}) {
 
   const [showMenu, setShowMenu] =
     useState(false);
@@ -32,8 +35,6 @@ function Navbar({ setActivePage }) {
       branch: "",
       profilePicture: "",
     };
-
-  // Close dropdown on outside click
 
   useEffect(() => {
 
@@ -83,28 +84,36 @@ function Navbar({ setActivePage }) {
   return (
     <>
 
-      <div className="bg-white shadow-sm h-20 px-8 flex items-center justify-between">
+      <div className="bg-white shadow-sm h-20 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
 
         {/* Left */}
 
-        <div>
+        <div className="flex items-center gap-3">
 
-          <h1 className="text-2xl font-bold text-slate-800">
-            Student Portal
-          </h1>
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="lg:hidden p-2 rounded-lg hover:bg-slate-100 transition"
+          >
+            <Menu size={24} />
+          </button>
 
-          <p className="text-sm text-gray-500">
-            Connect with societies and events
-          </p>
+          <div>
+
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-800">
+              Student Portal
+            </h1>
+
+            <p className="hidden sm:block text-sm text-gray-500">
+              Connect with societies and events
+            </p>
+
+          </div>
 
         </div>
 
         {/* Right */}
 
-        <div className="flex items-center gap-6">
-
-          
-          {/* Profile */}
+        <div className="flex items-center gap-4 sm:gap-6">
 
           <div
             className="relative"
@@ -127,22 +136,25 @@ function Navbar({ setActivePage }) {
                       )}&background=2563eb&color=fff`
                 }
                 alt="Student"
-                className="w-11 h-11 rounded-full object-cover"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover"
               />
 
-              <div className="text-left">
+              <div className="hidden sm:block text-left">
 
-                <h3 className="font-semibold">
+                <h3 className="font-semibold break-words">
                   {student.fullName}
                 </h3>
 
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-500 break-words">
                   {student.branch}
                 </p>
 
               </div>
 
-              <ChevronDown size={18} />
+              <ChevronDown
+                size={18}
+                className="hidden sm:block"
+              />
 
             </button>
 

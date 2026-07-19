@@ -17,7 +17,6 @@ function FeedbackModal({
   registration,
   onSuccess,
 }) {
-
   const [rating, setRating] =
     useState(0);
 
@@ -36,29 +35,21 @@ function FeedbackModal({
   const event = registration.event;
 
   const handleSubmit = async () => {
-
     if (rating === 0) {
-
       toast.error(
         "Please select a rating"
       );
-
       return;
-
     }
 
     if (!comment.trim()) {
-
       toast.error(
         "Please write your feedback"
       );
-
       return;
-
     }
 
     try {
-
       setLoading(true);
 
       const response =
@@ -70,27 +61,21 @@ function FeedbackModal({
           }
         );
 
-      toast.success(
-        response.message
-      );
+      toast.success(response.message);
 
       setOpen(false);
-
       setRating(0);
-
       setComment("");
 
       if (onSuccess) {
-
         onSuccess();
-
       }
 
     } catch (error) {
 
       toast.error(
         error.response?.data?.message ||
-        "Failed to submit feedback"
+          "Failed to submit feedback"
       );
 
     } finally {
@@ -98,10 +83,9 @@ function FeedbackModal({
       setLoading(false);
 
     }
-
   };
-    return (
 
+  return (
     <div
       className="
         fixed
@@ -112,7 +96,8 @@ function FeedbackModal({
         justify-center
         items-center
         z-50
-        p-5
+        px-4
+        py-4
       "
     >
 
@@ -121,35 +106,51 @@ function FeedbackModal({
           bg-white
           w-full
           max-w-xl
-          rounded-3xl
+          rounded-2xl
+          sm:rounded-3xl
           shadow-2xl
           overflow-hidden
+          max-h-[95vh]
+          overflow-y-auto
         "
       >
 
         {/* Header */}
 
-        <div className="flex justify-between items-center border-b p-6">
+        <div
+          className="
+            flex
+            justify-between
+            items-start
+            sm:items-center
+            border-b
+            p-5
+            sm:p-6
+            gap-4
+          "
+        >
 
-          <div>
+          <div className="flex-1">
 
-            <h2 className="text-2xl font-bold text-slate-800">
-
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-800 break-words">
               Give Feedback
-
             </h2>
 
-            <p className="text-gray-500 mt-1">
-
+            <p className="text-sm sm:text-base text-gray-500 mt-1">
               Share your experience about this event.
-
             </p>
 
           </div>
 
           <button
             onClick={() => setOpen(false)}
-            className="p-2 rounded-full hover:bg-slate-100 transition"
+            className="
+              p-2
+              rounded-full
+              hover:bg-slate-100
+              transition
+              shrink-0
+            "
           >
 
             <X size={22} />
@@ -160,12 +161,10 @@ function FeedbackModal({
 
         {/* Body */}
 
-        <div className="p-6">
+        <div className="p-5 sm:p-6">
 
-          <h3 className="text-xl font-bold text-slate-800">
-
+          <h3 className="text-lg sm:text-xl font-bold text-slate-800 break-words">
             {event.title}
-
           </h3>
 
           {/* Rating */}
@@ -173,12 +172,10 @@ function FeedbackModal({
           <div className="mt-8">
 
             <p className="font-semibold text-slate-700 mb-4">
-
               Your Rating
-
             </p>
 
-            <div className="flex gap-2">
+            <div className="flex justify-center sm:justify-start gap-2 flex-wrap">
 
               {[1, 2, 3, 4, 5].map((star) => (
 
@@ -195,7 +192,7 @@ function FeedbackModal({
                 >
 
                   <Star
-                    size={34}
+                    size={30}
                     className={
                       (hover || rating) >= star
                         ? "text-yellow-400 fill-yellow-400"
@@ -217,7 +214,10 @@ function FeedbackModal({
 
             <label className="font-semibold text-slate-700 flex items-center gap-2 mb-3">
 
-              <MessageSquare size={18} />
+              <MessageSquare
+                size={18}
+                className="shrink-0"
+              />
 
               Feedback
 
@@ -236,6 +236,8 @@ function FeedbackModal({
                 border
                 rounded-2xl
                 p-4
+                text-sm
+                sm:text-base
                 outline-none
                 resize-none
                 focus:ring-2
@@ -243,7 +245,7 @@ function FeedbackModal({
               "
             />
 
-            <div className="text-right text-sm text-gray-400 mt-2">
+            <div className="text-right text-xs sm:text-sm text-gray-400 mt-2">
 
               {comment.length}/50
 
@@ -255,11 +257,24 @@ function FeedbackModal({
 
         {/* Footer */}
 
-        <div className="border-t p-6 flex justify-end gap-3">
+        <div
+          className="
+            border-t
+            p-5
+            sm:p-6
+            flex
+            flex-col-reverse
+            sm:flex-row
+            justify-end
+            gap-3
+          "
+        >
 
           <button
             onClick={() => setOpen(false)}
             className="
+              w-full
+              sm:w-auto
               px-6
               py-3
               rounded-xl
@@ -277,6 +292,8 @@ function FeedbackModal({
             onClick={handleSubmit}
             disabled={loading}
             className="
+              w-full
+              sm:w-auto
               px-8
               py-3
               rounded-xl
@@ -300,9 +317,7 @@ function FeedbackModal({
       </div>
 
     </div>
-
   );
-
 }
 
 export default FeedbackModal;
