@@ -5,8 +5,7 @@ function SearchBar({
   setSearch,
 }) {
   return (
-
-    <div className="relative mb-8">
+    <div className="relative mb-6 sm:mb-8">
 
       <Search
         size={20}
@@ -17,14 +16,16 @@ function SearchBar({
         type="text"
         placeholder="Search society by name..."
         value={search}
-        onChange={(e) =>
-          setSearch(e.target.value)
-        }
+        onChange={(e) => setSearch(e.target.value)}
         className="
           w-full
-          pl-12
+          h-11
+          sm:h-12
+          pl-11
+          sm:pl-12
           pr-4
-          py-3
+          text-sm
+          sm:text-base
           bg-white
           border
           border-slate-300
@@ -36,7 +37,6 @@ function SearchBar({
       />
 
     </div>
-
   );
 }
 

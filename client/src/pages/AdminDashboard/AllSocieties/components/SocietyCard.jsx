@@ -23,7 +23,6 @@ function SocietyCard({
   society,
   refresh,
 }) {
-
   const menuRef = useRef(null);
 
   const [selectedSociety, setSelectedSociety] =
@@ -45,18 +44,13 @@ function SocietyCard({
     useState(false);
 
   useEffect(() => {
-
     const handleClickOutside = (event) => {
-
       if (
         menuRef.current &&
         !menuRef.current.contains(event.target)
       ) {
-
         setMenuOpen(false);
-
       }
-
     };
 
     document.addEventListener(
@@ -65,20 +59,15 @@ function SocietyCard({
     );
 
     return () => {
-
       document.removeEventListener(
         "mousedown",
         handleClickOutside
       );
-
     };
-
   }, []);
 
   const handleView = async () => {
-
     try {
-
       const response =
         await getSocietyDetails(
           society._id
@@ -90,24 +79,17 @@ function SocietyCard({
       });
 
       setOpenDetails(true);
-
       setMenuOpen(false);
-
     } catch (error) {
-
       toast.error(
         error.response?.data?.message ||
-        "Failed to load society details"
+          "Failed to load society details"
       );
-
     }
-
   };
 
   const handleDisable = async () => {
-
     try {
-
       setLoading(true);
 
       const response =
@@ -120,26 +102,18 @@ function SocietyCard({
       setDisableOpen(false);
 
       refresh();
-
     } catch (error) {
-
       toast.error(
         error.response?.data?.message ||
-        "Operation Failed"
+          "Operation Failed"
       );
-
     } finally {
-
       setLoading(false);
-
     }
-
   };
 
   const handleDelete = async () => {
-
     try {
-
       setLoading(true);
 
       const response =
@@ -152,25 +126,18 @@ function SocietyCard({
       setDeleteOpen(false);
 
       refresh();
-
     } catch (error) {
-
       toast.error(
         error.response?.data?.message ||
-        "Delete Failed"
+          "Delete Failed"
       );
-
     } finally {
-
       setLoading(false);
-
     }
-
   };
 
   return (
     <>
-
       <div
         className="
           w-full
@@ -183,17 +150,15 @@ function SocietyCard({
           transition-all
           duration-300
           relative
-          p-6
+          p-5 sm:p-6
         "
       >
-
         {/* Three Dots */}
 
         <div
           ref={menuRef}
-          className="absolute top-5 right-5"
+          className="absolute top-4 right-4"
         >
-
           <button
             onClick={() =>
               setMenuOpen(!menuOpen)
@@ -209,13 +174,10 @@ function SocietyCard({
               transition
             "
           >
-
             <MoreVertical size={20} />
-
           </button>
 
           {menuOpen && (
-
             <div
               className="
                 absolute
@@ -231,102 +193,49 @@ function SocietyCard({
                 z-50
               "
             >
-
               <button
                 onClick={handleView}
-                className="
-                  w-full
-                  flex
-                  items-center
-                  gap-3
-                  px-5
-                  py-3
-                  hover:bg-slate-100
-                  transition
-                  text-slate-700
-                "
+                className="w-full flex items-center gap-3 px-5 py-3 hover:bg-slate-100 transition text-slate-700"
               >
-
                 <Eye size={17} />
-
                 View Details
-
               </button>
 
               <button
                 onClick={() => {
-
                   setMenuOpen(false);
-
                   setDisableOpen(true);
-
                 }}
-                className="
-                  w-full
-                  flex
-                  items-center
-                  gap-3
-                  px-5
-                  py-3
-                  hover:bg-slate-100
-                  transition
-                  text-slate-700
-                "
+                className="w-full flex items-center gap-3 px-5 py-3 hover:bg-slate-100 transition text-slate-700"
               >
-
                 {society.isDisabled ? (
-
                   <CheckCircle size={17} />
-
                 ) : (
-
                   <Ban size={17} />
-
                 )}
 
                 {society.isDisabled
                   ? "Enable Society"
                   : "Disable Society"}
-
               </button>
 
               <button
                 onClick={() => {
-
                   setMenuOpen(false);
-
                   setDeleteOpen(true);
-
                 }}
-                className="
-                  w-full
-                  flex
-                  items-center
-                  gap-3
-                  px-5
-                  py-3
-                  hover:bg-red-50
-                  transition
-                  text-red-600
-                "
+                className="w-full flex items-center gap-3 px-5 py-3 hover:bg-red-50 transition text-red-600"
               >
-
                 <Trash2 size={17} />
-
                 Delete Society
-
               </button>
-
             </div>
-
           )}
-
         </div>
 
         {/* Logo */}
 
-        <div className="flex justify-center pt-4">
-
+        <div className="flex justify-center pt-3">
           <img
             src={
               society.logo
@@ -337,8 +246,10 @@ function SocietyCard({
             }
             alt={society.societyName}
             className="
-              w-24
-              h-24
+              w-20
+              h-20
+              sm:w-24
+              sm:h-24
               rounded-full
               object-cover
               border-2
@@ -348,23 +259,18 @@ function SocietyCard({
               shadow-sm
             "
           />
-
         </div>
 
         {/* Content */}
 
-        <div className="text-center mt-6">
+        <div className="text-center mt-5 sm:mt-6">
 
-          <h2 className="text-2xl font-semibold text-slate-700">
-
+          <h2 className="text-xl sm:text-2xl font-semibold text-slate-700 break-words">
             {society.societyName}
-
           </h2>
 
-          <p className="mt-2 text-slate-500 font-medium">
-
+          <p className="mt-2 text-sm sm:text-base text-slate-500 font-medium break-words">
             {society.societyType}
-
           </p>
 
           <span
@@ -383,15 +289,12 @@ function SocietyCard({
               }
             `}
           >
-
             {society.isDisabled
               ? "Disabled"
               : "Active"}
-
           </span>
 
         </div>
-
       </div>
 
       <SocietyDetailsModal
@@ -415,10 +318,8 @@ function SocietyCard({
         loading={loading}
         onConfirm={handleDelete}
       />
-
     </>
   );
-
 }
 
 export default SocietyCard;
