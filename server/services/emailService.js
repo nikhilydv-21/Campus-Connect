@@ -1,43 +1,46 @@
 require("dotenv").config();
 
-const brevo = require("@getbrevo/brevo");
-
-
-console.log("BREVO EXPORTS:", Object.keys(brevo));
-const apiInstance = new brevo.TransactionalEmailsApi();
-
-apiInstance.setApiKey(
-  brevo.TransactionalEmailsApiApiKeys.apiKey,
-  process.env.BREVO_API_KEY
-);
+const axios = require("axios");
 
 const sendEmail = async (to, subject, html) => {
   try {
     console.log("========== BREVO API DEBUG ==========");
 
-    const sendSmtpEmail = new brevo.SendSmtpEmail();
-
-    sendSmtpEmail.sender = {
-      name: "Campus Connect",
-      email: process.env.EMAIL_USER,
-    };
-
-    sendSmtpEmail.to = [
+    const response = await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
       {
-        email: to,
+        sender: {
+          name: "Campus Connect",
+          email: process.env.EMAIL_USER,
+        },
+        to: [
+          {
+            email: to,
+          },
+        ],
+        subject: subject,
+        htmlContent: html,
       },
-    ];
-
-    sendSmtpEmail.subject = subject;
-    sendSmtpEmail.htmlContent = html;
-
-    const response = await apiInstance.sendTransacEmail(sendSmtpEmail);
+      {
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+          "api-key": process.env.BREVO_API_KEY,
+        },
+      }
+    );
 
     console.log("✅ Email Sent Successfully");
-    console.log(response.body);
+    console.log(response.data);
   } catch (error) {
     console.error("❌ BREVO API ERROR");
-    console.error(error.response?.body || error);
+
+    if (error.response) {
+      console.error(error.response.data);
+    } else {
+      console.error(error.message);
+    }
+
     throw error;
   }
 };
