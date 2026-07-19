@@ -6,33 +6,33 @@ function RoleSelection() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center px-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center px-4 sm:px-6 py-8">
 
-      <div className="w-full max-w-4xl">
+      <div className="w-full max-w-5xl">
 
         {/* Back Button */}
         <button
           onClick={() => navigate("/")}
-          className="mb-6 flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-blue-600 transition"
+          className="mb-6 flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition"
         >
           <ArrowLeft size={16} />
           Back
         </button>
 
         {/* Heading */}
-        <h1 className="text-5xl font-extrabold text-slate-900 text-center">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 text-center">
           Campus Connect
         </h1>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 md:mt-12">
 
-          {/* Student Card */}
+          {/* Student */}
           <div
             className="
               bg-white
-              rounded-3xl
-              p-10
+              rounded-2xl md:rounded-3xl
+              p-6 sm:p-8 md:p-10
               shadow-lg
               transition-all
               duration-300
@@ -41,30 +41,38 @@ function RoleSelection() {
               hover:shadow-blue-200
             "
           >
-            <h2 className="text-3xl font-bold text-center text-slate-900">
+
+            <h2 className="text-2xl md:text-3xl font-bold text-center text-slate-900">
               Student
             </h2>
 
-            <div className="flex justify-center gap-4 mt-8">
-              <Button onClick={() => navigate("/login/student")}>
+            <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
+
+              <Button
+                fullWidth
+                onClick={() => navigate("/login/student")}
+              >
                 Login
               </Button>
 
               <Button
+                fullWidth
                 variant="outline"
                 onClick={() => navigate("/register/student")}
               >
                 Sign Up
               </Button>
+
             </div>
+
           </div>
 
-          {/* Society Card */}
+          {/* Society */}
           <div
             className="
               bg-white
-              rounded-3xl
-              p-10
+              rounded-2xl md:rounded-3xl
+              p-6 sm:p-8 md:p-10
               shadow-lg
               transition-all
               duration-300
@@ -73,37 +81,46 @@ function RoleSelection() {
               hover:shadow-violet-200
             "
           >
-            <h2 className="text-3xl font-bold text-center text-slate-900">
+
+            <h2 className="text-2xl md:text-3xl font-bold text-center text-slate-900">
               Society
             </h2>
 
-            <div className="flex justify-center gap-4 mt-8">
-              <Button onClick={() => navigate("/login/society")}>
+            <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
+
+              <Button
+                fullWidth
+                onClick={() => navigate("/login/society")}
+              >
                 Login
               </Button>
 
               <Button
+                fullWidth
                 variant="outline"
                 onClick={() => navigate("/register/society")}
               >
                 Sign Up
               </Button>
+
             </div>
+
           </div>
 
         </div>
 
         {/* Admin Login */}
-        <div className="flex justify-center mt-10">
+        <div className="flex justify-center mt-8 md:mt-10">
+
           <button
             onClick={() => navigate("/login/admin")}
             className="
               flex
               items-center
               gap-2
-              text-blue-600
+              text-slate-700
               font-semibold
-              hover:text-blue-700
+              hover:text-black
               transition-all
               duration-300
               hover:scale-105
@@ -112,6 +129,7 @@ function RoleSelection() {
             <ShieldCheck size={18} />
             Admin Login
           </button>
+
         </div>
 
       </div>
