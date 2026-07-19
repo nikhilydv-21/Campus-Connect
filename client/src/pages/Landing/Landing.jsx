@@ -24,8 +24,7 @@ function Landing() {
 
         <div className="mt-10 flex justify-center">
           <Button
-            fullWidth
-            className="w-full sm:w-auto max-w-xs"
+            className="px-10 py-3 text-base sm:text-lg"
             onClick={() => navigate("/choose-role")}
           >
             Get Started
