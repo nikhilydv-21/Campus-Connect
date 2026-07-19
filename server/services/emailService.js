@@ -1,53 +1,41 @@
 require("dotenv").config();
 
-const nodemailer = require("nodemailer");
+const brevo = require("@getbrevo/brevo");
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: 587,
-  secure: false,
-  requireTLS: true,
+const apiInstance = new brevo.TransactionalEmailsApi();
 
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-
-  tls: {
-    minVersion: "TLSv1.2",
-    rejectUnauthorized: false,
-  },
-
-  connectionTimeout: 60000,
-  greetingTimeout: 60000,
-  socketTimeout: 60000,
-});
+apiInstance.setApiKey(
+  brevo.TransactionalEmailsApiApiKeys.apiKey,
+  process.env.BREVO_API_KEY
+);
 
 const sendEmail = async (to, subject, html) => {
   try {
-    console.log("========== SMTP DEBUG ==========");
-    console.log("SMTP_HOST:", process.env.SMTP_HOST);
-    console.log("SMTP_PORT:", process.env.SMTP_PORT);
-    console.log("SMTP_USER:", process.env.SMTP_USER);
-    console.log("EMAIL_USER:", process.env.EMAIL_USER);
+    console.log("========== BREVO API DEBUG ==========");
 
-    await transporter.verify();
-    console.log("✅ SMTP VERIFIED");
+    const sendSmtpEmail = new brevo.SendSmtpEmail();
 
-    const info = await transporter.sendMail({
-      from: {
-        name: "Campus Connect",
-        address: process.env.EMAIL_USER,
+    sendSmtpEmail.sender = {
+      name: "Campus Connect",
+      email: process.env.EMAIL_USER,
+    };
+
+    sendSmtpEmail.to = [
+      {
+        email: to,
       },
-      to,
-      subject,
-      html,
-    });
+    ];
 
-    console.log("✅ Email Sent:", info.messageId);
+    sendSmtpEmail.subject = subject;
+    sendSmtpEmail.htmlContent = html;
+
+    const response = await apiInstance.sendTransacEmail(sendSmtpEmail);
+
+    console.log("✅ Email Sent Successfully");
+    console.log(response.body);
   } catch (error) {
-    console.error("❌ EMAIL ERROR");
-    console.error(error);
+    console.error("❌ BREVO API ERROR");
+    console.error(error.response?.body || error);
     throw error;
   }
 };
