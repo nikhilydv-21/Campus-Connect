@@ -2,6 +2,8 @@ require("dotenv").config();
 
 const brevo = require("@getbrevo/brevo");
 
+
+console.log("BREVO EXPORTS:", Object.keys(brevo));
 const apiInstance = new brevo.TransactionalEmailsApi();
 
 apiInstance.setApiKey(
