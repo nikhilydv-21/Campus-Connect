@@ -8,37 +8,41 @@ function RejectConfirmModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
 
-      <div className="w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 shadow-2xl">
+      <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl sm:p-8">
 
-        <h2 className="text-xl sm:text-2xl font-bold text-center text-red-600">
+        <h2 className="text-center text-xl font-bold text-red-600 sm:text-2xl">
           Reject Society
         </h2>
 
-        <p className="text-sm sm:text-base text-center text-gray-500 mt-4">
+        <p className="mt-4 text-center text-sm text-gray-500 sm:text-base">
           Are you sure you want to reject
         </p>
 
-        <p className="text-center font-semibold text-slate-800 mt-3 break-words">
+        <p className="mt-3 break-words text-center font-semibold text-slate-800">
           {society.societyName} ?
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-8">
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
 
-          <button
-            onClick={() => setOpen(false)}
-            className="border border-gray-300 rounded-xl py-3 px-4 hover:bg-gray-100 transition"
-          >
-            Cancel
-          </button>
+          {/* Reject - Mobile Top | Desktop Right */}
 
           <button
             onClick={onConfirm}
             disabled={loading}
-            className="bg-red-600 hover:bg-red-700 text-white rounded-xl py-3 px-4 transition disabled:opacity-70"
+            className="order-1 flex-1 rounded-xl bg-red-600 px-4 py-3 text-white transition hover:bg-red-700 disabled:opacity-70 sm:order-2"
           >
             {loading ? "Rejecting..." : "Reject"}
+          </button>
+
+          {/* Cancel - Mobile Bottom | Desktop Left */}
+
+          <button
+            onClick={() => setOpen(false)}
+            className="order-2 flex-1 rounded-xl border border-gray-300 px-4 py-3 transition hover:bg-gray-100 sm:order-1"
+          >
+            Cancel
           </button>
 
         </div>

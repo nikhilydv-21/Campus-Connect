@@ -24,19 +24,19 @@ function ApproveConfirmModal({
           {society.societyName} ?
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-8">
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4">
 
           <button
             onClick={onConfirm}
             disabled={loading}
-            className="order-1 sm:order-2 bg-green-600 hover:bg-green-700 text-white rounded-xl py-3 px-4 transition disabled:opacity-70"
+            className="order-1 sm:order-2 w-full sm:w-40 bg-green-600 hover:bg-green-700 text-white rounded-xl py-3 transition disabled:opacity-70"
           >
             {loading ? "Approving..." : "Approve"}
           </button>
 
           <button
             onClick={() => setOpen(false)}
-            className="order-2 sm:order-1 border border-gray-300 rounded-xl py-3 px-4 hover:bg-gray-100 transition"
+            className="order-2 sm:order-1 w-full sm:w-40 border border-gray-300 rounded-xl py-3 hover:bg-gray-100 transition"
           >
             Cancel
           </button>
