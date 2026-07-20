@@ -8,11 +8,13 @@ function DisableConfirmModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
 
-      <div className="w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 shadow-2xl">
+      <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl sm:p-8">
 
-        <h2 className="text-xl sm:text-2xl font-bold text-center text-slate-800">
+        {/* Title */}
+
+        <h2 className="text-center text-xl font-bold text-slate-800 sm:text-2xl">
 
           {society.isDisabled
             ? "Enable Society"
@@ -20,7 +22,9 @@ function DisableConfirmModal({
 
         </h2>
 
-        <p className="text-sm sm:text-base text-gray-500 text-center mt-4 leading-6">
+        {/* Description */}
+
+        <p className="mt-4 text-center text-sm leading-6 text-gray-500 sm:text-base">
 
           {society.isDisabled
             ? "This society will be able to login again."
@@ -28,35 +32,47 @@ function DisableConfirmModal({
 
         </p>
 
-        <p className="font-semibold text-center mt-3 text-slate-800 break-words">
+        {/* Society Name */}
+
+        <p className="mt-3 break-words text-center font-semibold text-slate-800">
 
           {society.societyName}
 
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-8">
+        {/* Buttons */}
 
-          <button
-            onClick={() => setOpen(false)}
-            className="border border-gray-300 rounded-xl py-3 px-4 hover:bg-gray-100 transition"
-          >
-            Cancel
-          </button>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
+
+          {/* Enable / Disable - Mobile Top | Desktop Right */}
 
           <button
             onClick={onConfirm}
             disabled={loading}
-            className={`rounded-xl py-3 px-4 text-white transition ${
+            className={`order-1 flex-1 rounded-xl px-4 py-3 text-white transition disabled:opacity-70 sm:order-2 ${
               society.isDisabled
                 ? "bg-green-600 hover:bg-green-700"
                 : "bg-yellow-500 hover:bg-yellow-600"
             }`}
           >
+
             {loading
               ? "Please Wait..."
               : society.isDisabled
               ? "Enable"
               : "Disable"}
+
+          </button>
+
+          {/* Cancel - Mobile Bottom | Desktop Left */}
+
+          <button
+            onClick={() => setOpen(false)}
+            className="order-2 flex-1 rounded-xl border border-gray-300 px-4 py-3 transition hover:bg-gray-100 sm:order-1"
+          >
+
+            Cancel
+
           </button>
 
         </div>
