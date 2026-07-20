@@ -2,13 +2,11 @@ import { useState, useRef, useEffect } from "react";
 import {
   MoreVertical,
   Download,
-  Award,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
 import {
   exportParticipantsCSV,
-  generateCertificates,
 } from "../../../../services/eventServices";
 
 function ActionMenu({
@@ -103,50 +101,27 @@ function ActionMenu({
 
   };
 
-  const handleCertificates = async () => {
-
-    try {
-
-      await generateCertificates(
-        eventId
-      );
-
-      toast.success(
-        "Certificates Generated"
-      );
-
-      setOpen(false);
-
-    } catch (error) {
-
-      toast.error(
-        error.response?.data?.message ||
-          "Failed to generate certificates"
-      );
-
-    }
-
-  };
-
   return (
 
     <div
-      className="relative self-start lg:self-auto"
       ref={menuRef}
+      className="relative self-start lg:self-auto"
     >
 
       <button
-        onClick={() =>
-          setOpen(!open)
-        }
+        onClick={() => setOpen(!open)}
         className="
-          bg-white
-          border
+          flex
+          h-12
+          w-12
+          items-center
+          justify-center
           rounded-2xl
-          p-3
+          border
+          bg-white
           shadow-sm
-          hover:bg-slate-100
           transition
+          hover:bg-slate-100
         "
       >
 
@@ -161,31 +136,32 @@ function ActionMenu({
             absolute
             right-0
             mt-3
-            w-56
-            sm:w-60
-            bg-white
-            rounded-2xl
-            shadow-xl
-            border
-            overflow-hidden
             z-50
+            w-52
+            max-w-[calc(100vw-2rem)]
+            overflow-hidden
+            rounded-2xl
+            border
+            bg-white
+            shadow-xl
           "
         >
 
           <button
             onClick={handleExportCSV}
             className="
-              w-full
-              px-4
-              sm:px-5
-              py-4
               flex
+              w-full
               items-center
               gap-3
+              px-4
+              py-4
+              text-left
               text-sm
-              sm:text-base
-              hover:bg-slate-100
               transition
+              hover:bg-slate-100
+              sm:px-5
+              sm:text-base
             "
           >
 
@@ -194,36 +170,8 @@ function ActionMenu({
               className="shrink-0"
             />
 
-            <span className="break-words">
+            <span>
               Export CSV
-            </span>
-
-          </button>
-
-          <button
-            onClick={handleCertificates}
-            className="
-              w-full
-              px-4
-              sm:px-5
-              py-4
-              flex
-              items-center
-              gap-3
-              text-sm
-              sm:text-base
-              hover:bg-slate-100
-              transition
-            "
-          >
-
-            <Award
-              size={18}
-              className="shrink-0"
-            />
-
-            <span className="break-words">
-              Generate Certificates
             </span>
 
           </button>

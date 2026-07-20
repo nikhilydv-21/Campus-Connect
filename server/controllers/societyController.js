@@ -959,6 +959,7 @@ const sendAnnouncement = async (req, res) => {
 
     await Promise.all(
       members.map(async (member) => {
+        if (!member.student) return;
         await Notification.create({
           recipient: member.student._id,
           recipientModel: "Student",

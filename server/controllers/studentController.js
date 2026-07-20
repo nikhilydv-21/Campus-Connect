@@ -1060,7 +1060,7 @@ const registerEvent = async (req, res) => {
         message: "Invalid Event ID",
       });
     }
-   
+
     // Check Student
     const student = await Student.findById(req.user.id);
 
@@ -1494,6 +1494,17 @@ const getLikedEvents = async (req, res) => {
     const { search } = req.query;
 
     let events = student.likedEvents;
+    // Show only upcoming/active events
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    events = events.filter((event) => {
+      return (
+        event.status !== "Completed" &&
+        event.status !== "Cancelled" &&
+        new Date(event.date) >= today
+      );
+    });
 
     // Search by Event Name or Society Name
     if (search) {

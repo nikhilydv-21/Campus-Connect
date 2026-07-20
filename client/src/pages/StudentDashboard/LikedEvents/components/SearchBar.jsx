@@ -3,16 +3,12 @@ import { Search } from "lucide-react";
 function SearchBar({
   search,
   setSearch,
-  status,
-  setStatus,
 }) {
   return (
 
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-5 mb-6 sm:mb-8">
+    <div className="mb-6 sm:mb-8">
 
-      {/* Search */}
-
-      <div className="relative md:col-span-3">
+      <div className="relative">
 
         <Search
           size={20}
@@ -31,7 +27,9 @@ function SearchBar({
           type="text"
           placeholder="Search by event or society..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) =>
+            setSearch(e.target.value)
+          }
           className="
             w-full
             h-11
@@ -54,38 +52,6 @@ function SearchBar({
         />
 
       </div>
-
-      {/* Filter */}
-
-      <select
-        value={status}
-        onChange={(e) => setStatus(e.target.value)}
-        className="
-          h-11
-          sm:h-12
-          border
-          border-slate-300
-          rounded-xl
-          px-4
-          bg-white
-          text-sm
-          sm:text-base
-          text-slate-700
-          outline-none
-          focus:border-slate-500
-          transition-all
-        "
-      >
-
-        <option value="">All Events</option>
-
-        <option value="Upcoming">Upcoming</option>
-
-        <option value="Ongoing">Ongoing</option>
-
-        <option value="Completed">Completed</option>
-
-      </select>
 
     </div>
 

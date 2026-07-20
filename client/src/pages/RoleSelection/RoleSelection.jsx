@@ -55,22 +55,35 @@ function RoleSelection() {
               Student
             </h2>
 
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">
+            <div className="mt-8 flex flex-col items-center">
 
               <Button
-                className="w-full sm:w-auto sm:min-w-[140px]"
+                className="w-full max-w-[240px]"
                 onClick={() => navigate("/login/student")}
               >
                 Login
               </Button>
 
-              <Button
-                className="w-full sm:w-auto sm:min-w-[140px]"
-                variant="outline"
-                onClick={() => navigate("/register/student")}
-              >
-                Sign Up
-              </Button>
+              <p className="mt-5 text-sm text-slate-500">
+
+                New here?{" "}
+
+                <button
+                  onClick={() =>
+                    navigate("/register/student")
+                  }
+                  className="
+                    font-semibold
+                    text-blue-600
+                    hover:text-blue-700
+                    hover:underline
+                    transition
+                  "
+                >
+                  Sign Up
+                </button>
+
+              </p>
 
             </div>
 
@@ -96,22 +109,35 @@ function RoleSelection() {
               Society
             </h2>
 
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">
+            <div className="mt-8 flex flex-col items-center">
 
               <Button
-                className="w-full sm:w-auto sm:min-w-[140px]"
+                className="w-full max-w-[240px]"
                 onClick={() => navigate("/login/society")}
               >
                 Login
               </Button>
 
-              <Button
-                className="w-full sm:w-auto sm:min-w-[140px]"
-                variant="outline"
-                onClick={() => navigate("/register/society")}
-              >
-                Sign Up
-              </Button>
+              <p className="mt-5 text-sm text-slate-500">
+
+                New here?{" "}
+
+                <button
+                  onClick={() =>
+                    navigate("/register/society")
+                  }
+                  className="
+                    font-semibold
+                    text-blue-600
+                    hover:text-blue-700
+                    hover:underline
+                    transition
+                  "
+                >
+                  Sign Up
+                </button>
+
+              </p>
 
             </div>
 
