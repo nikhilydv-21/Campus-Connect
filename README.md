@@ -175,18 +175,6 @@ Complete event information including venue, organizer, schedule, registration de
 
 ---
 
-## 👥 Participants Management
-
-Societies can monitor registered participants and manage attendance.
-
-<p align="center">
-
-![Participants](screenshots/participants.png)
-
-</p>
-
----
-
 # ⭐ Why Campus Connect?
 
 Traditional college event management often involves manual registrations, spreadsheets and scattered communication.
