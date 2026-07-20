@@ -16,15 +16,17 @@ function Settings() {
   }
 
   return (
-    <div className="bg-slate-100 min-h-screen p-8">
+    <div className="bg-slate-100 min-h-screen p-4 sm:p-6 lg:p-8">
 
-      <div className="mb-8">
+      {/* Heading */}
 
-        <h1 className="text-4xl font-bold text-slate-800">
+      <div className="mb-6 sm:mb-8">
+
+        <h1 className="text-3xl sm:text-4xl font-bold text-slate-800">
           Settings
         </h1>
 
-        <p className="text-gray-500 mt-2">
+        <p className="mt-2 text-sm sm:text-base text-gray-500">
           Manage your account settings.
         </p>
 
@@ -39,20 +41,23 @@ function Settings() {
           className="
             w-full
             bg-white
-            rounded-3xl
+            rounded-2xl
+            sm:rounded-3xl
             shadow-lg
-            p-6
+            p-5
+            sm:p-6
             flex
-            justify-between
             items-center
+            justify-between
+            gap-4
             hover:shadow-xl
             transition
           "
         >
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 min-w-0">
 
-            <div className="bg-blue-100 p-4 rounded-full">
+            <div className="bg-blue-100 p-3 sm:p-4 rounded-full shrink-0">
 
               <Lock
                 className="text-blue-600"
@@ -61,13 +66,13 @@ function Settings() {
 
             </div>
 
-            <div className="text-left">
+            <div className="text-left min-w-0">
 
-              <h2 className="text-xl font-semibold">
+              <h2 className="text-lg sm:text-xl font-semibold break-words">
                 Change Password
               </h2>
 
-              <p className="text-gray-500">
+              <p className="text-sm sm:text-base text-gray-500 break-words">
                 Update your account password
               </p>
 
@@ -75,7 +80,10 @@ function Settings() {
 
           </div>
 
-          <ChevronRight />
+          <ChevronRight
+            className="shrink-0"
+            size={22}
+          />
 
         </button>
 

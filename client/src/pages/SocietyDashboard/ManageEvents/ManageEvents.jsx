@@ -14,7 +14,6 @@ function ManageEvents({
   setActivePage,
   setSelectedEventId,
 }) {
-
   const [events, setEvents] =
     useState([]);
 
@@ -37,9 +36,7 @@ function ManageEvents({
     useState(false);
 
   const fetchEvents = async () => {
-
     try {
-
       setLoading(true);
 
       const response =
@@ -54,7 +51,7 @@ function ManageEvents({
 
       toast.error(
         error.response?.data?.message ||
-        "Failed to load events"
+          "Failed to load events"
       );
 
     } finally {
@@ -62,72 +59,52 @@ function ManageEvents({
       setLoading(false);
 
     }
-
   };
 
   useEffect(() => {
-
     fetchEvents();
-
   }, [search, status]);
 
   const handleEdit = (id) => {
-
     setSelectedEventId(id);
-
     setActivePage("edit-event");
-
   };
 
   const handleParticipants = (id) => {
-
     setSelectedEventId(id);
-
     setActivePage("participants");
-
   };
 
   const handleDelete = (event) => {
-
     setSelectedEvent(event);
-
     setDeleteModal(true);
-
   };
 
   const handleView = (event) => {
-
     setSelectedEvent(event);
-
     setViewModal(true);
-
   };
 
   return (
-
-    <div className="bg-slate-100 min-h-screen p-8">
+    <div className="bg-slate-100 min-h-screen p-4 sm:p-6 lg:p-8">
 
       {/* Heading */}
 
-      <div className="mb-8">
+      <div className="mb-6 sm:mb-8">
 
-        <h1 className="text-4xl font-bold text-slate-800">
-
+        <h1 className="text-3xl sm:text-4xl font-bold text-slate-800">
           Manage Events
-
         </h1>
 
-        <p className="text-gray-500 mt-2">
-
+        <p className="mt-2 text-sm sm:text-base text-gray-500">
           View, search, edit and manage your events.
-
         </p>
 
       </div>
 
-      {/* Search */}
+      {/* Search & Filter */}
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-5 mb-6 sm:mb-8">
 
         <div className="md:col-span-3">
 
@@ -153,7 +130,7 @@ function ManageEvents({
 
       {loading ? (
 
-        <div className="text-center py-20 text-lg text-gray-500">
+        <div className="text-center py-16 sm:py-20 text-base sm:text-lg text-gray-500">
 
           Loading Events...
 
@@ -165,7 +142,7 @@ function ManageEvents({
 
       ) : (
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 justify-items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6 justify-items-center">
 
           {events.map((event) => (
 
@@ -184,7 +161,7 @@ function ManageEvents({
 
       )}
 
-      {/* Delete */}
+      {/* Delete Modal */}
 
       <DeleteModal
         open={deleteModal}
@@ -193,7 +170,7 @@ function ManageEvents({
         refreshEvents={fetchEvents}
       />
 
-      {/* View */}
+      {/* View Modal */}
 
       <EventDetailsModal
         open={viewModal}
@@ -202,9 +179,7 @@ function ManageEvents({
       />
 
     </div>
-
   );
-
 }
 
 export default ManageEvents;

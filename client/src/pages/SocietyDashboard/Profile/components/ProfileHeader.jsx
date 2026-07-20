@@ -110,7 +110,18 @@ function ProfileHeader({
 
   return (
 
-    <div className="bg-white rounded-3xl shadow-lg p-8 mb-8">
+    <div
+      className="
+        mb-6
+        sm:mb-8
+        rounded-2xl
+        sm:rounded-3xl
+        bg-white
+        shadow-lg
+        p-5
+        sm:p-8
+      "
+    >
 
       <div className="flex flex-col items-center">
 
@@ -129,15 +140,17 @@ function ProfileHeader({
             setShowLogo(true)
           }
           className="
-            w-36
-            h-36
+            h-28
+            w-28
+            sm:h-36
+            sm:w-36
             rounded-full
-            object-cover
             border-4
             border-blue-600
+            object-cover
             cursor-pointer
-            hover:scale-105
             transition
+            hover:scale-105
           "
         />
 
@@ -155,9 +168,7 @@ function ProfileHeader({
 
             <button
               onClick={() =>
-                setLogoMenu(
-                  !logoMenu
-                )
+                setLogoMenu(!logoMenu)
               }
               className="
                 flex
@@ -165,33 +176,33 @@ function ProfileHeader({
                 gap-1
                 text-sm
                 text-gray-700
-                hover:text-black
                 transition
+                hover:text-black
               "
             >
 
               Logo
 
-              <ChevronDown
-                size={16}
-              />
+              <ChevronDown size={16} />
 
             </button>
 
             {logoMenu && (
-                            <div
+
+              <div
                 className="
                   absolute
-                  top-8
                   left-1/2
+                  top-8
+                  z-50
+                  w-48
+                  sm:w-52
                   -translate-x-1/2
-                  w-52
-                  bg-white
+                  overflow-hidden
                   rounded-2xl
                   border
+                  bg-white
                   shadow-xl
-                  overflow-hidden
-                  z-50
                 "
               >
 
@@ -200,14 +211,15 @@ function ProfileHeader({
                 <label
                   className="
                     flex
+                    cursor-pointer
                     items-center
                     gap-3
-                    px-5
+                    px-4
+                    sm:px-5
                     py-3
                     text-sm
-                    cursor-pointer
-                    hover:bg-slate-100
                     transition
+                    hover:bg-slate-100
                   "
                 >
 
@@ -238,16 +250,17 @@ function ProfileHeader({
                       setLogoMenu(false);
                     }}
                     className="
-                      w-full
                       flex
+                      w-full
                       items-center
                       gap-3
-                      px-5
+                      px-4
+                      sm:px-5
                       py-3
                       text-sm
                       text-red-600
-                      hover:bg-red-50
                       transition
+                      hover:bg-red-50
                     "
                   >
 
@@ -269,7 +282,16 @@ function ProfileHeader({
 
         {/* Society Name */}
 
-        <h2 className="text-3xl font-bold mt-6 text-center break-words">
+        <h2
+          className="
+            mt-6
+            text-center
+            text-2xl
+            sm:text-3xl
+            font-bold
+            break-words
+          "
+        >
 
           {editMode
             ? formData.societyName
@@ -279,7 +301,15 @@ function ProfileHeader({
 
         {/* Email */}
 
-        <p className="text-gray-500 mt-2 break-all">
+        <p
+          className="
+            mt-2
+            break-all
+            text-sm
+            sm:text-base
+            text-gray-500
+          "
+        >
 
           {society?.email}
 
@@ -287,32 +317,55 @@ function ProfileHeader({
 
         {/* Society Type */}
 
-        <p className="text-slate-700 font-semibold mt-1">
+        <p
+          className="
+            mt-1
+            text-sm
+            sm:text-base
+            font-semibold
+            text-slate-700
+          "
+        >
 
           {editMode
             ? formData.societyType
-            : society?.societyType || "Not Added"}
+            : society?.societyType ||
+              "Not Added"}
 
         </p>
 
         {/* Buttons */}
 
-        <div className="flex gap-4 mt-8">
-
-          {editMode ? (
+        <div
+          className="
+            mt-8
+            flex
+            w-full
+            flex-col
+            gap-3
+            sm:w-auto
+            sm:flex-row
+            sm:gap-4
+          "
+        >
+                    {editMode ? (
 
             <>
 
               <button
                 onClick={updateProfile}
                 className="
+                  w-full
+                  sm:w-auto
+                  rounded-xl
                   bg-green-600
-                  hover:bg-green-700
-                  text-white
                   px-6
                   py-3
-                  rounded-xl
+                  text-sm
+                  sm:text-base
+                  text-white
                   transition
+                  hover:bg-green-700
                 "
               >
 
@@ -323,13 +376,17 @@ function ProfileHeader({
               <button
                 onClick={handleCancel}
                 className="
+                  w-full
+                  sm:w-auto
+                  rounded-xl
                   bg-gray-500
-                  hover:bg-gray-600
-                  text-white
                   px-6
                   py-3
-                  rounded-xl
+                  text-sm
+                  sm:text-base
+                  text-white
                   transition
+                  hover:bg-gray-600
                 "
               >
 
@@ -346,19 +403,23 @@ function ProfileHeader({
                 setEditMode(true)
               }
               className="
+                w-full
+                sm:w-auto
+                rounded-xl
                 bg-blue-600
-                hover:bg-blue-700
-                text-white
                 px-6
                 py-3
-                rounded-xl
+                text-sm
+                sm:text-base
+                text-white
                 transition
+                hover:bg-blue-700
               "
             >
 
               <Pencil
                 size={18}
-                className="inline mr-2"
+                className="mr-2 inline"
               />
 
               Edit Profile

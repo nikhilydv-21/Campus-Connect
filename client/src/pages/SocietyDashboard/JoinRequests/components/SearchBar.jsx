@@ -15,6 +15,7 @@ function SearchBar({
           top-1/2
           -translate-y-1/2
           text-gray-400
+          pointer-events-none
         "
       />
 
@@ -33,6 +34,10 @@ function SearchBar({
           py-3
           pl-12
           pr-4
+          text-sm
+          sm:text-base
+          placeholder:text-sm
+          sm:placeholder:text-base
           outline-none
           focus:ring-2
           focus:ring-blue-500

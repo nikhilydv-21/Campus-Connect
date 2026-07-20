@@ -14,12 +14,16 @@ import Analytics from "./Analytics/Analytics";
 import Settings from "./Settings/Settings";
 import Participants from "./Participants/Participants";
 import Feedback from "./Feedback/Feedback";
+
 function SocietyDashboard() {
   const [activePage, setActivePage] =
     useState("dashboard");
 
   const [selectedEventId, setSelectedEventId] =
     useState(null);
+
+  const [sidebarOpen, setSidebarOpen] =
+    useState(false);
 
   const renderPage = () => {
     switch (activePage) {
@@ -64,7 +68,7 @@ function SocietyDashboard() {
 
       case "settings":
         return <Settings />;
-        
+
       case "feedback":
         return (
           <Feedback
@@ -73,31 +77,41 @@ function SocietyDashboard() {
           />
         );
 
-
-
       default:
         return <DashboardHome />;
     }
   };
 
   return (
-    <div className="flex bg-slate-100">
+    <div className="flex bg-slate-100 min-h-screen">
+
+      {/* Mobile Overlay */}
+
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-30 lg:hidden"
+          onClick={() =>
+            setSidebarOpen(false)
+          }
+        />
+      )}
 
       <Sidebar
         activePage={activePage}
         setActivePage={setActivePage}
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
       />
 
       <div className="flex-1 flex flex-col h-screen">
 
         <Navbar
           setActivePage={setActivePage}
+          setSidebarOpen={setSidebarOpen}
         />
 
-        <div className="flex-1 overflow-auto p-8">
-
+        <div className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8">
           {renderPage()}
-
         </div>
 
       </div>

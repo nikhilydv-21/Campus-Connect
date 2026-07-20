@@ -10,22 +10,49 @@ function SocialLinks({
   formData,
   setFormData,
 }) {
-  return (
-    <div className="mt-8 bg-white rounded-3xl shadow-lg p-8">
 
-      <h2 className="text-2xl font-bold text-slate-800 mb-8">
+  return (
+
+    <div
+      className="
+        mt-6
+        sm:mt-8
+        rounded-2xl
+        sm:rounded-3xl
+        bg-white
+        shadow-lg
+        p-5
+        sm:p-8
+      "
+    >
+
+      <h2
+        className="
+          mb-6
+          sm:mb-8
+          text-xl
+          sm:text-2xl
+          font-bold
+          text-slate-800
+        "
+      >
+
         Social Links
+
       </h2>
 
       {editMode ? (
 
-        <div className="space-y-6">
+        <div className="space-y-5 sm:space-y-6">
 
           {/* Instagram */}
 
           <div>
-            <label className="block text-sm text-gray-500 mb-2">
+
+            <label className="mb-2 block text-sm text-gray-500">
+
               Instagram
+
             </label>
 
             <input
@@ -41,15 +68,29 @@ function SocialLinks({
                   },
                 })
               }
-              className="w-full border rounded-xl px-4 py-3 outline-none focus:border-pink-500"
+              className="
+                w-full
+                rounded-xl
+                border
+                px-4
+                py-3
+                text-sm
+                sm:text-base
+                outline-none
+                focus:border-pink-500
+              "
             />
+
           </div>
 
           {/* LinkedIn */}
 
           <div>
-            <label className="block text-sm text-gray-500 mb-2">
+
+            <label className="mb-2 block text-sm text-gray-500">
+
               LinkedIn
+
             </label>
 
             <input
@@ -65,15 +106,29 @@ function SocialLinks({
                   },
                 })
               }
-              className="w-full border rounded-xl px-4 py-3 outline-none focus:border-blue-600"
+              className="
+                w-full
+                rounded-xl
+                border
+                px-4
+                py-3
+                text-sm
+                sm:text-base
+                outline-none
+                focus:border-blue-600
+              "
             />
+
           </div>
 
           {/* Website */}
 
           <div>
-            <label className="block text-sm text-gray-500 mb-2">
+
+            <label className="mb-2 block text-sm text-gray-500">
+
               Website
+
             </label>
 
             <input
@@ -89,67 +144,180 @@ function SocialLinks({
                   },
                 })
               }
-              className="w-full border rounded-xl px-4 py-3 outline-none focus:border-green-600"
+              className="
+                w-full
+                rounded-xl
+                border
+                px-4
+                py-3
+                text-sm
+                sm:text-base
+                outline-none
+                focus:border-green-600
+              "
             />
+
           </div>
 
         </div>
 
       ) : (
 
-        <div className="space-y-5">
+        <div className="space-y-4 sm:space-y-5">
 
           {society?.socialLinks?.instagram && (
+
             <a
               href={society.socialLinks.instagram}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-4 border rounded-2xl p-5 hover:bg-pink-50 transition"
+              className="
+                flex
+                items-center
+                gap-3
+                sm:gap-4
+                rounded-2xl
+                border
+                p-4
+                sm:p-5
+                transition
+                hover:bg-pink-50
+              "
             >
-              <FaInstagram className="text-pink-600 text-2xl flex-shrink-0" />
 
-              <span className="break-all">
+              <FaInstagram
+                className="
+                  shrink-0
+                  text-xl
+                  sm:text-2xl
+                  text-pink-600
+                "
+              />
+
+              <span
+                className="
+                  break-all
+                  text-sm
+                  sm:text-base
+                "
+              >
+
                 {society.socialLinks.instagram}
+
               </span>
+
             </a>
+
           )}
 
           {society?.socialLinks?.linkedin && (
+
             <a
               href={society.socialLinks.linkedin}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-4 border rounded-2xl p-5 hover:bg-blue-50 transition"
+              className="
+                flex
+                items-center
+                gap-3
+                sm:gap-4
+                rounded-2xl
+                border
+                p-4
+                sm:p-5
+                transition
+                hover:bg-blue-50
+              "
             >
-              <FaLinkedin className="text-blue-700 text-2xl flex-shrink-0" />
 
-              <span className="break-all">
+              <FaLinkedin
+                className="
+                  shrink-0
+                  text-xl
+                  sm:text-2xl
+                  text-blue-700
+                "
+              />
+
+              <span
+                className="
+                  break-all
+                  text-sm
+                  sm:text-base
+                "
+              >
+
                 {society.socialLinks.linkedin}
+
               </span>
+
             </a>
+
           )}
 
           {society?.socialLinks?.website && (
+
             <a
               href={society.socialLinks.website}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-4 border rounded-2xl p-5 hover:bg-green-50 transition"
+              className="
+                flex
+                items-center
+                gap-3
+                sm:gap-4
+                rounded-2xl
+                border
+                p-4
+                sm:p-5
+                transition
+                hover:bg-green-50
+              "
             >
-              <FaGlobe className="text-green-700 text-2xl flex-shrink-0" />
 
-              <span className="break-all">
+              <FaGlobe
+                className="
+                  shrink-0
+                  text-xl
+                  sm:text-2xl
+                  text-green-700
+                "
+              />
+
+              <span
+                className="
+                  break-all
+                  text-sm
+                  sm:text-base
+                "
+              >
+
                 {society.socialLinks.website}
+
               </span>
+
             </a>
+
           )}
 
           {!society?.socialLinks?.instagram &&
             !society?.socialLinks?.linkedin &&
             !society?.socialLinks?.website && (
-              <div className="text-center py-8 text-gray-500">
+
+              <div
+                className="
+                  py-8
+                  text-center
+                  text-sm
+                  sm:text-base
+                  text-gray-500
+                "
+              >
+
                 No Social Links Added
+
               </div>
+
             )}
 
         </div>
@@ -157,7 +325,9 @@ function SocialLinks({
       )}
 
     </div>
+
   );
+
 }
 
 export default SocialLinks;

@@ -8,25 +8,34 @@ import {
 } from "lucide-react";
 
 function EventPreview({ formData }) {
-  const [showBanner, setShowBanner] = useState(false);
+  const [showBanner, setShowBanner] =
+    useState(false);
 
   return (
     <>
-      <div className="mt-8 bg-white rounded-3xl shadow-lg overflow-hidden">
+      <div className="mt-6 sm:mt-8 bg-white rounded-2xl sm:rounded-3xl shadow-lg overflow-hidden">
+
         {/* Banner */}
 
         {formData.banner ? (
           <img
             src={
-           typeof formData.banner === "string"
-          ? formData.banner
-         : URL.createObjectURL(formData.banner)
-        }
+              typeof formData.banner ===
+              "string"
+                ? formData.banner
+                : URL.createObjectURL(
+                    formData.banner
+                  )
+            }
             alt="Banner Preview"
-            onClick={() => setShowBanner(true)}
+            onClick={() =>
+              setShowBanner(true)
+            }
             className="
               w-full
-              h-72
+              h-52
+              sm:h-64
+              lg:h-72
               object-cover
               cursor-pointer
               hover:opacity-90
@@ -34,143 +43,206 @@ function EventPreview({ formData }) {
             "
           />
         ) : (
-          <div className="w-full h-72 bg-slate-200 flex items-center justify-center text-gray-500 text-xl">
+          <div className="w-full h-52 sm:h-64 lg:h-72 bg-slate-200 flex items-center justify-center text-gray-500 text-base sm:text-xl">
             Event Banner Preview
           </div>
         )}
 
-        <div className="p-8">
-          <h2 className="text-3xl font-bold text-slate-800">
-            {formData.title || "Event Title"}
+        {/* Content */}
+
+        <div className="p-5 sm:p-6 lg:p-8">
+
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 break-words">
+            {formData.title ||
+              "Event Title"}
           </h2>
 
-          <p className="text-gray-600 mt-4 whitespace-pre-wrap break-words leading-7">
+          <p className="mt-4 text-sm sm:text-base text-gray-600 whitespace-pre-wrap break-words leading-6 sm:leading-7">
             {formData.description ||
               "Event description will appear here."}
           </p>
 
-          <div className="grid md:grid-cols-2 gap-5 mt-8">
-            <div className="flex items-center gap-3">
-              <Tag className="text-blue-600" size={20} />
-              <span>{formData.category}</span>
+          {/* Details */}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mt-6 sm:mt-8">
+
+            <div className="flex items-center gap-3 min-w-0">
+
+              <Tag
+                className="text-blue-600 shrink-0"
+                size={20}
+              />
+
+              <span className="break-words">
+                {formData.category}
+              </span>
+
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 min-w-0">
+
               <MapPin
-                className="text-red-500"
+                className="text-red-500 shrink-0"
                 size={20}
               />
-              <span>
-                {formData.venue || "Venue"}
+
+              <span className="break-words">
+                {formData.venue ||
+                  "Venue"}
               </span>
+
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 min-w-0">
+
               <Calendar
-                className="text-green-600"
+                className="text-green-600 shrink-0"
                 size={20}
               />
-              <span>
-                {formData.date || "Date"}
+
+              <span className="break-words">
+                {formData.date ||
+                  "Date"}
               </span>
+
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 min-w-0">
+
               <Clock
-                className="text-orange-500"
+                className="text-orange-500 shrink-0"
                 size={20}
               />
-              <span>
-                {formData.startTime || "--:--"} -{" "}
-                {formData.endTime || "--:--"}
+
+              <span className="break-words">
+                {formData.startTime ||
+                  "--:--"}{" "}
+                -{" "}
+                {formData.endTime ||
+                  "--:--"}
               </span>
+
             </div>
+
           </div>
 
           {/* Registration */}
 
-          <div className="mt-8 p-5 rounded-2xl bg-slate-50 border">
-            <h3 className="font-semibold text-lg mb-4">
+          <div className="mt-6 sm:mt-8 p-4 sm:p-5 rounded-2xl bg-slate-50 border">
+
+            <h3 className="mb-4 text-base sm:text-lg font-semibold">
               Registration
             </h3>
 
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-gray-500">
+            <div className="space-y-4">
+
+              <div className="flex justify-between items-start gap-4">
+
+                <span className="text-sm sm:text-base text-gray-500">
                   Mode
                 </span>
 
-                <span className="font-medium">
-                  {formData.registrationMode}
+                <span className="text-sm sm:text-base font-medium text-right break-words">
+                  {
+                    formData.registrationMode
+                  }
                 </span>
+
               </div>
 
-              <div className="flex justify-between">
-                <span className="text-gray-500">
+              <div className="flex justify-between items-start gap-4">
+
+                <span className="text-sm sm:text-base text-gray-500">
                   Deadline
                 </span>
 
-                <span className="font-medium">
+                <span className="text-sm sm:text-base font-medium text-right break-words">
                   {formData.registrationDeadline ||
                     "Not Selected"}
                 </span>
+
               </div>
 
               {formData.registrationMode ===
                 "Participant" && (
-                <div className="flex justify-between">
-                  <span className="text-gray-500 flex items-center gap-2">
-                    <Users size={18} />
+
+                <div className="flex justify-between items-start gap-4">
+
+                  <span className="flex items-center gap-2 text-sm sm:text-base text-gray-500">
+
+                    <Users
+                      size={18}
+                      className="shrink-0"
+                    />
+
                     Maximum Participants
+
                   </span>
 
-                  <span className="font-medium">
+                  <span className="text-sm sm:text-base font-medium text-right break-words">
                     {formData.maximumParticipants ||
                       "Unlimited"}
                   </span>
+
                 </div>
+
               )}
+
             </div>
+
           </div>
+
         </div>
+
       </div>
 
       {/* Full Screen Banner Modal */}
 
-      {showBanner && formData.banner && (
+      {showBanner &&
+        formData.banner && (
+
         <div
-          onClick={() => setShowBanner(false)}
+          onClick={() =>
+            setShowBanner(false)
+          }
           className="
             fixed
             inset-0
+            z-50
             bg-black/80
             flex
             items-center
             justify-center
-            z-50
-            p-5
+            p-4
           "
         >
+
           <div
             onClick={(e) =>
               e.stopPropagation()
             }
             className="relative"
           >
+
             <button
               onClick={() =>
                 setShowBanner(false)
               }
               className="
                 absolute
-                -top-4
-                -right-4
-                w-10
-                h-10
+                -top-3
+                -right-3
+                sm:-top-4
+                sm:-right-4
+                w-9
+                h-9
+                sm:w-10
+                sm:h-10
                 rounded-full
                 bg-white
                 shadow-lg
-                text-xl
+                text-lg
+                sm:text-xl
                 hover:bg-gray-200
               "
             >
@@ -178,22 +250,29 @@ function EventPreview({ formData }) {
             </button>
 
             <img
-             src={
-             typeof formData.banner === "string"
-            ? formData.banner
-           : URL.createObjectURL(formData.banner)
-             }
+              src={
+                typeof formData.banner ===
+                "string"
+                  ? formData.banner
+                  : URL.createObjectURL(
+                      formData.banner
+                    )
+              }
               alt="Event Banner"
               className="
                 max-w-[90vw]
                 max-h-[90vh]
-                rounded-3xl
+                rounded-2xl
+                sm:rounded-3xl
                 object-contain
                 shadow-2xl
               "
             />
+
           </div>
+
         </div>
+
       )}
     </>
   );

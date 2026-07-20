@@ -26,7 +26,9 @@ function ParticipantRow({
 
   if (participant.event?.date && participant.event?.startTime) {
 
-    const eventStart = new Date(participant.event.date);
+    const eventStart = new Date(
+      participant.event.date
+    );
 
     const [hour, minute] =
       participant.event.startTime.split(":");
@@ -106,7 +108,7 @@ function ParticipantRow({
 
       toast.error(
         error.response?.data?.message ||
-        "Failed to update attendance"
+          "Failed to update attendance"
       );
 
     } finally {
@@ -130,7 +132,7 @@ function ParticipantRow({
 
       {/* S.No */}
 
-      <td className="px-5 py-4 text-center font-medium text-slate-600">
+      <td className="px-4 sm:px-5 py-4 text-center font-medium text-slate-600 whitespace-nowrap">
 
         {index + 1}
 
@@ -138,7 +140,7 @@ function ParticipantRow({
 
       {/* Name */}
 
-      <td className="px-5 py-4 font-medium text-slate-800">
+      <td className="px-4 sm:px-5 py-4 font-medium text-slate-800 break-words">
 
         {participant.student?.fullName}
 
@@ -146,7 +148,7 @@ function ParticipantRow({
 
       {/* Roll */}
 
-      <td className="px-5 py-4 text-slate-600">
+      <td className="px-4 sm:px-5 py-4 text-slate-600 whitespace-nowrap">
 
         {participant.student?.rollNumber}
 
@@ -154,7 +156,7 @@ function ParticipantRow({
 
       {/* Branch */}
 
-      <td className="px-5 py-4 text-slate-600">
+      <td className="px-4 sm:px-5 py-4 text-slate-600 whitespace-nowrap">
 
         {participant.student?.branch}
 
@@ -162,7 +164,7 @@ function ParticipantRow({
 
       {/* Year */}
 
-      <td className="px-5 py-4 text-slate-600">
+      <td className="px-4 sm:px-5 py-4 text-slate-600 whitespace-nowrap">
 
         {participant.student?.year}
 
@@ -170,7 +172,7 @@ function ParticipantRow({
 
       {/* Email */}
 
-      <td className="px-5 py-4 text-slate-600">
+      <td className="px-4 sm:px-5 py-4 text-slate-600 break-all">
 
         {participant.student?.email}
 
@@ -178,7 +180,7 @@ function ParticipantRow({
 
       {/* Attendance */}
 
-      <td className="px-5 py-4 text-center">
+      <td className="px-4 sm:px-5 py-4 text-center">
 
         <input
           type="checkbox"
@@ -204,7 +206,7 @@ function ParticipantRow({
 
         {!attendanceAllowed && (
 
-          <p className="text-[11px] text-red-500 mt-1">
+          <p className="mt-1 text-[10px] sm:text-[11px] text-red-500 whitespace-nowrap">
 
             Event not started
 

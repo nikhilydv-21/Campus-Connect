@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { ArrowLeft } from "lucide-react";
 
 import {
-    getEventParticipants,
+  getEventParticipants,
 } from "../../../services/eventServices";
 
 import Header from "./components/Header";
@@ -13,151 +13,170 @@ import ParticipantsTable from "./components/ParticipantsTable";
 import ActionMenu from "./components/ActionMenu";
 
 function Participants({
-    eventId,
-    setActivePage,
+  eventId,
+  setActivePage,
 }) {
 
-    const [loading, setLoading] =
-        useState(true);
+  const [loading, setLoading] =
+    useState(true);
 
-    const [search, setSearch] =
-        useState("");
+  const [search, setSearch] =
+    useState("");
 
-    const [attendanceFilter, setAttendanceFilter] =
-        useState("");
+  const [attendanceFilter, setAttendanceFilter] =
+    useState("");
 
-    const [event, setEvent] =
-        useState(null);
+  const [event, setEvent] =
+    useState(null);
 
-    const [participants, setParticipants] =
-        useState([]);
+  const [participants, setParticipants] =
+    useState([]);
 
-    const [counts, setCounts] =
-        useState({
-            registered: 0,
-            attended: 0,
-            absent: 0,
-        });
+  const [counts, setCounts] =
+    useState({
+      registered: 0,
+      attended: 0,
+      absent: 0,
+    });
 
-    const fetchParticipants = async () => {
+  const fetchParticipants = async () => {
 
-        try {
+    try {
 
-            setLoading(true);
+      setLoading(true);
 
-            const response =
-                await getEventParticipants(
-                    eventId,
-                    search,
-                    attendanceFilter
-                );
+      const response =
+        await getEventParticipants(
+          eventId,
+          search,
+          attendanceFilter
+        );
 
-            setEvent(response.event);
+      setEvent(response.event);
 
-            setParticipants(
-                response.participants
-            );
+      setParticipants(
+        response.participants
+      );
 
-            setCounts(response.counts);
+      setCounts(response.counts);
 
-        } catch (error) {
+    } catch (error) {
 
-            toast.error(
-                error.response?.data?.message ||
-                "Failed to load participants"
-            );
+      toast.error(
+        error.response?.data?.message ||
+          "Failed to load participants"
+      );
 
-        } finally {
+    } finally {
 
-            setLoading(false);
+      setLoading(false);
 
+    }
+
+  };
+
+  useEffect(() => {
+
+    if (eventId) {
+
+      fetchParticipants();
+
+    }
+
+  }, [
+    eventId,
+    search,
+    attendanceFilter,
+  ]);
+
+  return (
+
+    <div className="bg-slate-100 min-h-screen p-4 sm:p-6 lg:p-8">
+
+      {/* Back */}
+
+      <button
+        onClick={() =>
+          setActivePage("manage-events")
         }
-
-    };
-
-    useEffect(() => {
-
-        if (eventId) {
-
-            fetchParticipants();
-
-        }
-
-    }, [
-        eventId,
-        search,
-        attendanceFilter,
-    ]);
-
-    return (
-
-        <div className="bg-slate-100 min-h-screen p-8">
-
-            {/* Back */}
-
-            <button
-                onClick={() =>
-                    setActivePage("manage-events")
-                }
-                className="
-          flex
+        className="
+          inline-flex
           items-center
           gap-2
           text-blue-600
           font-semibold
-          mb-6
+          text-sm
+          sm:text-base
+          mb-5
+          sm:mb-6
           hover:text-blue-700
           transition
         "
-            >
+      >
 
-                <ArrowLeft size={20} />
+        <ArrowLeft
+          size={20}
+          className="shrink-0"
+        />
 
-                Back
+        Back
 
-            </button>
+      </button>
 
-            {/* Heading */}
+      {/* Heading */}
 
-            <Header event={event} />
+      <Header event={event} />
 
-            {/* Summary */}
+      {/* Summary */}
 
-            <SummaryCards counts={counts} />
+      <SummaryCards counts={counts} />
 
-            {/* Search + Filter + Actions */}
+      {/* Search + Filter + Actions */}
 
-            <div className="flex flex-col lg:flex-row justify-between gap-5 mt-8 mb-6">
+      <div
+        className="
+          mt-6
+          sm:mt-8
+          mb-6
+          flex
+          flex-col
+          lg:flex-row
+          justify-between
+          gap-4
+          sm:gap-5
+        "
+      >
 
-                <SearchBar
-                    search={search}
-                    setSearch={setSearch}
-                    attendanceFilter={attendanceFilter}
-                    setAttendanceFilter={setAttendanceFilter}
-                />
+        <SearchBar
+          search={search}
+          setSearch={setSearch}
+          attendanceFilter={attendanceFilter}
+          setAttendanceFilter={setAttendanceFilter}
+        />
 
-                <ActionMenu
-                    eventId={eventId}
-                    event={event}
-                    attendanceFilter={attendanceFilter}
-                />
-            </div>
+        <ActionMenu
+          eventId={eventId}
+          event={event}
+          attendanceFilter={attendanceFilter}
+        />
 
-            {/* Table */}
+      </div>
 
-            <ParticipantsTable
-                loading={loading}
-                participants={participants}
-                counts={counts}
-                eventId={eventId}
-                refresh={fetchParticipants}
-                setCounts={setCounts}
-                setParticipants={setParticipants}
-            />
+      {/* Table */}
 
-        </div>
+      <ParticipantsTable
+        loading={loading}
+        participants={participants}
+        counts={counts}
+        eventId={eventId}
+        refresh={fetchParticipants}
+        setCounts={setCounts}
+        setParticipants={setParticipants}
+      />
 
-    );
+    </div>
+
+  );
 
 }
 

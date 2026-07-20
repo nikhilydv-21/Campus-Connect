@@ -4,19 +4,23 @@ function EventBasicInfo({
   categories,
 }) {
   return (
-    <div className="bg-white rounded-3xl shadow-lg p-8 mb-8">
+    <div className="bg-white rounded-2xl sm:rounded-3xl shadow-lg p-5 sm:p-6 lg:p-8 mb-6 sm:mb-8">
 
-      <h2 className="text-2xl font-bold text-slate-800 mb-8">
+      {/* Heading */}
+
+      <h2 className="text-xl sm:text-2xl font-bold text-slate-800 mb-6 sm:mb-8">
         Basic Information
       </h2>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      {/* Form */}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
 
         {/* Event Title */}
 
         <div className="md:col-span-2">
 
-          <label className="block text-sm text-gray-500 mb-2">
+          <label className="block mb-2 text-sm sm:text-base text-gray-500">
             Event Title
           </label>
 
@@ -36,6 +40,8 @@ function EventBasicInfo({
               rounded-xl
               px-4
               py-3
+              text-sm
+              sm:text-base
               outline-none
               focus:border-blue-600
             "
@@ -47,7 +53,7 @@ function EventBasicInfo({
 
         <div>
 
-          <label className="block text-sm text-gray-500 mb-2">
+          <label className="block mb-2 text-sm sm:text-base text-gray-500">
             Category
           </label>
 
@@ -65,6 +71,8 @@ function EventBasicInfo({
               rounded-xl
               px-4
               py-3
+              text-sm
+              sm:text-base
               outline-none
               focus:border-blue-600
             "
@@ -85,7 +93,7 @@ function EventBasicInfo({
 
         <div>
 
-          <label className="block text-sm text-gray-500 mb-2">
+          <label className="block mb-2 text-sm sm:text-base text-gray-500">
             Venue
           </label>
 
@@ -105,6 +113,8 @@ function EventBasicInfo({
               rounded-xl
               px-4
               py-3
+              text-sm
+              sm:text-base
               outline-none
               focus:border-blue-600
             "
@@ -116,7 +126,7 @@ function EventBasicInfo({
 
         <div className="md:col-span-2">
 
-          <label className="block text-sm text-gray-500 mb-2">
+          <label className="block mb-2 text-sm sm:text-base text-gray-500">
             Description
           </label>
 
@@ -136,6 +146,8 @@ function EventBasicInfo({
               border
               rounded-2xl
               p-4
+              text-sm
+              sm:text-base
               resize-y
               outline-none
               focus:border-blue-600

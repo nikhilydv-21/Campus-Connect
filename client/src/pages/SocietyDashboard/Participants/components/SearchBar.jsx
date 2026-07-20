@@ -41,6 +41,8 @@ function SearchBar({
               pl-12
               pr-4
               py-3
+              text-sm
+              sm:text-base
               shadow-sm
               outline-none
               focus:ring-2
@@ -65,6 +67,8 @@ function SearchBar({
             rounded-2xl
             px-4
             py-3
+            text-sm
+            sm:text-base
             shadow-sm
             outline-none
             focus:ring-2

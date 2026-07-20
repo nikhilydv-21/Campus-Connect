@@ -17,6 +17,8 @@ function StatusFilter({
           rounded-2xl
           px-4
           py-3
+          text-sm
+          sm:text-base
           shadow-sm
           outline-none
           focus:ring-2
@@ -36,8 +38,6 @@ function StatusFilter({
         <option value="Ongoing">
           Ongoing
         </option>
-
-        
 
       </select>
 

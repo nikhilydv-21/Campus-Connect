@@ -16,50 +16,54 @@ function DeleteModal({
       className="
         fixed
         inset-0
+        z-50
         bg-black/60
         flex
         items-center
         justify-center
-        z-50
         p-4
       "
     >
       <div
         onClick={(e) => e.stopPropagation()}
         className="
-          bg-white
-          rounded-3xl
-          shadow-2xl
           w-full
           max-w-md
+          bg-white
+          rounded-2xl
+          sm:rounded-3xl
+          shadow-2xl
           overflow-hidden
         "
       >
         {/* Header */}
 
-        <div className="flex justify-between items-center p-6 border-b">
+        <div className="flex items-center justify-between p-5 sm:p-6 border-b">
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 min-w-0">
 
-            <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
-              <Trash2 className="text-red-600" size={24} />
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-red-100 flex items-center justify-center shrink-0">
+
+              <Trash2
+                className="text-red-600"
+                size={22}
+              />
+
             </div>
 
-            <div>
-              <h2 className="text-xl font-bold text-slate-800">
+            <div className="min-w-0">
+
+              <h2 className="text-lg sm:text-xl font-bold text-slate-800 break-words">
                 {title}
               </h2>
+
             </div>
 
           </div>
 
           <button
             onClick={onClose}
-            className="
-              p-2
-              rounded-lg
-              hover:bg-gray-100
-            "
+            className="p-2 rounded-lg hover:bg-gray-100 transition shrink-0"
           >
             <X size={20} />
           </button>
@@ -68,9 +72,9 @@ function DeleteModal({
 
         {/* Body */}
 
-        <div className="p-6">
+        <div className="p-5 sm:p-6">
 
-          <p className="text-gray-600 leading-7">
+          <p className="text-sm sm:text-base text-gray-600 leading-6 sm:leading-7 break-words">
             {message}
           </p>
 
@@ -78,18 +82,21 @@ function DeleteModal({
 
         {/* Footer */}
 
-        <div className="flex justify-end gap-4 p-6 border-t">
+        <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 sm:gap-4 p-5 sm:p-6 border-t">
 
           <button
             onClick={onClose}
             disabled={loading}
             className="
+              w-full
+              sm:w-auto
               px-6
               py-3
               rounded-xl
               border
               hover:bg-gray-100
               disabled:opacity-50
+              transition
             "
           >
             Cancel
@@ -99,6 +106,8 @@ function DeleteModal({
             onClick={onDelete}
             disabled={loading}
             className="
+              w-full
+              sm:w-auto
               px-6
               py-3
               rounded-xl
@@ -106,14 +115,18 @@ function DeleteModal({
               hover:bg-red-700
               text-white
               disabled:bg-gray-400
+              transition
             "
           >
-            {loading ? "Deleting..." : "Delete"}
+            {loading
+              ? "Deleting..."
+              : "Delete"}
           </button>
 
         </div>
 
       </div>
+
     </div>
   );
 }

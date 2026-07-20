@@ -8,8 +8,8 @@ function AnnouncementModal({
   open,
   setOpen,
 }) {
-
-  const [title, setTitle] = useState("");
+  const [title, setTitle] =
+    useState("");
 
   const [message, setMessage] =
     useState("");
@@ -20,25 +20,17 @@ function AnnouncementModal({
   if (!open) return null;
 
   const handleSend = async () => {
-
     if (!title.trim()) {
-
       toast.error("Title is required");
-
       return;
-
     }
 
     if (!message.trim()) {
-
       toast.error("Message is required");
-
       return;
-
     }
 
     try {
-
       setLoading(true);
 
       const response =
@@ -50,16 +42,14 @@ function AnnouncementModal({
       toast.success(response.message);
 
       setTitle("");
-
       setMessage("");
-
       setOpen(false);
 
     } catch (error) {
 
       toast.error(
         error.response?.data?.message ||
-        "Failed to send announcement"
+          "Failed to send announcement"
       );
 
     } finally {
@@ -67,84 +57,84 @@ function AnnouncementModal({
       setLoading(false);
 
     }
-
   };
 
   return (
-
     <div
       className="
         fixed
         inset-0
+        z-[80]
         bg-black/60
         backdrop-blur-sm
         flex
         justify-center
         items-center
-        z-[80]
-        p-5
+        p-4
+        sm:p-5
       "
     >
 
       <div
         className="
-          bg-white
-          rounded-3xl
           w-full
           max-w-2xl
-          overflow-hidden
+          bg-white
+          rounded-2xl
+          sm:rounded-3xl
           shadow-2xl
+          overflow-hidden
         "
       >
 
         {/* Header */}
 
-        <div className="border-b px-8 py-6 flex justify-between items-center">
+        <div className="border-b p-5 sm:px-8 sm:py-6">
 
-          <div>
+          <div className="flex items-start justify-between gap-4">
 
-            <h2 className="text-2xl font-bold text-slate-800">
+            <div className="min-w-0">
 
-              Send Announcement
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-800 break-words">
+                Send Announcement
+              </h2>
 
-            </h2>
+              <p className="mt-1 text-sm sm:text-base text-gray-500 break-words">
+                This announcement will be sent to all society members.
+              </p>
 
-            <p className="text-gray-500 mt-1">
+            </div>
 
-              This announcement will be sent to all society members.
-
-            </p>
+            <button
+              onClick={() =>
+                setOpen(false)
+              }
+              className="shrink-0 p-2 rounded-xl hover:bg-slate-100 transition"
+            >
+              <X size={24} />
+            </button>
 
           </div>
-
-          <button
-            onClick={() => setOpen(false)}
-            className="p-2 rounded-xl hover:bg-slate-100"
-          >
-
-            <X size={24} />
-
-          </button>
 
         </div>
 
         {/* Body */}
 
-        <div className="p-8 space-y-6">
+        <div className="p-5 sm:p-8 space-y-6">
 
           <div>
 
-            <label className="font-semibold">
-
+            <label className="font-semibold text-sm sm:text-base">
               Announcement Title
-
             </label>
 
             <input
               type="text"
               value={title}
               onChange={(e) =>
-                setTitle(e.target.value)
+                setTitle(
+                  e.target.value
+                )
               }
               placeholder="Enter announcement title..."
               className="
@@ -154,6 +144,8 @@ function AnnouncementModal({
                 rounded-xl
                 px-4
                 py-3
+                text-sm
+                sm:text-base
                 outline-none
                 focus:ring-2
                 focus:ring-slate-300
@@ -164,10 +156,8 @@ function AnnouncementModal({
 
           <div>
 
-            <label className="font-semibold">
-
+            <label className="font-semibold text-sm sm:text-base">
               Message
-
             </label>
 
             <textarea
@@ -175,7 +165,9 @@ function AnnouncementModal({
               value={message}
               maxLength={1000}
               onChange={(e) =>
-                setMessage(e.target.value)
+                setMessage(
+                  e.target.value
+                )
               }
               placeholder="Write announcement..."
               className="
@@ -185,6 +177,8 @@ function AnnouncementModal({
                 rounded-xl
                 px-4
                 py-3
+                text-sm
+                sm:text-base
                 resize-none
                 outline-none
                 focus:ring-2
@@ -192,10 +186,8 @@ function AnnouncementModal({
               "
             />
 
-            <div className="text-right text-sm text-gray-400 mt-2">
-
+            <div className="mt-2 text-right text-xs sm:text-sm text-gray-400">
               {message.length}/1000
-
             </div>
 
           </div>
@@ -204,27 +196,32 @@ function AnnouncementModal({
 
         {/* Footer */}
 
-        <div className="border-t px-8 py-6 flex justify-end gap-3">
+        <div className="border-t p-5 sm:px-8 sm:py-6 flex flex-col-reverse sm:flex-row justify-end gap-3">
 
           <button
-            onClick={() => setOpen(false)}
+            onClick={() =>
+              setOpen(false)
+            }
             className="
+              w-full
+              sm:w-auto
               px-6
               py-3
               border
               rounded-xl
               hover:bg-slate-100
+              transition
             "
           >
-
             Cancel
-
           </button>
 
           <button
             onClick={handleSend}
             disabled={loading}
             className="
+              w-full
+              sm:w-auto
               px-6
               py-3
               bg-slate-900
@@ -232,9 +229,11 @@ function AnnouncementModal({
               text-white
               rounded-xl
               flex
+              justify-center
               items-center
               gap-2
               disabled:opacity-60
+              transition
             "
           >
 
@@ -251,9 +250,7 @@ function AnnouncementModal({
       </div>
 
     </div>
-
   );
-
 }
 
 export default AnnouncementModal;

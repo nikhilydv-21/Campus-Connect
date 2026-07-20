@@ -53,12 +53,13 @@ function LogoModal({
         fixed
         inset-0
         z-50
-        bg-black/70
-        backdrop-blur-md
         flex
         items-center
         justify-center
-        p-6
+        bg-black/70
+        backdrop-blur-md
+        p-4
+        sm:p-6
         animate-[fadeIn_.25s_ease]
       "
     >
@@ -81,25 +82,29 @@ function LogoModal({
           }
           className="
             absolute
-            -top-5
-            -right-5
-            w-11
-            h-11
+            -top-3
+            -right-3
+            sm:-top-5
+            sm:-right-5
+            z-20
+            flex
+            h-10
+            w-10
+            sm:h-11
+            sm:w-11
+            items-center
+            justify-center
             rounded-full
             bg-white
             shadow-xl
-            flex
-            items-center
-            justify-center
-            hover:scale-110
-            hover:bg-slate-100
             transition-all
             duration-200
-            z-20
+            hover:scale-110
+            hover:bg-slate-100
           "
         >
 
-          <X size={22} />
+          <X size={20} className="sm:w-[22px] sm:h-[22px]" />
 
         </button>
 
@@ -114,20 +119,24 @@ function LogoModal({
             )}`
           }
           alt="Society Logo"
+          draggable={false}
           className="
-            max-w-[80vw]
-            max-h-[80vh]
-            object-contain
-            rounded-3xl
+            max-w-[90vw]
+            sm:max-w-[80vw]
+            max-h-[75vh]
+            sm:max-h-[80vh]
+            rounded-2xl
+            sm:rounded-3xl
             bg-white
-            p-3
+            p-2
+            sm:p-3
+            object-contain
             shadow-2xl
             transition-transform
             duration-300
             hover:scale-[1.02]
             select-none
           "
-          draggable={false}
         />
 
       </div>
@@ -139,11 +148,15 @@ function LogoModal({
         @keyframes fadeIn {
 
           from {
+
             opacity: 0;
+
           }
 
           to {
+
             opacity: 1;
+
           }
 
         }

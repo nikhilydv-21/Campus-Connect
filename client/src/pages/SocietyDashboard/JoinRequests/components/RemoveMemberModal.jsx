@@ -14,16 +14,13 @@ function RemoveMemberModal({
   member,
   refreshMembers,
 }) {
-
   const [loading, setLoading] =
     useState(false);
 
   if (!open || !member) return null;
 
   const handleRemove = async () => {
-
     try {
-
       setLoading(true);
 
       const response =
@@ -43,7 +40,7 @@ function RemoveMemberModal({
 
       toast.error(
         error.response?.data?.message ||
-        "Failed to remove member"
+          "Failed to remove member"
       );
 
     } finally {
@@ -51,41 +48,46 @@ function RemoveMemberModal({
       setLoading(false);
 
     }
-
   };
 
   return (
-
     <div
       className="
         fixed
         inset-0
+        z-[60]
         bg-black/50
         backdrop-blur-sm
         flex
         justify-center
         items-center
-        z-[60]
+        p-4
       "
     >
 
       <div
         className="
-          bg-white
           w-full
           max-w-md
-          rounded-3xl
+          bg-white
+          rounded-2xl
+          sm:rounded-3xl
           shadow-2xl
-          p-8
+          p-5
+          sm:p-8
         "
       >
+
+        {/* Icon */}
 
         <div className="flex justify-center">
 
           <div
             className="
-              h-16
-              w-16
+              w-14
+              h-14
+              sm:w-16
+              sm:h-16
               rounded-full
               bg-red-100
               flex
@@ -95,87 +97,95 @@ function RemoveMemberModal({
           >
 
             <AlertTriangle
-              size={32}
-              className="text-red-600"
+              size={30}
+              className="text-red-600 sm:w-8 sm:h-8"
             />
 
           </div>
 
         </div>
 
+        {/* Title */}
+
         <h2
           className="
-            text-2xl
+            mt-5
+            sm:mt-6
+            text-xl
+            sm:text-2xl
             font-bold
             text-center
-            mt-6
           "
         >
-
           Remove Member
-
         </h2>
+
+        {/* Message */}
 
         <p
           className="
+            mt-4
+            text-sm
+            sm:text-base
             text-center
             text-slate-600
-            mt-4
-            leading-7
+            leading-6
+            sm:leading-7
+            break-words
           "
         >
-
           Are you sure you want to remove
 
           <br />
 
-          <span className="font-bold">
-
+          <span className="font-bold break-words">
             {member.student?.fullName}
-
           </span>
 
           <br />
 
           from your society?
-
         </p>
 
-        <div className="flex gap-3 mt-8">
+        {/* Buttons */}
+
+        <div className="mt-6 sm:mt-8 flex flex-col-reverse sm:flex-row gap-3">
 
           <button
-            onClick={() => setOpen(false)}
+            onClick={() =>
+              setOpen(false)
+            }
             className="
-              flex-1
+              w-full
+              sm:flex-1
               py-3
               rounded-xl
               border
               hover:bg-slate-100
+              transition
             "
           >
-
             Cancel
-
           </button>
 
           <button
             onClick={handleRemove}
             disabled={loading}
             className="
-              flex-1
+              w-full
+              sm:flex-1
               py-3
               rounded-xl
               bg-red-600
               hover:bg-red-700
               text-white
               font-semibold
+              transition
             "
           >
-
             {loading
               ? "Removing..."
               : "Remove"}
-
           </button>
 
         </div>
@@ -183,9 +193,7 @@ function RemoveMemberModal({
       </div>
 
     </div>
-
   );
-
 }
 
 export default RemoveMemberModal;

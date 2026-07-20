@@ -175,60 +175,69 @@ function Profile() {
   }, []);
 
   const updateProfile = async () => {
-  try {
 
-    const payload = {
-  ...formData,
+    try {
 
-  secretaries: formData.secretaries.filter(
-    (item) => item.name.trim() !== ""
-  ),
+      const payload = {
 
-  jointSecretaries: formData.jointSecretaries.filter(
-    (item) => item.name.trim() !== ""
-  ),
+        ...formData,
 
-  achievements: formData.achievements.filter(
-    (item) =>
-      item.title.trim() !== "" ||
-      item.description.trim() !== ""
-  ),
+        secretaries: formData.secretaries.filter(
+          (item) => item.name.trim() !== ""
+        ),
 
-  contacts: formData.contacts.filter(
-    (item) =>
-      item.name.trim() !== "" ||
-      item.position.trim() !== "" ||
-      item.phone.trim() !== ""
-  ),
-};
+        jointSecretaries: formData.jointSecretaries.filter(
+          (item) => item.name.trim() !== ""
+        ),
 
-    const response = await updateSocietyProfile(payload);
+        achievements: formData.achievements.filter(
+          (item) =>
+            item.title.trim() !== "" ||
+            item.description.trim() !== ""
+        ),
 
-    toast.success(response.message);
+        contacts: formData.contacts.filter(
+          (item) =>
+            item.name.trim() !== "" ||
+            item.position.trim() !== "" ||
+            item.phone.trim() !== ""
+        ),
 
-    setSociety(response.society);
+      };
 
-    setFormData({
-      ...payload,
-      achievements: response.society.achievements,
-    });
+      const response =
+        await updateSocietyProfile(payload);
 
-    localStorage.setItem(
-      "society",
-      JSON.stringify(response.society)
-    );
+      toast.success(response.message);
 
-    setEditMode(false);
+      setSociety(response.society);
 
-  } catch (error) {
+      setFormData({
 
-    toast.error(
-      error.response?.data?.message ||
-      "Profile Update Failed"
-    );
+        ...payload,
 
-  }
-};
+        achievements:
+          response.society.achievements,
+
+      });
+
+      localStorage.setItem(
+        "society",
+        JSON.stringify(response.society)
+      );
+
+      setEditMode(false);
+
+    } catch (error) {
+
+      toast.error(
+        error.response?.data?.message ||
+        "Profile Update Failed"
+      );
+
+    }
+
+  };
 
   const handleLogoUpload = async (e) => {
 
@@ -251,11 +260,8 @@ function Profile() {
     } catch (error) {
 
       toast.error(
-
         error.response?.data?.message ||
-
         "Logo Upload Failed"
-
       );
 
     }
@@ -282,11 +288,8 @@ function Profile() {
       console.error(error);
 
       toast.error(
-
         error.response?.data?.message ||
-
         "Failed to remove logo"
-
       );
 
     }
@@ -297,7 +300,16 @@ function Profile() {
 
     return (
 
-      <div className="flex justify-center items-center min-h-screen">
+      <div
+        className="
+          flex
+          min-h-screen
+          items-center
+          justify-center
+          text-base
+          sm:text-lg
+        "
+      >
 
         Loading...
 
@@ -308,18 +320,47 @@ function Profile() {
   }
 
   return (
-    <>
-      <div className="bg-slate-100 min-h-screen p-8">
 
-        <h1 className="text-4xl font-bold">
+    <>
+
+      <div
+        className="
+          min-h-screen
+          bg-slate-100
+          p-4
+          sm:p-6
+          lg:p-8
+        "
+      >
+
+        <h1
+          className="
+            text-3xl
+            sm:text-4xl
+            font-bold
+            break-words
+          "
+        >
+
           Society Profile
+
         </h1>
 
-        <p className="text-gray-500 mt-2 mb-8">
-          View and manage your society information.
-        </p>
+        <p
+          className="
+            mt-2
+            mb-6
+            sm:mb-8
+            text-sm
+            sm:text-base
+            text-gray-500
+          "
+        >
 
-        <ProfileHeader
+          View and manage your society information.
+
+        </p>
+                <ProfileHeader
           society={society}
           editMode={editMode}
           setEditMode={setEditMode}
@@ -390,9 +431,9 @@ function Profile() {
       />
 
     </>
+
   );
 
 }
 
 export default Profile;
-    

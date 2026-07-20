@@ -3,19 +3,23 @@ function EventRegistration({
   setFormData,
 }) {
   return (
-    <div className="bg-white rounded-3xl shadow-lg p-8 mb-8">
+    <div className="bg-white rounded-2xl sm:rounded-3xl shadow-lg p-5 sm:p-6 lg:p-8 mb-6 sm:mb-8">
 
-      <h2 className="text-2xl font-bold text-slate-800 mb-8">
+      {/* Heading */}
+
+      <h2 className="text-xl sm:text-2xl font-bold text-slate-800 mb-6 sm:mb-8">
         Registration Settings
       </h2>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      {/* Form */}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
 
         {/* Registration Mode */}
 
         <div>
 
-          <label className="block text-sm text-gray-500 mb-2">
+          <label className="block mb-2 text-sm sm:text-base text-gray-500">
             Registration Mode
           </label>
 
@@ -26,7 +30,8 @@ function EventRegistration({
                 ...formData,
                 registrationMode: e.target.value,
                 maximumParticipants:
-                  e.target.value === "Viewer"
+                  e.target.value ===
+                  "Viewer"
                     ? ""
                     : formData.maximumParticipants,
               })
@@ -37,6 +42,8 @@ function EventRegistration({
               rounded-xl
               px-4
               py-3
+              text-sm
+              sm:text-base
               outline-none
               focus:border-blue-600
             "
@@ -48,6 +55,7 @@ function EventRegistration({
             <option value="Viewer">
               Viewer
             </option>
+
           </select>
 
         </div>
@@ -57,57 +65,79 @@ function EventRegistration({
         {formData.registrationMode ===
           "Participant" && (
 
-            <div>
+          <div>
 
-              <label className="block text-sm text-gray-500 mb-2">
-                Maximum Participants
-              </label>
+            <label className="block mb-2 text-sm sm:text-base text-gray-500">
+              Maximum Participants
+            </label>
 
-              <input
-                type="text"
-                inputMode="numeric"
-                placeholder="Enter Maximum Participants"
-                value={formData.maximumParticipants}
-                onChange={(e) => {
-                  const value = e.target.value.replace(/\D/g, "");
+            <input
+              type="text"
+              inputMode="numeric"
+              placeholder="Enter Maximum Participants"
+              value={
+                formData.maximumParticipants
+              }
+              onChange={(e) => {
+                const value =
+                  e.target.value.replace(
+                    /\D/g,
+                    ""
+                  );
 
-                  setFormData({
-                    ...formData,
-                    maximumParticipants: value,
-                  });
-                }}
-                onKeyDown={(e) => {
-                  if (
-                    ["e", "E", "+", "-", ".", ","].includes(e.key)
-                  ) {
-                    e.preventDefault();
-                  }
-                }}
-                onPaste={(e) => {
+                setFormData({
+                  ...formData,
+                  maximumParticipants:
+                    value,
+                });
+              }}
+              onKeyDown={(e) => {
+                if (
+                  [
+                    "e",
+                    "E",
+                    "+",
+                    "-",
+                    ".",
+                    ",",
+                  ].includes(e.key)
+                ) {
                   e.preventDefault();
+                }
+              }}
+              onPaste={(e) => {
+                e.preventDefault();
 
-                  const pasted = e.clipboardData
+                const pasted =
+                  e.clipboardData
                     .getData("text")
-                    .replace(/\D/g, "");
+                    .replace(
+                      /\D/g,
+                      ""
+                    );
 
-                  setFormData({
-                    ...formData,
-                    maximumParticipants: pasted,
-                  });
-                }}
-                className="
-    w-full
-    border
-    rounded-xl
-    px-4
-    py-3
-    outline-none
-    focus:border-blue-600
-  "
-              />
-            </div>
+                setFormData({
+                  ...formData,
+                  maximumParticipants:
+                    pasted,
+                });
+              }}
+              className="
+                w-full
+                border
+                rounded-xl
+                px-4
+                py-3
+                text-sm
+                sm:text-base
+                outline-none
+                focus:border-blue-600
+              "
+            />
 
-          )}
+          </div>
+
+        )}
 
       </div>
 
@@ -115,31 +145,42 @@ function EventRegistration({
 
       <div
         className="
-          mt-8
+          mt-6
+          sm:mt-8
           rounded-2xl
           bg-blue-50
           border
           border-blue-200
-          p-5
+          p-4
+          sm:p-5
         "
       >
 
-        <h3 className="font-semibold text-blue-700 mb-2">
+        <h3 className="mb-2 text-base sm:text-lg font-semibold text-blue-700">
           Registration Information
         </h3>
 
         {formData.registrationMode ===
-          "Participant" ? (
-          <p className="text-gray-700 leading-7">
-            Students will register as participants.
-            Registration will automatically close once
-            the maximum participant limit is reached.
+        "Participant" ? (
+
+          <p className="text-sm sm:text-base text-gray-700 leading-6 sm:leading-7 break-words">
+            Students will register as
+            participants. Registration
+            will automatically close
+            once the maximum
+            participant limit is
+            reached.
           </p>
+
         ) : (
-          <p className="text-gray-700 leading-7">
-            This event is open for viewers only.
-            No participant limit will be applied.
+
+          <p className="text-sm sm:text-base text-gray-700 leading-6 sm:leading-7 break-words">
+            This event is open for
+            viewers only. No
+            participant limit will be
+            applied.
           </p>
+
         )}
 
       </div>

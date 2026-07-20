@@ -7,33 +7,39 @@ import StatCard from "./components/StatCard";
 import PopularEventCard from "./components/PopularEventCard";
 
 function Analytics() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] =
+    useState(true);
 
-  const [analytics, setAnalytics] = useState({
-    totalEvents: 0,
-    activeEvents: 0,
-    pastEvents: 0,
-    totalRegistrations: 0,
-    totalMembers: 0,
+  const [analytics, setAnalytics] =
+    useState({
+      totalEvents: 0,
+      activeEvents: 0,
+      pastEvents: 0,
+      totalRegistrations: 0,
+      totalMembers: 0,
 
-    mostPopularEvent: {
-      title: "N/A",
-      registrations: 0,
-    },
-  });
+      mostPopularEvent: {
+        title: "N/A",
+        registrations: 0,
+      },
+    });
 
   const fetchAnalytics = async () => {
     try {
       setLoading(true);
 
-      const response = await getAnalytics();
+      const response =
+        await getAnalytics();
 
-      setAnalytics(response.analytics);
+      setAnalytics(
+        response.analytics
+      );
 
     } catch (error) {
 
       toast.error(
-        error.response?.data?.message ||
+        error.response?.data
+          ?.message ||
           "Failed to load analytics"
       );
 
@@ -50,60 +56,74 @@ function Analytics() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen text-xl text-gray-500">
+      <div className="flex justify-center items-center h-60 text-lg sm:text-xl text-gray-500">
         Loading Analytics...
       </div>
     );
   }
 
   return (
-    <div className="bg-slate-100 min-h-screen p-8">
+    <div className="bg-slate-100 min-h-screen p-4 sm:p-6 lg:p-8">
 
       {/* Heading */}
 
-      <div className="mb-10">
+      <div className="mb-8 sm:mb-10">
 
-        <h1 className="text-4xl font-bold text-slate-800">
+        <h1 className="text-3xl sm:text-4xl font-bold text-slate-800">
           Analytics
         </h1>
 
-        <p className="text-gray-500 mt-2">
-          Track your society performance and event statistics.
+        <p className="mt-2 text-sm sm:text-base text-gray-500">
+          Track your society
+          performance and event
+          statistics.
         </p>
 
       </div>
 
       {/* Statistics */}
 
-      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
 
         <StatCard
           title="Total Events"
-          value={analytics.totalEvents}
+          value={
+            analytics.totalEvents
+          }
         />
 
         <StatCard
           title="Active Events"
-          value={analytics.activeEvents}
+          value={
+            analytics.activeEvents
+          }
         />
 
         <StatCard
           title="Past Events"
-          value={analytics.pastEvents}
+          value={
+            analytics.pastEvents
+          }
         />
 
         <StatCard
           title="Total Registrations"
-          value={analytics.totalRegistrations}
+          value={
+            analytics.totalRegistrations
+          }
         />
 
         <StatCard
           title="Total Members"
-          value={analytics.totalMembers}
+          value={
+            analytics.totalMembers
+          }
         />
 
         <PopularEventCard
-          event={analytics.mostPopularEvent}
+          event={
+            analytics.mostPopularEvent
+          }
         />
 
       </div>

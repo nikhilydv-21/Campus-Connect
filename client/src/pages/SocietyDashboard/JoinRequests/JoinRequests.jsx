@@ -17,7 +17,6 @@ import EmptyState from "./components/EmptyState";
 import MembersModal from "./components/MembersModal";
 
 function JoinRequests() {
-
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -29,9 +28,7 @@ function JoinRequests() {
     useState([]);
 
   const fetchRequests = async () => {
-
     try {
-
       setLoading(true);
 
       const response =
@@ -43,7 +40,7 @@ function JoinRequests() {
 
       toast.error(
         error.response?.data?.message ||
-        "Failed to load join requests"
+          "Failed to load join requests"
       );
 
     } finally {
@@ -51,11 +48,9 @@ function JoinRequests() {
       setLoading(false);
 
     }
-
   };
 
   const fetchMembers = async () => {
-
     try {
 
       const response =
@@ -69,39 +64,31 @@ function JoinRequests() {
 
       toast.error(
         error.response?.data?.message ||
-        "Failed to load members"
+          "Failed to load members"
       );
 
     }
-
   };
 
   useEffect(() => {
-
     fetchRequests();
-
   }, [search]);
 
   return (
-
-    <div className="bg-slate-100 min-h-screen p-8">
+    <div className="bg-slate-100 min-h-screen p-4 sm:p-6 lg:p-8">
 
       {/* Heading */}
 
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-5 mb-6 sm:mb-8">
 
         <div>
 
-          <h1 className="text-4xl font-bold text-slate-800">
-
+          <h1 className="text-3xl sm:text-4xl font-bold text-slate-800">
             Join Requests
-
           </h1>
 
-          <p className="text-gray-500 mt-2">
-
+          <p className="text-sm sm:text-base text-gray-500 mt-2">
             Review and manage students requesting to join your society.
-
           </p>
 
         </div>
@@ -109,8 +96,11 @@ function JoinRequests() {
         <button
           onClick={fetchMembers}
           className="
+            w-full
+            sm:w-auto
             flex
             items-center
+            justify-center
             gap-2
             px-5
             py-3
@@ -122,7 +112,6 @@ function JoinRequests() {
             transition
           "
         >
-
           <Users size={18} />
 
           View Members
@@ -133,7 +122,7 @@ function JoinRequests() {
 
       {/* Search */}
 
-      <div className="mb-8">
+      <div className="mb-6 sm:mb-8">
 
         <SearchBar
           search={search}
@@ -146,7 +135,7 @@ function JoinRequests() {
 
       {loading ? (
 
-        <div className="text-center py-20 text-lg text-gray-500">
+        <div className="text-center py-16 sm:py-20 text-base sm:text-lg text-gray-500">
 
           Loading Requests...
 
@@ -158,7 +147,7 @@ function JoinRequests() {
 
       ) : (
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 justify-items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 justify-items-center">
 
           {requests.map((request) => (
 
@@ -182,9 +171,7 @@ function JoinRequests() {
       />
 
     </div>
-
   );
-
 }
 
 export default JoinRequests;

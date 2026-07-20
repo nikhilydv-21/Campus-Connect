@@ -27,22 +27,21 @@ function ApproveConfirmModal({
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-8">
 
           <button
-            onClick={() => setOpen(false)}
-            className="border border-gray-300 rounded-xl py-3 px-4 hover:bg-gray-100 transition"
-          >
-            Cancel
-          </button>
-
-          <button
             onClick={onConfirm}
             disabled={loading}
-            className="bg-green-600 hover:bg-green-700 text-white rounded-xl py-3 px-4 transition disabled:opacity-70"
+            className="order-1 sm:order-2 bg-green-600 hover:bg-green-700 text-white rounded-xl py-3 px-4 transition disabled:opacity-70"
           >
             {loading ? "Approving..." : "Approve"}
           </button>
 
-        </div>
+          <button
+            onClick={() => setOpen(false)}
+            className="order-2 sm:order-1 border border-gray-300 rounded-xl py-3 px-4 hover:bg-gray-100 transition"
+          >
+            Cancel
+          </button>
 
+        </div>
       </div>
 
     </div>

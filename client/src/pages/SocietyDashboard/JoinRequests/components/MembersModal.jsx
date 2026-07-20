@@ -23,23 +23,32 @@ function MembersModal({
   members,
   refreshMembers,
 }) {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] =
+    useState("");
 
-  const [filteredMembers, setFilteredMembers] =
-    useState([]);
+  const [
+    filteredMembers,
+    setFilteredMembers,
+  ] = useState([]);
 
-  const [selectedMember, setSelectedMember] =
-    useState(null);
+  const [
+    selectedMember,
+    setSelectedMember,
+  ] = useState(null);
 
-  const [announcementOpen, setAnnouncementOpen] =
-    useState(false);
+  const [
+    announcementOpen,
+    setAnnouncementOpen,
+  ] = useState(false);
 
   useEffect(() => {
-    const keyword = search.toLowerCase();
+    const keyword =
+      search.toLowerCase();
 
     setFilteredMembers(
       members.filter((item) => {
-        const student = item.student;
+        const student =
+          item.student;
 
         return (
           student?.fullName
@@ -58,24 +67,34 @@ function MembersModal({
 
   if (!open) return null;
 
-  const handleRemove = async () => {
-    try {
-      const response = await removeMember(
-        selectedMember._id
-      );
+  const handleRemove =
+    async () => {
+      try {
+        const response =
+          await removeMember(
+            selectedMember._id
+          );
 
-      toast.success(response.message);
+        toast.success(
+          response.message
+        );
 
-      setSelectedMember(null);
+        setSelectedMember(
+          null
+        );
 
-      refreshMembers();
-    } catch (error) {
-      toast.error(
-        error.response?.data?.message ||
-          "Failed to remove member"
-      );
-    }
-  };
+        refreshMembers();
+
+      } catch (error) {
+
+        toast.error(
+          error.response?.data
+            ?.message ||
+            "Failed to remove member"
+        );
+
+      }
+    };
 
   return (
     <>
@@ -89,13 +108,15 @@ function MembersModal({
           justify-center
           items-center
           z-50
-          p-5
+          p-4
+          sm:p-5
         "
       >
         <div
           className="
             bg-white
-            rounded-3xl
+            rounded-2xl
+            sm:rounded-3xl
             w-full
             max-w-5xl
             max-h-[90vh]
@@ -104,31 +125,38 @@ function MembersModal({
             flex-col
           "
         >
+
           {/* Header */}
 
-          <div className="border-b px-8 py-6">
+          <div className="border-b p-5 sm:px-8 sm:py-6">
 
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-5">
 
               <div>
 
-                <h2 className="text-3xl font-bold text-slate-800">
+                <h2 className="text-2xl sm:text-3xl font-bold text-slate-800">
                   Society Members
                 </h2>
 
-                <p className="text-gray-500 mt-1">
-                  Total Members : {members.length}
+                <p className="text-sm sm:text-base text-gray-500 mt-1">
+                  Total Members :
+                  {" "}
+                  {members.length}
                 </p>
 
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
 
                 <button
                   onClick={() =>
-                    setAnnouncementOpen(true)
+                    setAnnouncementOpen(
+                      true
+                    )
                   }
                   className="
+                    w-full
+                    sm:w-auto
                     border
                     border-slate-300
                     hover:bg-slate-100
@@ -136,13 +164,19 @@ function MembersModal({
                     px-4
                     py-2.5
                     flex
+                    justify-center
                     items-center
                     gap-2
                     transition
                   "
                 >
-                  <Megaphone size={18} />
+
+                  <Megaphone
+                    size={18}
+                  />
+
                   Send Announcement
+
                 </button>
 
                 <button
@@ -150,12 +184,16 @@ function MembersModal({
                     setOpen(false)
                   }
                   className="
+                    self-end
+                    sm:self-auto
                     p-2
                     rounded-xl
                     hover:bg-slate-100
                   "
                 >
+
                   <X size={24} />
+
                 </button>
 
               </div>
@@ -166,7 +204,7 @@ function MembersModal({
 
           {/* Search */}
 
-          <div className="border-b p-6">
+          <div className="border-b p-5 sm:p-6">
 
             <div className="relative">
 
@@ -175,7 +213,8 @@ function MembersModal({
                 className="
                   absolute
                   left-4
-                  top-3.5
+                  top-1/2
+                  -translate-y-1/2
                   text-gray-400
                 "
               />
@@ -185,7 +224,9 @@ function MembersModal({
                 placeholder="Search Members..."
                 value={search}
                 onChange={(e) =>
-                  setSearch(e.target.value)
+                  setSearch(
+                    e.target.value
+                  )
                 }
                 className="
                   w-full
@@ -194,6 +235,8 @@ function MembersModal({
                   pl-11
                   pr-4
                   py-3
+                  text-sm
+                  sm:text-base
                   outline-none
                   focus:ring-2
                   focus:ring-slate-300
@@ -206,10 +249,12 @@ function MembersModal({
 
           {/* Members List */}
 
-          <div className="flex-1 overflow-y-auto p-6">
-                        {filteredMembers.length === 0 ? (
+          <div className="flex-1 overflow-y-auto p-5 sm:p-6">
 
-              <div className="text-center py-20 text-gray-500">
+            {filteredMembers.length ===
+            0 ? (
+
+              <div className="text-center py-16 sm:py-20 text-sm sm:text-base text-gray-500">
 
                 No Members Found
 
@@ -219,114 +264,156 @@ function MembersModal({
 
               <div className="space-y-4">
 
-                {filteredMembers.map((member) => {
+                {filteredMembers.map(
+                  (member) => {
 
-                  const student = member.student;
+                    const student =
+                      member.student;
 
-                  return (
+                    return (
 
-                    <div
-                      key={member._id}
-                      className="
-                        border
-                        rounded-2xl
-                        px-5
-                        py-4
-                        flex
-                        justify-between
-                        items-center
-                        hover:shadow-md
-                        transition
-                      "
-                    >
+                      <div
+                        key={
+                          member._id
+                        }
+                        className="
+                          border
+                          rounded-2xl
+                          p-4
+                          sm:px-5
+                          sm:py-4
+                          flex
+                          flex-col
+                          sm:flex-row
+                          sm:justify-between
+                          sm:items-center
+                          gap-4
+                          hover:shadow-md
+                          transition
+                        "
+                      >
 
-                      {/* Left */}
+                        {/* Left */}
 
-                      <div className="flex-1">
+                        <div className="flex-1 min-w-0">
 
-                        <h3 className="text-lg font-bold text-slate-800">
+                          <h3 className="text-lg font-bold text-slate-800 break-words">
 
-                          {student.fullName}
+                            {
+                              student.fullName
+                            }
 
-                        </h3>
+                          </h3>
 
-                        <div
-                          className="
-                            mt-3
-                            flex
-                            flex-wrap
-                            gap-x-8
-                            gap-y-2
-                            text-sm
-                            text-slate-600
-                          "
-                        >
+                          <div
+                            className="
+                              mt-3
+                              flex
+                              flex-col
+                              sm:flex-row
+                              sm:flex-wrap
+                              gap-3
+                              sm:gap-x-8
+                              text-sm
+                              text-slate-600
+                            "
+                          >
 
-                          <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 min-w-0">
 
-                            <Hash size={16} />
+                              <Hash
+                                size={
+                                  16
+                                }
+                                className="shrink-0"
+                              />
 
-                            <span>
+                              <span className="break-all">
 
-                              {student.rollNumber}
+                                {
+                                  student.rollNumber
+                                }
 
-                            </span>
+                              </span>
 
-                          </div>
+                            </div>
 
-                          <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 min-w-0">
 
-                            <GraduationCap size={16} />
+                              <GraduationCap
+                                size={
+                                  16
+                                }
+                                className="shrink-0"
+                              />
 
-                            <span>
+                              <span className="break-words">
 
-                              {student.branch?.toUpperCase()} • Year {student.year}
+                                {student.branch?.toUpperCase()}
+                                {" • "}
+                                Year{" "}
+                                {
+                                  student.year
+                                }
 
-                            </span>
+                              </span>
 
-                          </div>
+                            </div>
 
-                          <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 min-w-0">
 
-                            <Mail size={16} />
+                              <Mail
+                                size={
+                                  16
+                                }
+                                className="shrink-0"
+                              />
 
-                            <span>
+                              <span className="break-all">
 
-                              {student.email}
+                                {
+                                  student.email
+                                }
 
-                            </span>
+                              </span>
+
+                            </div>
 
                           </div>
 
                         </div>
 
+                        {/* Delete */}
+
+                        <button
+                          onClick={() =>
+                            setSelectedMember(
+                              member
+                            )
+                          }
+                          className="
+                            self-end
+                            sm:self-auto
+                            p-3
+                            rounded-xl
+                            hover:bg-red-50
+                            text-red-600
+                            transition
+                          "
+                        >
+
+                          <Trash2
+                            size={20}
+                          />
+
+                        </button>
+
                       </div>
 
-                      {/* Delete */}
+                    );
 
-                      <button
-                        onClick={() =>
-                          setSelectedMember(member)
-                        }
-                        className="
-                          ml-5
-                          p-3
-                          rounded-xl
-                          hover:bg-red-50
-                          text-red-600
-                          transition
-                        "
-                      >
-
-                        <Trash2 size={20} />
-
-                      </button>
-
-                    </div>
-
-                  );
-
-                })}
+                  }
+                )}
 
               </div>
 
@@ -347,31 +434,44 @@ function MembersModal({
                 justify-center
                 items-center
                 z-[60]
+                p-4
               "
             >
 
               <div
                 className="
                   bg-white
-                  rounded-3xl
                   w-full
                   max-w-md
-                  p-8
+                  rounded-2xl
+                  sm:rounded-3xl
                   shadow-2xl
+                  p-5
+                  sm:p-8
                 "
               >
 
-                <h2 className="text-2xl font-bold text-slate-800">
+                <h2 className="text-xl sm:text-2xl font-bold text-slate-800">
 
                   Remove Member
 
                 </h2>
 
-                <p className="mt-4 text-gray-600 leading-7">
+                <p
+                  className="
+                    mt-4
+                    text-sm
+                    sm:text-base
+                    text-gray-600
+                    leading-6
+                    sm:leading-7
+                    break-words
+                  "
+                >
 
                   Are you sure you want to remove
 
-                  <span className="font-semibold">
+                  <span className="font-semibold break-words">
 
                     {" "}
                     {selectedMember.student.fullName}
@@ -382,13 +482,15 @@ function MembersModal({
 
                 </p>
 
-                <div className="flex justify-end gap-3 mt-8">
+                <div className="mt-6 sm:mt-8 flex flex-col-reverse sm:flex-row justify-end gap-3">
 
                   <button
                     onClick={() =>
                       setSelectedMember(null)
                     }
                     className="
+                      w-full
+                      sm:w-auto
                       px-6
                       py-3
                       border
@@ -406,6 +508,8 @@ function MembersModal({
                   <button
                     onClick={handleRemove}
                     className="
+                      w-full
+                      sm:w-auto
                       px-6
                       py-3
                       bg-red-600
