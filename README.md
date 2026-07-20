@@ -181,7 +181,7 @@ Societies can monitor registered participants and manage attendance.
 
 <p align="center">
 
-<img src="screenshots/participants.png" width="90%">
+![Participants](screenshots/participants.png)
 
 </p>
 
